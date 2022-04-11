@@ -15,7 +15,7 @@ Create a parent folder where all microservices will be stored. (e.g. XWSProject)
 Pull Repo
 
 Open the userservice project in IntelliJ and clean and install with maven.
-![Picture of the maven build tool in IntelliJ] (https://i.imgur.com/MuIDcGk.png)
+![Picture of the maven build tool in IntelliJ](https://i.imgur.com/MuIDcGk.png)
 
 Open command prompt in parent folder and run
 ```bash
