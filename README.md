@@ -1,5 +1,11 @@
 # XWS_Dislinkt
 
+
+```javascript
+TODO: Setup API Gateway with spring?\
+```
+
+
 ## Running the app
 Install docker desktop
 ```bash
