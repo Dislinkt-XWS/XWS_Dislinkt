@@ -32,3 +32,6 @@ docker compose up --build
 You should be able to access the userservice project endpoints at http://localhost:8761/api/users
 
 MongoDB UI is running at http://localhost:8081/
+
+Note:
+After changing any code inside of a service it needs to be rebuilt with maven (see image above).
