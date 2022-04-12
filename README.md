@@ -19,7 +19,8 @@ Open the userservice project in IntelliJ and clean and install with maven.
 
 Open command prompt in parent folder and run
 ```bash
-docker compose up
+docker compose up --build 
+//This builds all the images again so that any code changes take effect
 ```
 
 You should be able to access the userservice project endpoints at http://localhost:8761/api/users
