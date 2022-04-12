@@ -23,6 +23,13 @@ services:
 
   userservice:
       build: './userservice/'
-      hostname: userservice
       ports:
         - 8761:8761
+  postservice:
+      build: './postservice/'
+      ports:
+        - 8750:8750
+  messageservice:
+      build: './messageservice/'
+      ports:
+        - 8700:8700
