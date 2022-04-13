@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8888/eureka
+
+
+spring:
+  application:
+    name: dislinktapigateway
+
+  cloud:
+    gateway:
+      routes:
+        ## USER SERVICE
+        - id: userservice
+          uri: lb://userservice
+          predicates:
+            - Path=/user/**
+        ## FUND TRANSFER SERVICE
+        - id: postservice
+          uri: lb://postservice
+          predicates:
+            - Path=/post/**
+        - id: messageservice
+          uri: lb://message
+          predicates:
+            - Path=/message/**
+

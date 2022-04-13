@@ -1,5 +1,7 @@
 
 spring:
+  application:
+    name: messageservice
   data:
     mongodb:
       # The URI is optional, it's all of these lines into one
@@ -13,3 +15,7 @@ spring:
 
 server:
   port: 8700
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8888/eureka
