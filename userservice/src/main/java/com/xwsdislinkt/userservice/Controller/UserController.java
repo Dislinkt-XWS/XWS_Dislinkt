@@ -1,5 +1,6 @@
 package com.xwsdislinkt.userservice.Controller;
 
+import com.xwsdislinkt.userservice.DTO.LoginDTO;
 import com.xwsdislinkt.userservice.DTO.UserDTO;
 import com.xwsdislinkt.userservice.Model.User;
 import com.xwsdislinkt.userservice.Service.UserService;
@@ -39,5 +40,14 @@ public class UserController {
                 .map(user -> modelMapper.map(user, UserDTO.class))
                 .collect(Collectors.toList());
         return new ResponseEntity<>(userDTOS, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/login")
+    public ResponseEntity<UserDTO> login(@RequestBody @Validated LoginDTO dto) {
+        var user = userService.findByUsername(dto.getUsername());
+        if (user == null || !user.getPassword().equals(dto.getPassword())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(modelMapper.map(user, UserDTO.class), HttpStatus.OK);
     }
 }
