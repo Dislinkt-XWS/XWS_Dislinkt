@@ -15,9 +15,9 @@ import java.time.LocalDateTime;
 @Document(collection = "messages")
 public class Message {
     @Id
-    private ObjectId id;
-    private ObjectId senderId;
-    private ObjectId receiverId;
+    private String id;
+    private String senderId;
+    private String receiverId;
     private String text;
     private LocalDateTime messageSent;
 }

@@ -16,8 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
-
-    private ObjectId id;
+    private String id;
     private String password;
     private String username;
     private String email;
@@ -33,8 +32,5 @@ public class UserDTO {
     private List<String> interests;
     //private List<Long> blockedUsers;
     //private List<Long> followedUsers; No need
-    public String getIdString() {
-        return id.toHexString();
-    }
 
 }

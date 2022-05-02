@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PostService {
-    Optional<Post> get(Long id);
+    Optional<Post> get(String id);
     List<Post> findAll();
     Post save(Post p);
-    void delete(Long id);
+    void delete(String id);
 }

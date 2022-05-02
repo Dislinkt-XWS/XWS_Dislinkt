@@ -9,20 +9,22 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class UserServiceMongoDb implements UserService {
     @Autowired
     UserRepository userRepository;
 
     @Override
-    public Optional<User> get(Long id) {
+    public Optional<User> get(String id) {
         return userRepository.findById(id);
     }
 
     @Override
     public User save(User u)
     {
-        u.setId(new ObjectId());
+        u.setId(UUID.randomUUID().toString());
         return userRepository.save(u);
     }
 
@@ -32,7 +34,7 @@ public class UserServiceMongoDb implements UserService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         userRepository.deleteById(id);
     }
 

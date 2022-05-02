@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MessageService {
-    Optional<Message> get(Long id);
+    Optional<Message> get(String id);
     List<Message> findAll();
     Message save(Message m);
-    void delete(Long id);
+    void delete(String id);
 }

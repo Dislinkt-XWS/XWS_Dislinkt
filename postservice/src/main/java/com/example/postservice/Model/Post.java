@@ -16,7 +16,7 @@ import java.util.List;
 @Document(collection = "posts")
 public class Post {
     @Id
-    private ObjectId id;
+    private String id;
     private ObjectId userId;
     private String textContent;
     private String imagePath;

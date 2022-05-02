@@ -12,12 +12,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageDTO {
-    private ObjectId id;
-    private ObjectId senderId;
-    private ObjectId receiverId;
+    private String id;
+    private String senderId;
+    private String receiverId;
     private String text;
     private LocalDateTime messageSent;
-    public String getIdString() {
-        return id.toHexString();
-    }
 }

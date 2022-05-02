@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class PostServiceMongoDb implements PostService {
 
@@ -16,7 +18,7 @@ public class PostServiceMongoDb implements PostService {
     PostRepository postRepository;
 
     @Override
-    public Optional<Post> get(Long id) {
+    public Optional<Post> get(String id) {
         return postRepository.findById(id);
     }
 
@@ -27,12 +29,12 @@ public class PostServiceMongoDb implements PostService {
 
     @Override
     public Post save(Post p) {
-        p.setId(new ObjectId());
+        p.setId(UUID.randomUUID().toString());
         return postRepository.save(p);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         postRepository.deleteById(id);
     }
 }

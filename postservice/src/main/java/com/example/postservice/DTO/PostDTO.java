@@ -13,14 +13,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostDTO {
-    private ObjectId id;
+    private String id;
     private ObjectId userId;
     private String textContent;
     private String imagePath;
     private List<ObjectId> userLikes;
     private List<ObjectId> userDislikes;
     private LocalDateTime datePosted;
-    public String getIdString() {
-        return id.toHexString();
-    }
 }

@@ -20,7 +20,7 @@ import java.util.List;
 @Document(collection = "users")
 public class User {
     @Id
-    private ObjectId id;
+    private String id;
     @Indexed(unique = true)
     private String username;
     private String password;

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class MessageServiceMongoDb implements MessageService {
 
@@ -16,7 +18,7 @@ public class MessageServiceMongoDb implements MessageService {
     MessageRepository messageRepository;
 
     @Override
-    public Optional<Message> get(Long id) {
+    public Optional<Message> get(String id) {
         return messageRepository.findById(id);
     }
 
@@ -27,12 +29,12 @@ public class MessageServiceMongoDb implements MessageService {
 
     @Override
     public Message save(Message m) {
-        m.setId(new ObjectId());
+        m.setId(UUID.randomUUID().toString());
         return messageRepository.save(m);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         messageRepository.deleteById(id);
     }
 }
