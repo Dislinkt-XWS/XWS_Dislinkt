@@ -3,6 +3,7 @@ package com.example.postservice.Controller;
 import com.example.postservice.DTO.PostDTO;
 import com.example.postservice.Model.Post;
 import com.example.postservice.Service.PostService;
+import org.bson.types.ObjectId;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

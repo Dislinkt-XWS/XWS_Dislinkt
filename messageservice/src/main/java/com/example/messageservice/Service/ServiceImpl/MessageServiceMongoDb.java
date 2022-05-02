@@ -3,6 +3,7 @@ package com.example.messageservice.Service.ServiceImpl;
 import com.example.messageservice.Model.Message;
 import com.example.messageservice.Repository.MessageRepository;
 import com.example.messageservice.Service.MessageService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ public class MessageServiceMongoDb implements MessageService {
 
     @Override
     public Message save(Message m) {
+        m.setId(new ObjectId());
         return messageRepository.save(m);
     }
 

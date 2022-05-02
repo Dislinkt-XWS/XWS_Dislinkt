@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.bson.types.ObjectId;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,11 +13,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostDTO {
-    private Long id;
-    private Long userId;
+    private ObjectId id;
+    private ObjectId userId;
     private String textContent;
     private String imagePath;
-    private List<Long> userLikes;
-    private List<Long> userDislikes;
+    private List<ObjectId> userLikes;
+    private List<ObjectId> userDislikes;
     private LocalDateTime datePosted;
+    public String getIdString() {
+        return id.toHexString();
+    }
 }

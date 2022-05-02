@@ -3,6 +3,7 @@ package com.example.messageservice.Controller;
 import com.example.messageservice.DTO.MessageDTO;
 import com.example.messageservice.Model.Message;
 import com.example.messageservice.Service.MessageService;
+import org.bson.types.ObjectId;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

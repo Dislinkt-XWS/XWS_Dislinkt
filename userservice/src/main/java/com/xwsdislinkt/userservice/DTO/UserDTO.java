@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.bson.types.ObjectId;
 
 
 import java.util.Date;
@@ -16,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class UserDTO {
 
-    private Long id;
+    private ObjectId id;
     private String password;
     private String username;
     private String email;
@@ -32,6 +33,8 @@ public class UserDTO {
     private List<String> interests;
     //private List<Long> blockedUsers;
     //private List<Long> followedUsers; No need
-
+    public String getIdString() {
+        return id.toHexString();
+    }
 
 }

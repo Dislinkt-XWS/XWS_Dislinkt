@@ -1,6 +1,7 @@
 package com.example.postservice.Model;
 
 import lombok.*;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,12 +16,12 @@ import java.util.List;
 @Document(collection = "posts")
 public class Post {
     @Id
-    private Long id;
-    private Long userId;
+    private ObjectId id;
+    private ObjectId userId;
     private String textContent;
     private String imagePath;
-    private List<Long> userLikes;
-    private List<Long> userDislikes;
+    private List<ObjectId> userLikes;
+    private List<ObjectId> userDislikes;
     private LocalDateTime datePosted;
 
 }

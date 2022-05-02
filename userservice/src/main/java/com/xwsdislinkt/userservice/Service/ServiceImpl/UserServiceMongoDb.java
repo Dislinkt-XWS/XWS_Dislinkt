@@ -3,6 +3,7 @@ package com.xwsdislinkt.userservice.Service.ServiceImpl;
 import com.xwsdislinkt.userservice.Model.User;
 import com.xwsdislinkt.userservice.Repository.UserRepository;
 import com.xwsdislinkt.userservice.Service.UserService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,9 @@ public class UserServiceMongoDb implements UserService {
     }
 
     @Override
-    public User save(User u) {
+    public User save(User u)
+    {
+        u.setId(new ObjectId());
         return userRepository.save(u);
     }
 
