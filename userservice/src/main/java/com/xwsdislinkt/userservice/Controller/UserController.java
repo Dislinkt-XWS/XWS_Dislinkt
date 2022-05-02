@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -50,5 +51,25 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(modelMapper.map(user, UserDTO.class), HttpStatus.OK);
+    }
+
+
+    @PostMapping(value = "/follow/approve" )
+    public ResponseEntity<Boolean> approveFollow(@RequestBody Map<String, String> userIds){
+        if(userService.approveFollow(userIds.get("userId"), userIds.get("followerId"))){
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping(value = "/follow")
+    public ResponseEntity<Boolean> follow(@RequestBody Map<String, String> userIds){
+        System.out.println(userIds.get("userId"));
+        System.out.println(userIds.get("toFollowUser"));
+
+        if(userService.followUser(userIds.get("userId"), userIds.get("toFollowUser"))){
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+        return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
     }
 }

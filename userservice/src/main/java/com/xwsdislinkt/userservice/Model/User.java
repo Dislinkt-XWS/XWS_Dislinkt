@@ -20,7 +20,7 @@ import java.util.List;
 @Document(collection = "users")
 public class User {
     @Id
-    private String id;
+    private String  id;
     @Indexed(unique = true)
     private String username;
     private String password;
@@ -32,10 +32,16 @@ public class User {
     private LocalDateTime dateOfBirth;
     private String bio;
     private Boolean isPrivate;
-    private List<Long> blockedUsers;
+    private List<String > blockedUsers;
     private List<Experience> workExperience;
     private List<Experience> education;
-    private List<Long> followedUsers;
+    private List<String > followedUsers;
     private List<String> interests;
     private List<String> skills;
+    //List of ids of users who sent a follow request to the user.
+    private List<String > followRequests;
+    //List of ids of follow requests the user made
+    private List<String > pendingFollowRequests;
+    //List of ids following the user
+    private List<String > followers;
 }
