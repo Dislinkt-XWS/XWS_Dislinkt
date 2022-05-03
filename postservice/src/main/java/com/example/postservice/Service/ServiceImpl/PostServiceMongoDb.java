@@ -44,4 +44,9 @@ public class PostServiceMongoDb implements PostService {
     public List<Post> findByUserId(String userId) {
         return postRepository.findByUserId(userId);
     }
+
+    @Override
+    public Post update(Post p) {
+        return postRepository.save(p);
+    }
 }
