@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PostDTO {
     private String id;
-    private ObjectId userId;
+    private String userId;
     private String textContent;
     private String imagePath;
     private List<ObjectId> userLikes;

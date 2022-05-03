@@ -44,5 +44,14 @@ public class PostController {
         return new ResponseEntity<>(postsDtos, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/user/{userId}")
+    public ResponseEntity<List<PostDTO>> findByUserId(@PathVariable("userId") String userId) {
+        var posts = postService.findByUserId(userId);
+        List<PostDTO> postDTOS = posts
+                .stream()
+                .map(post -> modelMapper.map(post, PostDTO.class))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(postDTOS, HttpStatus.OK);
+    }
 
 }

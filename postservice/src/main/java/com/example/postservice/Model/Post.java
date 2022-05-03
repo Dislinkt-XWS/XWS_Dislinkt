@@ -17,7 +17,7 @@ import java.util.List;
 public class Post {
     @Id
     private String id;
-    private ObjectId userId;
+    private String userId;
     private String textContent;
     private String imagePath;
     private List<ObjectId> userLikes;

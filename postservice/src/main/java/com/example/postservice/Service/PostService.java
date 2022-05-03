@@ -10,4 +10,5 @@ public interface PostService {
     List<Post> findAll();
     Post save(Post p);
     void delete(String id);
+    List<Post> findByUserId(String userId);
 }
