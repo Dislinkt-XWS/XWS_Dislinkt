@@ -40,7 +40,7 @@ public class UserServiceMongoDb implements UserService {
     }
 
     @Override
-    public User findByUsername(String username) { return userRepository.findByUsername(username); }
+    public User findByUsernameOrEmail(String usernameOrEmail) { return userRepository.findByUsernameOrEmail(usernameOrEmail); }
 
     @Override
     public Boolean approveFollow(String userId, String followerId){
@@ -68,6 +68,11 @@ public class UserServiceMongoDb implements UserService {
         return false;
 
 
+    }
+
+    @Override
+    public List<User> searchUsers(String criteria) {
+        return userRepository.searchUsers(criteria);
     }
 
     @Override

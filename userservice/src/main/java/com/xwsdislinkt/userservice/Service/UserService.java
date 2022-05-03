@@ -14,7 +14,8 @@ public interface UserService {
     List<User> findAll();
     User save(User u);
     void delete(String  id);
-    User findByUsername(String username);
+    User findByUsernameOrEmail(String usernameOrEmail);
     Boolean followUser(String  userId, String  toFollowUserId);
     Boolean approveFollow(String userId, String followerId);
+    List<User> searchUsers(String criteria);
 }

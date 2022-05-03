@@ -46,7 +46,7 @@ public class UserController {
 
     @PostMapping(value = "/login")
     public ResponseEntity<UserDTO> login(@RequestBody @Validated LoginDTO dto) {
-        var user = userService.findByUsername(dto.getUsername());
+        var user = userService.findByUsernameOrEmail(dto.getUsernameOrEmail());
         if (user == null || !user.getPassword().equals(dto.getPassword())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -71,5 +71,15 @@ public class UserController {
             return new ResponseEntity<>(true, HttpStatus.OK);
         }
         return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping(value="/search/{criteria}")
+    public ResponseEntity<List<UserDTO>> search(@PathVariable("criteria") String criteria) {
+        var users = userService.searchUsers(criteria);
+        List<UserDTO> userDTOS = users
+                .stream()
+                .map(user -> modelMapper.map(user, UserDTO.class))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(userDTOS, HttpStatus.OK);
     }
 }
