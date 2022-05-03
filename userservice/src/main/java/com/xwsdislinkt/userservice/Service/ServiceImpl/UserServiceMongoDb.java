@@ -4,6 +4,9 @@ import com.xwsdislinkt.userservice.Model.User;
 import com.xwsdislinkt.userservice.Repository.UserRepository;
 import com.xwsdislinkt.userservice.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,6 +18,8 @@ import java.util.UUID;
 public class UserServiceMongoDb implements UserService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
 
@@ -26,6 +31,8 @@ public class UserServiceMongoDb implements UserService {
     public User save(User u)
     {
         u.setId(UUID.randomUUID().toString());
+        var password = u.getPassword();
+        u.setPassword(passwordEncoder.encode(password));
         return userRepository.save(u);
     }
 
@@ -131,5 +138,15 @@ public class UserServiceMongoDb implements UserService {
         if(userToFollow.getFollowRequests() != null && userToFollow.getFollowRequests().contains(user.getId()) )
             return true;
         return false;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        var user = userRepository.getUserByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
+        } else {
+            return user;
+        }
     }
 }
