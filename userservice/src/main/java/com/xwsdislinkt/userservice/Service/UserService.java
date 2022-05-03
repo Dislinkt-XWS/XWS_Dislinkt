@@ -4,11 +4,12 @@ import com.xwsdislinkt.userservice.Model.User;
 import com.xwsdislinkt.userservice.Repository.UserRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     Optional<User> get(String  id);
     List<User> findAll();
