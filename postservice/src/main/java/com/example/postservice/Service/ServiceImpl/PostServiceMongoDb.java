@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,11 +31,22 @@ public class PostServiceMongoDb implements PostService {
     @Override
     public Post save(Post p) {
         p.setId(UUID.randomUUID().toString());
+        p.setDatePosted(LocalDateTime.now());
         return postRepository.save(p);
     }
 
     @Override
     public void delete(String id) {
         postRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Post> findByUserId(String userId) {
+        return postRepository.findByUserId(userId);
+    }
+
+    @Override
+    public Post update(Post p) {
+        return postRepository.save(p);
     }
 }
