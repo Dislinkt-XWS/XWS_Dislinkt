@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
 @Document(collection = "users")
 public class User {
     @Id
-    private String  id;
+    private String id;
     @Indexed(unique = true)
     private String username;
     private String password;
@@ -33,8 +34,8 @@ public class User {
     private String bio;
     private Boolean isPrivate;
     private List<String > blockedUsers;
-    private List<Experience> workExperience;
-    private List<Experience> education;
+    private List<String> workExperience = new ArrayList<>();
+    private List<String> education = new ArrayList<>();
     private List<String > followedUsers;
     private List<String> interests;
     private List<String> skills;

@@ -1,19 +1,18 @@
-package com.xwsdislinkt.userservice.Model;
+package com.xwsdislinkt.userservice.DTO;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
-@Document(collection = "experiences")
-public class Experience {
-    @Id
+@NoArgsConstructor
+public class ExperienceDTO {
     private String id;
     private String userId;
     private String establishmentName;

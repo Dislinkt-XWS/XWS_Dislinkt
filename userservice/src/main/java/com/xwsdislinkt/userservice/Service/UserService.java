@@ -13,6 +13,7 @@ public interface UserService {
     Optional<User> get(String  id);
     List<User> findAll();
     User save(User u);
+    User update(User u);
     void delete(String  id);
     User findByUsername(String username);
     Boolean followUser(String  userId, String  toFollowUserId);
