@@ -19,4 +19,5 @@ public interface UserService extends UserDetailsService {
     Boolean followUser(String  userId, String  toFollowUserId);
     Boolean approveFollow(String userId, String followerId);
     List<User> searchUsers(String criteria);
+    User findLoggedInUser();
 }

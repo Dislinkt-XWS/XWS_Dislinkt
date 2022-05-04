@@ -4,6 +4,7 @@ import com.xwsdislinkt.userservice.Model.User;
 import com.xwsdislinkt.userservice.Repository.UserRepository;
 import com.xwsdislinkt.userservice.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,7 +48,15 @@ public class UserServiceMongoDb implements UserService {
     }
 
     @Override
-    public User findByUsernameOrEmail(String usernameOrEmail) { return userRepository.findByUsernameOrEmail(usernameOrEmail); }
+    public User findByUsernameOrEmail(String usernameOrEmail) {
+        return userRepository.findByUsernameOrEmail(usernameOrEmail); }
+
+    @Override
+    public User findLoggedInUser(){
+        var loggedInUser = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println("This is the logged in user " + loggedInUser);
+        return userRepository.findByUsernameOrEmail(loggedInUser);
+    }
 
     @Override
     public Boolean approveFollow(String userId, String followerId){
@@ -57,13 +66,11 @@ public class UserServiceMongoDb implements UserService {
         System.out.println(followerUser.getId());
 
         if(user.getFollowRequests() != null && user.getFollowRequests().contains(followerId)){
-            System.out.println("Puca pre nego sto obrise follow req");
+
 
             user.getFollowRequests().remove(followerId);
-            System.out.println("Puca pre nego sto obrise follow req poslat");
 
             followerUser.getPendingFollowRequests().remove(userId);
-            System.out.println("Puca pre nego sto doda followera");
 
             followerUser.getFollowedUsers().add(userId);
             user.getFollowers().add(followerId);
@@ -84,6 +91,8 @@ public class UserServiceMongoDb implements UserService {
 
     @Override
     public Boolean followUser(String userId, String toFollowUserId){
+        System.out.println("Service logged in user id: " + userId);
+        System.out.println("Service user to follow id: " + toFollowUserId);
         User user = userRepository.findById(userId).get();
         User userToFollow = userRepository.findById(toFollowUserId).get();
         if(isAlreadyAFollower(user, userToFollow))

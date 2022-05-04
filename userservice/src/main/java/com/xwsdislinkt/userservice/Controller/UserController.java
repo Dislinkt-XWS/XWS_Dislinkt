@@ -75,22 +75,31 @@ public class UserController {
 
 
     @PostMapping(value = "/follow/approve" )
-    public ResponseEntity<Boolean> approveFollow(@RequestBody Map<String, String> userIds){
-        if(userService.approveFollow(userIds.get("userId"), userIds.get("followerId"))){
-            return new ResponseEntity<>(true, HttpStatus.OK);
+    public ResponseEntity<String> approveFollow(@RequestBody Map<String, String> userToApproveIds){
+        var user = userService.findLoggedInUser();
+
+        if(user == null){
+            return new ResponseEntity<>("User must be logged in to approve a follow", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        if(userService.approveFollow(user.getId(), userToApproveIds.get("userToApproveIds"))){
+            return new ResponseEntity<>("Successfully approved follow ", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Couldnt execture the approve follow operation.", HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping(value = "/follow")
-    public ResponseEntity<Boolean> follow(@RequestBody Map<String, String> userIds){
-        System.out.println(userIds.get("userId"));
-        System.out.println(userIds.get("toFollowUser"));
-
-        if(userService.followUser(userIds.get("userId"), userIds.get("toFollowUser"))){
-            return new ResponseEntity<>(true, HttpStatus.OK);
+    public ResponseEntity<String> follow(@RequestBody Map<String, String> userToFollowId){
+        var user = userService.findLoggedInUser();
+        System.out.println("Controller logged in user id: " + user.getId());
+        System.out.println("Controller user to follow id: " +userToFollowId);
+        if(user == null){
+            return new ResponseEntity<>("User must be logged in to follow other accounts", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+
+        if(userService.followUser(user.getId(), userToFollowId.get("userToFollowId"))){
+            return new ResponseEntity<>("Successfully followed user. ", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Couldnt execute the follow operation.", HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping(value="/search/{criteria}")
