@@ -37,4 +37,15 @@ public class CommentController {
                 .collect(Collectors.toList());
         return new ResponseEntity<>(commentDTOS, HttpStatus.OK);
     }
+
+    @GetMapping
+    public ResponseEntity<List<CommentDTO>> findAll() {
+        var comments = commentService.findAll();
+        List<CommentDTO> commentDTOS = comments
+                .stream()
+                .map(comment -> modelMapper.map(comment, CommentDTO.class))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(commentDTOS, HttpStatus.OK);
+    }
+
 }

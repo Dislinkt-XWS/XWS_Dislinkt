@@ -21,15 +21,26 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
 
+  gateway:
+    image: nginx:1.19.8-alpine
+    ports:
+      - 8080:8080
+    volumes:
+      - ./gateway/nginx.conf:/etc/nginx/nginx.conf
+      - ./gateway/api_gateway.conf:/etc/nginx/api_gateway.conf
+
   userservice:
       build: './userservice/'
       ports:
         - 8761:8761
+      hostname: user-service
   postservice:
       build: './postservice/'
       ports:
         - 8750:8750
+      hostname: post-service
   messageservice:
       build: './messageservice/'
       ports:
         - 8700:8700
+      hostname: message-service
