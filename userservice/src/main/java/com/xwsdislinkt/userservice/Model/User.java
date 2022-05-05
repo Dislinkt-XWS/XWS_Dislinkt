@@ -37,8 +37,8 @@ public class User {
     private List<String> workExperience = new ArrayList<>();
     private List<String> education = new ArrayList<>();
     private List<String > followedUsers;
-    private List<String> interests;
-    private List<String> skills;
+    private List<String> interests = new ArrayList<>();;
+    private List<String> skills = new ArrayList<>();
     //List of ids of users who sent a follow request to the user.
     private List<String > followRequests;
     //List of ids of follow requests the user made

@@ -1,11 +1,13 @@
 package com.xwsdislinkt.userservice.Controller;
 
-import com.xwsdislinkt.userservice.DTO.ExperienceDTO;
-import com.xwsdislinkt.userservice.DTO.LoginDTO;
-import com.xwsdislinkt.userservice.DTO.UserDTO;
+import com.xwsdislinkt.userservice.DTO.*;
 import com.xwsdislinkt.userservice.Model.Experience;
+import com.xwsdislinkt.userservice.Model.Interest;
+import com.xwsdislinkt.userservice.Model.Skill;
 import com.xwsdislinkt.userservice.Model.User;
 import com.xwsdislinkt.userservice.Service.ExperienceService;
+import com.xwsdislinkt.userservice.Service.InterestService;
+import com.xwsdislinkt.userservice.Service.SkillService;
 import com.xwsdislinkt.userservice.Service.UserService;
 import org.apache.coyote.Response;
 import org.bson.types.ObjectId;
@@ -28,6 +30,10 @@ public class UserController {
     UserService userService;
     @Autowired
     ExperienceService experienceService;
+    @Autowired
+    SkillService skillService;
+    @Autowired
+    InterestService interestService;
     @Autowired
     ModelMapper modelMapper;
 
@@ -125,6 +131,30 @@ public class UserController {
         return new ResponseEntity<>(modelMapper.map(experience, ExperienceDTO.class), HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/skill")
+    public ResponseEntity<SkillDTO> addSkill(@RequestBody @Validated SkillDTO dto) {
+        var skill = modelMapper.map(dto, Skill.class);
+        var user = userService.get(skill.getUserId()).get();
+
+        skill = skillService.save(skill);
+        user.getSkills().add(skill.getId());
+        userService.update(user);
+
+        return new ResponseEntity<>(modelMapper.map(skill, SkillDTO.class), HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/interest")
+    public ResponseEntity<InterestDTO> addInterest(@RequestBody @Validated InterestDTO dto) {
+        var interest = modelMapper.map(dto, Interest.class);
+        var user = userService.get(interest.getUserId()).get();
+
+        interest = interestService.save(interest);
+        user.getInterests().add(interest.getId());
+        userService.update(user);
+
+        return new ResponseEntity<>(modelMapper.map(interest, InterestDTO.class), HttpStatus.CREATED);
+    }
+
     @PutMapping(value = "/edit")
     public ResponseEntity<ExperienceDTO> editExperience(@RequestBody @Validated ExperienceDTO dto) {
 
@@ -171,6 +201,40 @@ public class UserController {
         var user = userService.get(experience.getUserId()).get();
         experienceService.delete(id);
         user.getWorkExperience().remove(id);
+        userService.update(user);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    @DeleteMapping(value = "/skill/{id}")
+    public ResponseEntity<Void> deleteSkill(@PathVariable String id) {
+
+        if(skillService.get(id).isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        var skill = skillService.get(id).get();
+        var user = userService.get(skill.getUserId()).get();
+        skillService.delete(id);
+        user.getSkills().remove(id);
+        userService.update(user);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    @DeleteMapping(value = "/interest/{id}")
+    public ResponseEntity<Void> deleteInterest(@PathVariable String id) {
+
+        if(interestService.get(id).isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        var interest = interestService.get(id).get();
+        var user = userService.get(interest.getUserId()).get();
+        interestService.delete(id);
+        user.getInterests().remove(id);
         userService.update(user);
 
         return new ResponseEntity<>(HttpStatus.OK);
