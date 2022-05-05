@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +25,7 @@ import java.util.List;
 @Document(collection = "users")
 public class User implements UserDetails {
     @Id
-    private String  id;
+    private String id;
     @Indexed(unique = true)
     private String username;
     private String password;
@@ -36,11 +38,11 @@ public class User implements UserDetails {
     private String bio;
     private Boolean isPrivate;
     private List<String > blockedUsers;
-    private List<Experience> workExperience;
-    private List<Experience> education;
+    private List<String> workExperience = new ArrayList<>();
+    private List<String> education = new ArrayList<>();
     private List<String > followedUsers;
-    private List<String> interests;
-    private List<String> skills;
+    private List<String> interests = new ArrayList<>();;
+    private List<String> skills = new ArrayList<>();
     //List of ids of users who sent a follow request to the user.
     private List<String > followRequests;
     //List of ids of follow requests the user made

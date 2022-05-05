@@ -14,6 +14,7 @@ public interface UserService extends UserDetailsService {
     Optional<User> get(String  id);
     List<User> findAll();
     User save(User u);
+    User update(User u);
     void delete(String  id);
     User findByUsernameOrEmail(String usernameOrEmail);
     Boolean followUser(String  userId, String  toFollowUserId);

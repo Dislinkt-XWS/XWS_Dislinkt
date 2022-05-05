@@ -38,6 +38,12 @@ public class UserServiceMongoDb implements UserService {
     }
 
     @Override
+    public User update(User u)
+    {
+        return userRepository.save(u);
+    }
+
+    @Override
     public List<User> findAll(){
         return userRepository.findAll();
     }

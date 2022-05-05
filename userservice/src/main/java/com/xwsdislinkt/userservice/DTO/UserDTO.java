@@ -6,10 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.bson.types.ObjectId;
 
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 @Getter
 @Setter
@@ -18,18 +17,18 @@ import java.util.List;
 public class UserDTO {
 
 
-    private String  id;
+    private String id;
     private String password;
     private String username;
     private String email;
     private String phoneNumber;
     private UserGender userGender;
     private String fullName;
-    private Date dateOfBirth;
+    private LocalDateTime dateOfBirth;
     private String bio;
     private Boolean isPrivate;
-    private List<Experience> workExperience;
-    private List<Experience> education;
+    private List<String> workExperience;
+    private List<String> education;
     private List<String> skills;
     private List<String> interests;
     //private List<Long> blockedUsers;
