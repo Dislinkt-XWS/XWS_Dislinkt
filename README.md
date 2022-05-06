@@ -36,6 +36,10 @@ Post Micoservice running at http://localhost:8750/api/posts
 Message Micoservice running at http://localhost:8700/api/messages
 User Micoservice running at http://localhost:8761/api/posts
 
+All of the microservices can now be accessed through 
+http://localhost:8080
+as the gateway has been added. The rest of the url stayed the same /api/endpoint-name
+
 ```
 
 MongoDB UI is running at http://localhost:8081/
