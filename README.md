@@ -14,6 +14,8 @@ docker pull mongo:latest
 docker pull mongo-express:latest
 
 docker pull openjdk:11
+
+docker pull nginx:latest
 ```
 
 Create a parent folder where all microservices will be stored. (e.g. XWSProject)
