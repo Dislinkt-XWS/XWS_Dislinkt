@@ -2,7 +2,8 @@
 
 
 ```javascript
-TODO: Setup API Gateway with spring???
+TODO: Setup newsfeed for specific user
+TODO: Create a bash file that'll automatically clean install your projects
 ```
 
 
