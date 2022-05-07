@@ -7,12 +7,13 @@ import com.example.postservice.Service.PostService;
 import org.bson.types.ObjectId;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,36 @@ public class PostController {
                 .map(post -> modelMapper.map(post, PostDTO.class))
                 .collect(Collectors.toList());
         return new ResponseEntity<>(postDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/newsfeed")
+    public ResponseEntity<List<PostDTO>> getNewsFeed(@RequestHeader String authorization){
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", authorization);
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+        RestTemplate restTemplate = new RestTemplate();
+        var userPostIds = restTemplate.exchange("http://user-service:8761/api/users/loggedinandfollowers",
+                HttpMethod.GET, entity, List.class);
+        System.out.println("Ovo dobijem iz user servisa " + userPostIds);
+        List<String> userIds = userPostIds.getBody();
+        System.out.println("Ovo je body koji dobijem iz user servisa " + userIds);
+
+        List<Post> posts = postService.findAll();
+        List<Post> postsToShow = new ArrayList<>();
+        for(String userId : userIds){
+            for(Post post : posts){
+                System.out.println("Ovo je userId i post posebno: " + userId + " " + post);
+                if(userId.equals(post.getUserId()))
+                    postsToShow.add(post);
+           }
+       }
+
+        List<PostDTO> postDTOS = postsToShow
+                .stream()
+                .map(post -> modelMapper.map(post, PostDTO.class))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(postDTOS, HttpStatus.OK);
+
     }
 
     @PostMapping(value = "/like")
