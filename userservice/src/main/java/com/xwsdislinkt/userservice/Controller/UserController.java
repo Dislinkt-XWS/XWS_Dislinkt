@@ -21,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -100,6 +101,20 @@ public class UserController {
         var expiresIn = tokenUtils.getExpiredIn();
 
         return new ResponseEntity<>(new UserTokenState(jwt, expiresIn), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/loggedinandfollowers")
+    public ResponseEntity<List<String>> newsfeedGet(){
+
+        var loggedInUser = userService.findLoggedInUser();
+        System.out.println(loggedInUser.getFullName());
+        List<String> allUsers = new ArrayList<>();
+        allUsers = loggedInUser.getFollowedUsers();
+        System.out.println(allUsers);
+        System.out.println("ZASTO NULL POINTER PICKA TI MATERINAAAAAAA");
+        allUsers.add(loggedInUser.getId());
+        return new ResponseEntity<>(allUsers, HttpStatus.OK);
+
     }
 
     @PostMapping(value = "/follow/approve" )
