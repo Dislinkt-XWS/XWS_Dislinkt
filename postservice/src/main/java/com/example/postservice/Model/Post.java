@@ -46,4 +46,6 @@ public class Post {
     public boolean userDisliked(String userId) {
         return userDislikes.contains(userId);
     }
+
+    public void addComment(String commentId) { commentIds.add(commentId);}
 }

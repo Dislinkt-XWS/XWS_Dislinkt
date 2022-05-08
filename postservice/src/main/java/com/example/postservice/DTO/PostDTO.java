@@ -19,4 +19,5 @@ public class PostDTO {
     private List<String> userLikes;
     private List<String> userDislikes;
     private LocalDateTime datePosted;
+    private List<String> commentIds;
 }

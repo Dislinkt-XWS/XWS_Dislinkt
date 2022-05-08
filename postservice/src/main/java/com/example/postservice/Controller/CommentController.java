@@ -3,6 +3,7 @@ package com.example.postservice.Controller;
 import com.example.postservice.DTO.CommentDTO;
 import com.example.postservice.Model.Comment;
 import com.example.postservice.Service.CommentService;
+import com.example.postservice.Service.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,11 +22,16 @@ public class CommentController {
     private CommentService commentService;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private PostService postService;
 
     @PostMapping
     public ResponseEntity<CommentDTO> save(@RequestBody @Validated Comment dto) {
-        var comment = modelMapper.map(dto, Comment.class);
-        return new ResponseEntity<>(modelMapper.map(commentService.save(comment), CommentDTO.class), HttpStatus.CREATED);
+        var comment = commentService.save(modelMapper.map(dto, Comment.class));
+        var post = postService.get(comment.getPostId()).get();
+        post.addComment(comment.getId());
+        postService.update(post);
+        return new ResponseEntity<>(modelMapper.map(comment, CommentDTO.class), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/post/{postId}")
