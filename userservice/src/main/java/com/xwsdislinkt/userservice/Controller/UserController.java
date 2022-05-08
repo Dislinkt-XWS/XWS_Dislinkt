@@ -291,6 +291,15 @@ public class UserController {
         userService.update(user);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
 
+    @GetMapping(value = "/current-user")
+    public ResponseEntity<String> getCurrentUser() {
+        var current = userService.findLoggedInUser();
+
+        if (current == null)
+            return new ResponseEntity<>("No user is logged in!", HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(current.getId(), HttpStatus.OK);
     }
 }

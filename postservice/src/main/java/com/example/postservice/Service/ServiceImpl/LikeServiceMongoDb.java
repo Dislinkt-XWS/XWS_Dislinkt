@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LikeServiceMongoDb implements LikeService {
-
     @Autowired
     private PostService postService;
 
     @Override
-    public Post likePost(String userId, String postId) {
+    public Post likePost(String postId, String authorization) {
         Post post = postService.get(postId).get();
+        String userId = postService.findCurrentUser(authorization);
         if(post.userLiked(userId)) {
             return post;
         }
@@ -27,8 +27,9 @@ public class LikeServiceMongoDb implements LikeService {
     }
 
     @Override
-    public Post disLikePost(String userId, String postId) {
+    public Post disLikePost(String postId, String authorization) {
         Post post = postService.get(postId).get();
+        String userId = postService.findCurrentUser(authorization);
         if(post.userDisliked(userId)) {
             return post;
         }
@@ -41,8 +42,9 @@ public class LikeServiceMongoDb implements LikeService {
     }
 
     @Override
-    public Post unLikePost(String userId, String postId) {
+    public Post unLikePost(String postId, String authorization) {
         Post post = postService.get(postId).get();
+        String userId = postService.findCurrentUser(authorization);
         if(post.userLiked(userId)) {
             post.removeLike(userId);
             postService.update(post);
@@ -51,8 +53,9 @@ public class LikeServiceMongoDb implements LikeService {
     }
 
     @Override
-    public Post unDislikePost(String userId, String postId) {
+    public Post unDislikePost(String postId, String authorization) {
         Post post = postService.get(postId).get();
+        String userId = postService.findCurrentUser(authorization);
         if(post.userDisliked(userId)) {
             post.removeDislike(userId);
             postService.update(post);

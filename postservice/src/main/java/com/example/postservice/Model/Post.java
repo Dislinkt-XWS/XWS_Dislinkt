@@ -17,7 +17,7 @@ public class Post {
     private String id;
     private String userId;
     private String textContent;
-    private String imagePath;
+    private List<String> imagePath;
     private List<String> userLikes = new ArrayList<>();
     private List<String> userDislikes = new ArrayList<>();
     private LocalDateTime datePosted;

@@ -5,9 +5,19 @@ import com.example.postservice.Repository.PostRepository;
 import com.example.postservice.Service.PostService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,9 +39,17 @@ public class PostServiceMongoDb implements PostService {
     }
 
     @Override
-    public Post save(Post p) {
+    public Post save(Post p, String authorization) {
         p.setId(UUID.randomUUID().toString());
+        var userId = findCurrentUser(authorization);
+        if (userId == null)
+            return null;
+
+        p.setUserId(userId);
         p.setDatePosted(LocalDateTime.now());
+        p.setUserLikes(new ArrayList<>());
+        p.setUserDislikes(new ArrayList<>());
+
         return postRepository.save(p);
     }
 
@@ -48,5 +66,62 @@ public class PostServiceMongoDb implements PostService {
     @Override
     public Post update(Post p) {
         return postRepository.save(p);
+    }
+
+    public String findCurrentUser(String authorization) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", authorization);
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        var currentUserId = restTemplate.exchange("http://user-service:8761/api/users/current-user",
+                HttpMethod.GET, entity, String.class);
+
+        return currentUserId.getBody();
+    }
+
+    @Override
+    public List<String> uploadImages(List<MultipartFile> images) {
+        List<String> imagePaths = new ArrayList<>();
+
+        for (var file : images) {
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+            String fileName = file.getOriginalFilename();
+            System.out.println("NAZIV FAJLA " + fileName);
+
+            var location = "src/main/resources/static/images";
+
+            if (!new File(location).exists()) {
+                try {
+                    Files.createDirectory(Paths.get(location));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            File newFile = new File(location + fileName);
+            System.out.println("LOKACIJA FAJLA: " + newFile.getAbsolutePath());
+
+            try {
+                inputStream = file.getInputStream();
+                /*if (!newFile.createNewFile()) {
+                    System.out.println("File not created!");
+                }*/
+
+                outputStream = new FileOutputStream(newFile);
+                int read = 0;
+                byte[] bytes = new byte[1024];
+                while ((read = inputStream.read(bytes)) != -1) {
+                    outputStream.write(bytes, 0, read);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            imagePaths.add(newFile.getAbsolutePath());
+        }
+
+        return imagePaths;
     }
 }
