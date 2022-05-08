@@ -12,9 +12,10 @@ import java.util.UUID;
 
 @Service
 public class CommentServiceMongoDb implements CommentService {
-
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private PostServiceMongoDb postService;
 
     @Override
     public Comment findById(String id) {
@@ -27,7 +28,13 @@ public class CommentServiceMongoDb implements CommentService {
     }
 
     @Override
-    public Comment save(Comment comment) {
+    public Comment save(Comment comment, String authorization) {
+        var userId = postService.findCurrentUser(authorization);
+
+        if (userId == null)
+            return null;
+
+        comment.setUserId(userId);
         comment.setId(UUID.randomUUID().toString());
         comment.setDatePosted(LocalDateTime.now());
         return commentRepository.save(comment);

@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,18 +37,24 @@ public class PostServiceMongoDb implements PostService {
     }
 
     @Override
-    public Post save(Post p, String authorization) {
+    public Post save(Post p, String authorization) throws Exception {
         p.setId(UUID.randomUUID().toString());
         var userId = findCurrentUser(authorization);
+
         if (userId == null)
-            return null;
+            throw new Exception("No user is logged in!");
 
         p.setUserId(userId);
         p.setDatePosted(LocalDateTime.now());
         p.setUserLikes(new ArrayList<>());
         p.setUserDislikes(new ArrayList<>());
 
-        return postRepository.save(p);
+        return p;
+    }
+
+    @Override
+    public Post saveToDatabase(Post post) {
+        return postRepository.save(post);
     }
 
     @Override
@@ -64,17 +72,25 @@ public class PostServiceMongoDb implements PostService {
         return postRepository.save(p);
     }
 
-    public String findCurrentUser(String authorization) {
+    public String findCurrentUser(String authorization) throws HttpClientErrorException {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authorization);
         HttpEntity<String> entity = new HttpEntity<>("", headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        var currentUserId = restTemplate.exchange("http://user-service:8761/api/users/current-user",
-                HttpMethod.GET, entity, String.class);
 
-        System.out.println("OVO JE TRENUTNI USER: " + currentUserId.getBody());
-        return currentUserId.getBody();
+        try {
+            var currentUserId = restTemplate.exchange("http://user-service:8761/api/users/current-user",
+                    HttpMethod.GET, entity, String.class);
+
+            System.out.println("OVO JE TRENUTNI USER: " + currentUserId.getBody());
+            if (currentUserId.getStatusCode() == HttpStatus.OK)
+                return currentUserId.getBody();
+        } catch (HttpClientErrorException e) {
+            return null;
+        }
+
+        return null;
     }
 
     @Override

@@ -90,8 +90,6 @@ public class UserServiceMongoDb implements UserService {
 
     }
 
-
-
     @Override
     public List<User> searchUsers(String criteria) {
         return userRepository.searchUsers(criteria);
@@ -159,7 +157,7 @@ public class UserServiceMongoDb implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var user = userRepository.getUserByUsername(username);
+        var user = userRepository.findByUsernameOrEmail(username);
         if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
         } else {

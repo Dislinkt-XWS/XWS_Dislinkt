@@ -38,12 +38,14 @@ public class PostController {
         var postDto = new Post();
         postDto.setTextContent(dto.getTextContent());
         postDto.setImagePath(imagePath);
-        var newPost = postService.save(postDto, authorization);
-
-        if (newPost == null)
+        Post newPost = null;
+        try {
+            newPost = postService.save(postDto, authorization);
+        } catch (Exception e) {
             return new ResponseEntity<>("Unable to create post because there is no user defined!", HttpStatus.BAD_REQUEST);
+        }
 
-        return new ResponseEntity<>(modelMapper.map(newPost, PostDTO.class), HttpStatus.CREATED);
+        return new ResponseEntity<>(modelMapper.map(postService.saveToDatabase(newPost), PostDTO.class), HttpStatus.CREATED);
     }
 
     @GetMapping

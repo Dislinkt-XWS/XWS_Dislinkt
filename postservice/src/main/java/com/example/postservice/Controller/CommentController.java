@@ -26,8 +26,8 @@ public class CommentController {
     private PostService postService;
 
     @PostMapping
-    public ResponseEntity<CommentDTO> save(@RequestBody @Validated Comment dto) {
-        var comment = commentService.save(modelMapper.map(dto, Comment.class));
+    public ResponseEntity<CommentDTO> save(@RequestBody @Validated Comment dto, @RequestHeader String authorization) {
+        var comment = commentService.save(modelMapper.map(dto, Comment.class), authorization);
         var post = postService.get(comment.getPostId()).get();
         post.addComment(comment.getId());
         postService.update(post);
