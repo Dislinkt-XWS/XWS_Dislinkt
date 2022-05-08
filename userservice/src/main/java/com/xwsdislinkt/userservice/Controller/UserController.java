@@ -66,14 +66,24 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        if(userService.findByUsernameOrEmail(dto.getEmail()) != null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if(userService.findByUsernameOrEmail(dto.getUsername()) != null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         User user = userService.get(dto.getId()).get();
         user.setEmail(dto.getEmail());
+        user.setFullName(dto.getFullName());
         user.setPhoneNumber(dto.getPhoneNumber());
         user.setUserGender(dto.getUserGender());
         user.setDateOfBirth(dto.getDateOfBirth());
         user.setBio(dto.getBio());
         user.setUsername(dto.getUsername());
-        user.setPassword(dto.getPassword());
+        //user.setPassword(dto.getPassword());
+        user.setIsPrivate(dto.getIsPrivate());
 
         return new ResponseEntity<>(modelMapper.map(
                 userService.update(user), UserDTO.class), HttpStatus.OK);
