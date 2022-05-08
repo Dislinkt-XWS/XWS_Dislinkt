@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(value = "/api/posts")
 public class PostController {
-
     @Autowired
     private PostService postService;
     @Autowired
@@ -26,8 +25,8 @@ public class PostController {
     @Autowired
     private LikeService likeService;
 
-    @PostMapping()
-    public ResponseEntity<?> create(@RequestBody NewPostDTO dto, @RequestHeader String authorization) {
+    @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<?> create(@ModelAttribute NewPostDTO dto, @RequestHeader String authorization) {
         if ((dto.getTextContent() == null || dto.getTextContent().isEmpty())
             && dto.getImages() == null)
             return new ResponseEntity<>("Each post must have some type of content!", HttpStatus.BAD_REQUEST);
@@ -46,7 +45,6 @@ public class PostController {
 
         return new ResponseEntity<>(modelMapper.map(newPost, PostDTO.class), HttpStatus.CREATED);
     }
-
 
     @GetMapping
     public ResponseEntity<List<PostDTO>> get() {
@@ -98,26 +96,33 @@ public class PostController {
     }
 
     @PostMapping(value = "/like")
-    public ResponseEntity<PostDTO> likePost(@RequestBody String postId, @RequestHeader String authorization) {
-        System.out.println("POSTID: " + postId);
+    public ResponseEntity<?> likePost(@RequestBody String postId, @RequestHeader String authorization) {
+        if (postId == null || postId.equals(""))
+            return new ResponseEntity<>("Cannot determine which post to like!", HttpStatus.BAD_REQUEST);
         Post post = likeService.likePost(postId, authorization);
         return new ResponseEntity<>(modelMapper.map(post, PostDTO.class), HttpStatus.OK);
     }
 
     @PostMapping(value = "/dislike")
-    public ResponseEntity<PostDTO> dislikePost(@RequestBody String postId, @RequestHeader String authorization) {
+    public ResponseEntity<?> dislikePost(@RequestBody String postId, @RequestHeader String authorization) {
+        if (postId == null || postId.equals(""))
+            return new ResponseEntity<>("Cannot determine which post to dislike!", HttpStatus.BAD_REQUEST);
         Post post = likeService.disLikePost(postId, authorization);
         return new ResponseEntity<>(modelMapper.map(post, PostDTO.class), HttpStatus.OK);
     }
 
     @PostMapping(value = "/unLike")
-    public ResponseEntity<PostDTO> unLikePost(@RequestBody String postId, @RequestHeader String authorization) {
+    public ResponseEntity<?> unLikePost(@RequestBody String postId, @RequestHeader String authorization) {
+        if (postId == null || postId.equals(""))
+            return new ResponseEntity<>("Cannot determine which post to unlike!", HttpStatus.BAD_REQUEST);
         Post post = likeService.unLikePost(postId, authorization);
         return new ResponseEntity<>(modelMapper.map(post, PostDTO.class), HttpStatus.OK);
     }
 
     @PostMapping(value = "/unDislike")
-    public ResponseEntity<PostDTO> unDislikePost(@RequestBody String postId, @RequestHeader String authorization) {
+    public ResponseEntity<?> unDislikePost(@RequestBody String postId, @RequestHeader String authorization) {
+        if (postId == null || postId.equals(""))
+            return new ResponseEntity<>("Cannot determine from which post the like should be removed!", HttpStatus.BAD_REQUEST);
         Post post = likeService.unDislikePost(postId, authorization);
         return new ResponseEntity<>(modelMapper.map(post, PostDTO.class), HttpStatus.OK);
     }

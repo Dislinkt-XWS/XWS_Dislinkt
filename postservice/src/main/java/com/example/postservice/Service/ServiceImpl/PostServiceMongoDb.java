@@ -3,7 +3,6 @@ package com.example.postservice.Service.ServiceImpl;
 import com.example.postservice.Model.Post;
 import com.example.postservice.Repository.PostRepository;
 import com.example.postservice.Service.PostService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,9 +12,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +73,7 @@ public class PostServiceMongoDb implements PostService {
         var currentUserId = restTemplate.exchange("http://user-service:8761/api/users/current-user",
                 HttpMethod.GET, entity, String.class);
 
+        System.out.println("OVO JE TRENUTNI USER: " + currentUserId.getBody());
         return currentUserId.getBody();
     }
 
@@ -90,24 +87,16 @@ public class PostServiceMongoDb implements PostService {
             String fileName = file.getOriginalFilename();
             System.out.println("NAZIV FAJLA " + fileName);
 
-            var location = "src/main/resources/static/images";
-
-            if (!new File(location).exists()) {
-                try {
-                    Files.createDirectory(Paths.get(location));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            var location = "./src/main/resources/static/images/";
 
             File newFile = new File(location + fileName);
             System.out.println("LOKACIJA FAJLA: " + newFile.getAbsolutePath());
 
             try {
                 inputStream = file.getInputStream();
-                /*if (!newFile.createNewFile()) {
-                    System.out.println("File not created!");
-                }*/
+                if (!newFile.exists()) {
+                    newFile.createNewFile();
+                }
 
                 outputStream = new FileOutputStream(newFile);
                 int read = 0;
@@ -119,7 +108,7 @@ public class PostServiceMongoDb implements PostService {
                 e.printStackTrace();
             }
 
-            imagePaths.add(newFile.getAbsolutePath());
+            imagePaths.add(newFile.getAbsolutePath().substring(3));
         }
 
         return imagePaths;

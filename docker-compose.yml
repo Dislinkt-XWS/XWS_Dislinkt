@@ -39,6 +39,8 @@ services:
       ports:
         - 8750:8750
       hostname: post-service
+      volumes:
+        - ${HOME}/.xws_images:/etc
   messageservice:
       build: './messageservice/'
       ports:
