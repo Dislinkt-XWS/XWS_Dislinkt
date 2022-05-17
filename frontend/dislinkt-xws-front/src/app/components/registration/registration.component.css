@@ -1,0 +1,64 @@
+#background {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  background: gainsboro;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 350px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.05);
+}
+
+.center h1,
+h2 {
+  text-align: center;
+  padding: 20px 0;
+  padding-bottom: 1rem;
+}
+
+.center .row {
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+.content {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-control {
+  border-radius: 0;
+  height: 40px;
+  border: 1px solid rgb(40, 39, 39);
+}
+
+.form-check-input {
+  border: 1px solid rgb(40, 39, 39);
+}
+
+textarea {
+  border-radius: 0;
+  height: 150px;
+  border: 1px solid rgb(40, 39, 39);
+}
+
+.btn {
+  border-radius: 50px;
+  width: 50%;
+}
+
+nav {
+  background-color: gainsboro;
+}
+
+.logo {
+  width: 200px;
+}
