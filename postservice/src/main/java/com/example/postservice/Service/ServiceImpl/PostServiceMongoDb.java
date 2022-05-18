@@ -94,39 +94,37 @@ public class PostServiceMongoDb implements PostService {
     }
 
     @Override
-    public List<String> uploadImages(List<MultipartFile> images) {
-        List<String> imagePaths = new ArrayList<>();
+    public String uploadImages(MultipartFile file) {
+        var imagePath = "";
 
-        for (var file : images) {
-            InputStream inputStream = null;
-            OutputStream outputStream = null;
-            String fileName = file.getOriginalFilename();
-            System.out.println("NAZIV FAJLA " + fileName);
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+        String fileName = file.getOriginalFilename();
+        System.out.println("NAZIV FAJLA " + fileName);
 
-            var location = "./src/main/resources/static/images/";
+        var location = "./src/main/resources/static/images/";
 
-            File newFile = new File(location + fileName);
-            System.out.println("LOKACIJA FAJLA: " + newFile.getAbsolutePath());
+        File newFile = new File(location + fileName);
+        System.out.println("LOKACIJA FAJLA: " + newFile.getAbsolutePath());
 
-            try {
-                inputStream = file.getInputStream();
-                if (!newFile.exists()) {
-                    newFile.createNewFile();
-                }
-
-                outputStream = new FileOutputStream(newFile);
-                int read = 0;
-                byte[] bytes = new byte[1024];
-                while ((read = inputStream.read(bytes)) != -1) {
-                    outputStream.write(bytes, 0, read);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+        try {
+            inputStream = file.getInputStream();
+            if (!newFile.exists()) {
+                newFile.createNewFile();
             }
 
-            imagePaths.add(newFile.getAbsolutePath().substring(3));
+            outputStream = new FileOutputStream(newFile);
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            while ((read = inputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, read);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        return imagePaths;
+        imagePath = newFile.getAbsolutePath().substring(3);
+
+        return imagePath;
     }
 }

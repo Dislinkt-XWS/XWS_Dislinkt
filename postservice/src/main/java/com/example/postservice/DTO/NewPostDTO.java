@@ -14,5 +14,5 @@ import java.util.List;
 @NoArgsConstructor
 public class NewPostDTO {
     private String textContent;
-    private List<MultipartFile> images;
+    private MultipartFile image;
 }

@@ -16,5 +16,5 @@ public interface PostService {
     List<Post> findByUserId(String userId);
     Post update(Post p);
     String findCurrentUser(String authorization);
-    List<String> uploadImages(List<MultipartFile> images);
+    String uploadImages(MultipartFile images);
 }

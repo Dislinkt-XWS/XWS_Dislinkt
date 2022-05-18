@@ -28,12 +28,12 @@ public class PostController {
     @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<?> create(@ModelAttribute NewPostDTO dto, @RequestHeader String authorization) {
         if ((dto.getTextContent() == null || dto.getTextContent().isEmpty())
-            && dto.getImages() == null)
+            && dto.getImage() == null)
             return new ResponseEntity<>("Each post must have some type of content!", HttpStatus.BAD_REQUEST);
 
-        List<String> imagePath = new ArrayList<>();
-        if (dto.getImages() != null)
-            imagePath = postService.uploadImages(dto.getImages());
+        var imagePath = "";
+        if (dto.getImage() != null)
+            imagePath = postService.uploadImages(dto.getImage());
 
         var postDto = new Post();
         postDto.setTextContent(dto.getTextContent());

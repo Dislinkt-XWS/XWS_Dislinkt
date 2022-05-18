@@ -100,7 +100,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserTokenState> login(@RequestBody LoginDTO dto) {
+    public ResponseEntity<String> login(@RequestBody LoginDTO dto) {
         var authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 dto.getUsernameOrEmail(), dto.getPassword()));
 
@@ -110,7 +110,7 @@ public class UserController {
         var jwt = tokenUtils.generateToken(user.getUsername());
         var expiresIn = tokenUtils.getExpiredIn();
 
-        return new ResponseEntity<>(new UserTokenState(jwt, expiresIn), HttpStatus.OK);
+        return new ResponseEntity<>(jwt, HttpStatus.OK);
     }
 
     @GetMapping(value = "/loggedinandfollowers")
@@ -173,5 +173,15 @@ public class UserController {
             return new ResponseEntity<>("No user is logged in!", HttpStatus.NOT_FOUND);
 
         return new ResponseEntity<>(current.getId(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/whoami")
+    public ResponseEntity<?> loggedIn() {
+        var current = userService.findLoggedInUser();
+
+        if (current == null)
+            return new ResponseEntity<>("No user is logged in!", HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(current, HttpStatus.OK);
     }
 }

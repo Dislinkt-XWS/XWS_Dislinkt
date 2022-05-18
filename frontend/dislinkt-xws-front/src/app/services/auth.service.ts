@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { User } from '../model/user';
+import { User, UserDto } from '../model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,11 @@ export class AuthService {
     localStorage.removeItem('jwt');
   }
 
-  public signup(user: User) {
+  public signup(user: UserDto) {
     return this.http.post('/api/users', user, { responseType: 'text' });
+  }
+
+  public getCurrentUser(): Observable<User> {
+    return this.http.get<User>('api/users/whoami');
   }
 }

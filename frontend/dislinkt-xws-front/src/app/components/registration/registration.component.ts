@@ -1,6 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { User, UserGender } from 'src/app/model/user';
+import { UserDto, UserGender } from 'src/app/model/user';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -37,7 +37,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   public signup() {
-    let user: User = {
+    let user: UserDto = {
       password: this.password,
       username: this.username,
       email: this.email,

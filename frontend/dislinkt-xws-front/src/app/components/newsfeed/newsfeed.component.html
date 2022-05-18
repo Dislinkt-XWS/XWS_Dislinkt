@@ -1,0 +1,78 @@
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+  <div class="container">
+    <h1 class="logo navbar-brand">
+      <a href="/feed">
+        <img class="logo" src="../../../assets/img/linkedin_small.svg">
+      </a>
+    </h1>
+    <div class="d-none d-sm-block">
+      <input class="form-control search-bar" type="text" placeholder="&#xf52a;  Search "
+        style="font-family:'bootstrap-icons', Arial">
+    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse menu" id="navmenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item mt-2 d-lg-none d-md-none">
+          <input class="form-control search-bar" type="text" placeholder="&#xf52a;  Search "
+            style="font-family:'bootstrap-icons', Arial; width: 220px;">
+        </li>
+        <li class="nav-item mt-2">
+          <a href="/feed" exact class="nav-link me-3">
+            <i class="fas fa-home me-1"></i>
+            Home
+          </a>
+        </li>
+        <li class="nav-item mt-2">
+          <a href="#" exact class="nav-link me-3">
+            <i class="far fa-comments me-1"></i>
+            Messaging
+          </a>
+        </li>
+        <li class="nav-item mt-2 separator">
+          <h1 href="#" class="nav-link">|</h1>
+        </li>
+
+        <li class="nav-item mt-2">
+          <a href="#" exact class="nav-link me-3">
+            <i class="far fa-user-circle me-1"></i>
+            {{ fullName }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- END NAVBAR -->
+
+<!-- FEED -->
+<div class="feed">
+  <div class="row p-5">
+    <div class="col-md-2"></div>
+
+    <div class="col-md-8">
+      <div class="card new-post shadow">
+        <div class=" card-body">
+          <textarea placeholder="Share your thoughts..." class="form-control post-text"></textarea>
+        </div>
+        <div class="card-footer p-0" style="display: inline-flex;">
+          <div class="choose_file" style="width: 50%; height: 100%; border-radius: 0;">
+            <button type="button" class="btn" style="width: 50%; height: 100%; border-radius: 0;">
+              <i class="far fa-images me-2"></i>
+              Photo
+            </button>
+            <input name="img" type="file" />
+          </div>
+
+          <button style="width: 50%; height: 100%; border-radius: 0;" class="ms-auto btn btn-primary">Post</button>
+        </div>
+      </div>
+    </div>
+
+    <div class=" col-md-2"></div>
+  </div>
+</div>
+<!-- END FEED -->
