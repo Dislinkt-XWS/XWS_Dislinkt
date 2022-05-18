@@ -1,0 +1,39 @@
+.logo {
+  /* height: 150px; */
+  width: 150px;
+}
+
+.btn {
+  border-radius: 50px;
+}
+
+.items {
+  display: inline-block;
+  margin: 0;
+}
+
+section {
+  height: 90vh;
+}
+
+.main-img {
+  /* margin-left: 15px; */
+  width: 60%;
+  height: 70%;
+}
+
+.title {
+  color: #935f50;
+}
+
+table {
+  margin-top: 35px;
+  width: 80%;
+  height: 80%;
+}
+
+input {
+  border-radius: 0;
+  height: 40px;
+  border: 1px solid rgb(40, 39, 39);
+}
