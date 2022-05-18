@@ -1,5 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { User, UserGender } from 'src/app/model/user';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-registration',
@@ -15,11 +17,46 @@ import { Component, OnInit } from '@angular/core';
 export class RegistrationComponent implements OnInit {
 
   visible: boolean;
+  errorMessage = "";
 
-  constructor() { }
+  password: string
+  username: string;
+  email: string;
+  phoneNumber: string;
+  userGender: UserGender;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: Date;
+  bio: string;
+  isPrivate: boolean;
+
+  constructor(public authService: AuthService) { }
 
   ngOnInit(): void {
     this.visible = false;
+  }
+
+  public signup() {
+    let user: User = {
+      password: this.password,
+      username: this.username,
+      email: this.email,
+      phoneNumber: this.phoneNumber,
+      userGender: this.userGender,
+      fullName: this.firstName + " " + this.lastName,
+      dateOfBirth: new Date(this.dateOfBirth),
+      bio: this.bio,
+      isPrivate: this.isPrivate
+    }
+
+    this.authService.signup(user).subscribe(
+      (data) => {
+        console.log('response received: ');
+      },
+      (error) => {
+        this.errorMessage = error.error
+      }
+    );
   }
 
 }

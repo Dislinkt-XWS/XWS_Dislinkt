@@ -23,44 +23,57 @@
   <div class="content mt-3" *ngIf="!visible">
     <h1>Welcome</h1>
     <div class="row">
-      <input type="email" class="form-control mb-3" id="email" placeholder="Email" />
+      <input type="email" class="form-control mb-3" id="email" placeholder="Email" [(ngModel)]="email" />
     </div>
     <div class="row">
-      <input type="text" class="form-control mb-3" id="username" placeholder="Username" />
+      <input type="text" class="form-control mb-3" id="username" placeholder="Username" [(ngModel)]="username" />
     </div>
     <div class="row">
-      <input type="password" class="form-control mb-3" id="password" placeholder="Password" />
+      <input type="password" class="form-control mb-3" id="password" placeholder="Password" [(ngModel)]="password" />
     </div>
     <div class="row">
-      <input type="text" class="form-control mb-3" id="name" placeholder="First Name" />
+      <input type="text" class="form-control mb-3" id="name" placeholder="First Name" [(ngModel)]="firstName" />
     </div>
     <div class="row">
-      <input type="text" class="form-control mb-3" id="surname" placeholder="Last Name" />
+      <input type="text" class="form-control mb-3" id="surname" placeholder="Last Name" [(ngModel)]="lastName" />
     </div>
     <div class="row">
-      <input type="text" class="form-control mb-3" id="phone" placeholder="Phone Number" />
+      <input type="text" class="form-control mb-3" id="phone" placeholder="Phone Number" [(ngModel)]="phoneNumber" />
     </div>
-    <button class="login my-3 btn btn-primary" (click)="visible = true">
+    <button class="login my-3 btn btn-primary next" (click)="visible = true">
       Next
     </button>
   </div>
 
-  <div class="content mt-3" *ngIf="visible" [@slideInOut]>
-    <h1>Welcome</h1>
-    <div class="row">
-      <input type="date" class="form-control mb-3" id="birthdya" placeholder="Day of birth" />
-    </div>
-    <div class="row">
-      <textarea class=" mb-3" id="bio" placeholder="Biography"></textarea>
+  <div class="content mt-3" *ngIf="visible">
+    <div class="form-check form-check-inline mb-3">
+      <input class="form-check-input" type="radio" name="genderOptions" id="male" value="MALE"
+        [(ngModel)]="userGender" />
+      <label class="form-check-label" for="male">Male</label>
     </div>
     <div class="form-check form-check-inline mb-3">
-      <input class="form-check-input" type="radio" name="privacyOptions" id="private" />
-      <label class="form-check-label" for="private">Private</label>
+      <input class="form-check-input" type="radio" name="genderOptions" id="female" value="FEMALE"
+        [(ngModel)]="userGender" />
+      <label class="form-check-label" for="female">Female</label>
     </div>
-    <div class="form-check form-check-inline mb-3">
-      <input class="form-check-input" type="radio" name="privacyOptions" id="public" />
-      <label class="form-check-label" for="public">Public</label>
+    <div class="row">
+      <input type="date" class="form-control mb-3" id="birthday" placeholder="Day of birth" [(ngModel)]="dateOfBirth" />
     </div>
-    <button class="login my-3 btn btn-primary">Next</button>
+    <div class="row">
+      <textarea class=" mb-3" id="bio" placeholder="Biography" [(ngModel)]="bio"></textarea>
+    </div>
+    <div class="row">
+      <select class="form-select mb-3" [(ngModel)]="isPrivate">
+        <option selected disabled>Account privacy</option>
+        <option value=true>Private</option>
+        <option value=false>Public</option>
+      </select>
+    </div>
+    <div class="row justify-content-center">
+      <p style="color: red;">{{ errorMessage }}</p>
+    </div>
+    <button class="login my-3 btn btn-primary me-2" (click)="visible = false">Previous</button>
+    <button class="login my-3 btn btn-primary" (click)="signup()">Sign up</button>
+
   </div>
 </div>

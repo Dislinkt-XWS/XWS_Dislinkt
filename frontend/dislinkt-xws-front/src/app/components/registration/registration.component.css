@@ -7,10 +7,12 @@
 
 .center {
   position: absolute;
+  align-items: center;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 350px;
+  height: 550px;
   background: white;
   border-radius: 10px;
   box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.05);
@@ -34,7 +36,8 @@ h2 {
   align-items: center;
 }
 
-.form-control {
+.form-control,
+.form-select {
   border-radius: 0;
   height: 40px;
   border: 1px solid rgb(40, 39, 39);
@@ -52,6 +55,9 @@ textarea {
 
 .btn {
   border-radius: 50px;
+}
+
+.next {
   width: 50%;
 }
 

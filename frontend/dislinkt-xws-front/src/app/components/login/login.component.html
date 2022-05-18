@@ -6,8 +6,8 @@
           <img class="logo mt-2" src="../../../assets/img/logo.png">
         </a>
       </h1>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navmenu" aria-controls="navmenu"
-        aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navmenu" aria-expanded="false"
+        aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse menu" id="navmenu">
@@ -23,13 +23,13 @@
           <li class="nav-item mt-2">
             <a href="signup" exact class="nav-link me-3">Join now</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="#" exact class="nav-link me-3">
               <button class="btn btn-outline-primary">
                 Sign in
               </button>
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>
@@ -43,13 +43,18 @@
         <h1 class="title">Welcome to your professional community</h1>
         <table class="mb-3">
           <tr>
-            <input type="email" class="form-control mb-4" id="email" placeholder="Email or username">
+            <input type="email" class="form-control mb-4" id="email" placeholder="Email or username"
+              [(ngModel)]="username">
           </tr>
           <tr>
-            <input type="password" class="form-control mb-4" id="password" placeholder="Password">
+            <input type="password" class="form-control mb-4" id="password" placeholder="Password"
+              [(ngModel)]="password">
           </tr>
           <tr align="center">
-            <button class="btn btn-primary btn-lg w-100">
+            <p [@slideInOut] style="color: red;">{{ errorMessage }}</p>
+          </tr>
+          <tr align="center">
+            <button class="btn btn-primary btn-lg w-100" (click)="login()">
               Sign in
             </button>
           </tr>
