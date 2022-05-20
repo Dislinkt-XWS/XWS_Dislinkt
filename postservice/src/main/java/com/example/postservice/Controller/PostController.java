@@ -11,6 +11,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,24 +70,23 @@ public class PostController {
     }
 
     @GetMapping(value = "/newsfeed")
-    public ResponseEntity<List<PostDTO>> getNewsFeed(@RequestHeader String authorization) {
+    public ResponseEntity<List<PostDTO>> getNewsFeed(@RequestHeader String authorization) throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authorization);
         HttpEntity<String> entity = new HttpEntity<>("", headers);
         RestTemplate restTemplate = new RestTemplate();
         var userPostIds = restTemplate.exchange("http://user-service:8761/api/users/loggedinandfollowers",
                 HttpMethod.GET, entity, List.class);
-        System.out.println("Ovo dobijem iz user servisa " + userPostIds);
         List<String> userIds = userPostIds.getBody();
-        System.out.println("Ovo je body koji dobijem iz user servisa " + userIds);
 
         List<Post> posts = postService.findAll();
         List<Post> postsToShow = new ArrayList<>();
         for (String userId : userIds) {
             for (Post post : posts) {
-                System.out.println("Ovo je userId i post posebno: " + userId + " " + post);
-                if (userId.equals(post.getUserId()))
+                if (userId.equals(post.getUserId())) {
+                    post.setImagePath(postService.getBase64(post));
                     postsToShow.add(post);
+                }
             }
         }
 

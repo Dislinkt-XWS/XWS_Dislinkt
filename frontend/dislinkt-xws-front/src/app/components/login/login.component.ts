@@ -1,5 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   password: string;
 
   errorMessage = "";
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -28,6 +29,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.username, this.password).subscribe(
       (data) => {
         console.log('response received: ');
+        this.router.navigate(['/feed']);
       },
       (error) => {
         this.errorMessage = 'Invalid credentials';

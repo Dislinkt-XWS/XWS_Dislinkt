@@ -14,11 +14,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class PostServiceMongoDb implements PostService {
@@ -126,5 +126,11 @@ public class PostServiceMongoDb implements PostService {
         imagePath = newFile.getAbsolutePath().substring(3);
 
         return imagePath;
+    }
+
+    @Override
+    public String getBase64(Post post) throws IOException {
+        var path = Paths.get(post.getImagePath());
+        return Base64.getEncoder().encodeToString(Files.readAllBytes(path));
     }
 }

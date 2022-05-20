@@ -1,5 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserDto, UserGender } from 'src/app/model/user';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -30,7 +31,7 @@ export class RegistrationComponent implements OnInit {
   bio: string;
   isPrivate: boolean;
 
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.visible = false;
@@ -52,6 +53,7 @@ export class RegistrationComponent implements OnInit {
     this.authService.signup(user).subscribe(
       (data) => {
         console.log('response received: ');
+        this.router.navigate(['/']);
       },
       (error) => {
         this.errorMessage = error.error

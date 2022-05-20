@@ -48,31 +48,58 @@
 </nav>
 <!-- END NAVBAR -->
 
-<!-- FEED -->
+<!-- MAIN CONTENT -->
 <div class="feed">
   <div class="row p-5">
-    <div class="col-md-2"></div>
+    <div class="col-md-3"></div>
 
-    <div class="col-md-8">
+    <div class="col-md-6">
+      <!-- NEW POST -->
       <div class="card new-post shadow">
-        <div class=" card-body">
-          <textarea placeholder="Share your thoughts..." class="form-control post-text"></textarea>
+        <div class="card-body">
+          <textarea rows="2" placeholder="Share your thoughts..." class="form-control post-text"
+            [(ngModel)]="postContent"></textarea>
         </div>
         <div class="card-footer p-0" style="display: inline-flex;">
           <div class="choose_file" style="width: 50%; height: 100%; border-radius: 0;">
-            <button type="button" class="btn" style="width: 50%; height: 100%; border-radius: 0;">
+            <button type="button" class="btn" style="width: 50%; height: 100%; border-radius: 0; border: none"
+              [disabled]="imagePath !== undefined">
               <i class="far fa-images me-2"></i>
               Photo
+              <span class="badge bg-info" *ngIf="imagePath !== undefined">1</span>
             </button>
-            <input name="img" type="file" />
+            <input name="img" type="file" (change)="selectedFiles($event)" [disabled]="imagePath !== undefined" />
           </div>
 
-          <button style="width: 50%; height: 100%; border-radius: 0;" class="ms-auto btn btn-primary">Post</button>
+          <button style="width: 50%; height: 100%; border-radius: 0;" class="ms-auto btn btn-primary"
+            (click)="createPost()">Post</button>
         </div>
       </div>
+      <!-- END NEW POST -->
+
+      <!-- FEED -->
+      <div class="card all-posts shadow mt-5" *ngFor="let post of posts">
+        <div class="card-body">
+          <h5 class="card-title">{{post.userId}}</h5>
+          <p class="card-text">{{post.textContent}}</p>
+        </div>
+        <img class="card-img-bottom img-fluid" [src]="getPhoto(post)" alt="Card image cap">
+        <p class="card-text px-3 mt-3 mb-1 ms-auto" style="width: 143px;"><small
+            class="text-muted">{{post.datePosted | date: "dd/MM/yyyy hh:mm"}}</small>
+        </p>
+
+        <hr class="text-muted my-0">
+        <div class="likes-comments p-3" style="display: inline-flex;">
+          <a class="me-3 like"><i class="fas fa-thumbs-up me-2"></i>20</a>
+          <a class="dislike"><i class="fas fa-thumbs-down me-2"></i>20</a>
+          <a class="comments">Show comments</a>
+        </div>
+      </div>
+      <!-- END FEED -->
+
     </div>
 
-    <div class=" col-md-2"></div>
+    <div class=" col-md-3"></div>
   </div>
 </div>
-<!-- END FEED -->
+<!-- END MAIN CONTENT -->
