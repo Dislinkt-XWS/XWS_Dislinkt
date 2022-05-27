@@ -84,7 +84,8 @@ public class PostController {
         for (String userId : userIds) {
             for (Post post : posts) {
                 if (userId.equals(post.getUserId())) {
-                    post.setImagePath(postService.getBase64(post));
+                    if (!post.getImagePath().isEmpty())
+                        post.setImagePath(postService.getBase64(post));
                     postsToShow.add(post);
                 }
             }

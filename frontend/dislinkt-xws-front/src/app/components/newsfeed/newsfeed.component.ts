@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NewPostDto, Post } from 'src/app/model/post';
+import { Router } from '@angular/router';
+import { Comment, NewPostDto, Post } from 'src/app/model/post';
 import { User, UserDto } from 'src/app/model/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { PostsService } from 'src/app/services/posts.service';
@@ -14,18 +15,23 @@ export class NewsfeedComponent implements OnInit {
   currentUser: User;
   fullName: string = "";
   posts: Post[];
+  comments: Comment[] = [];
 
   postContent: string;
   imagePath: File;
-  formData: FormData;
+  formData: FormData = new FormData();
+  allUsers: User[];
 
-  constructor(public authService: AuthService, public postsService: PostsService, private sanitizer: DomSanitizer) { }
+  constructor(public authService: AuthService, public postsService: PostsService, private sanitizer: DomSanitizer, private router: Router) { }
 
   ngOnInit(): void {
     setTimeout(() => {
       this.getCurrentUser();
       this.getNewsfeed();
     }, 500);
+
+    this.authService.getAllUsers().subscribe(data => this.allUsers = data);
+    this.postsService.getCommentsByPost().subscribe(data => this.comments = data);
   }
 
   getCurrentUser() {
@@ -44,6 +50,11 @@ export class NewsfeedComponent implements OnInit {
   }
 
   createPost() {
+    if (this.imagePath !== undefined)
+      this.formData.append('image', this.imagePath);
+
+    this.formData.append('textContent', this.postContent);
+
     this.postsService.createPost(this.formData).subscribe(
       (data) => {
         console.log('uspeh');
@@ -57,14 +68,66 @@ export class NewsfeedComponent implements OnInit {
 
   selectedFiles(event: any) {
     this.formData = new FormData();
-
     this.imagePath = event.target.files.item(0);
-    this.formData.append('image', this.imagePath);
-    this.formData.append('textContent', this.postContent);
   }
 
   getPhoto(post: Post) {
     return this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + post.imagePath);
+  }
+
+  getUserById(userId: string) {
+    for (let u of this.allUsers) {
+      if (userId === u.id)
+        return u.fullName;
+    }
+
+    return "";
+  }
+
+  countLikes(post: Post) {
+    return post.userLikes.length;
+  }
+
+  likePost(post: Post) {
+    if (post.userLikes.indexOf(this.currentUser.id) === -1) {
+      this.postsService.likePost(post.id).subscribe();
+    }
+    else
+      this.postsService.unlikePost(post.id).subscribe();
+  }
+
+  dislikePost(post: Post) {
+    if (post.userLikes.indexOf(this.currentUser.id) === -1) {
+      this.postsService.dislikePost(post.id).subscribe();
+    }
+    else
+      this.postsService.undislikePost(post.id).subscribe();
+  }
+
+  alreadyLiked(post: Post) {
+    if (post.userLikes.indexOf(this.currentUser.id) === -1) {
+      return false;
+    }
+
+    return true;
+  }
+
+  alreadyDisliked(post: Post) {
+    if (post.userDislikes.indexOf(this.currentUser.id) === -1) {
+      return false;
+    }
+
+    return true;
+  }
+
+  getComments(postId: string) {
+    let foundComments: Comment[] = []
+    for (let comment of this.comments) {
+      if (comment.postId === postId)
+        foundComments.push(comment);
+    }
+
+    return foundComments;
   }
 
 }

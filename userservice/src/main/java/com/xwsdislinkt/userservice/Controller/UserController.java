@@ -121,7 +121,6 @@ public class UserController {
         List<String> allUsers = new ArrayList<>();
         allUsers = loggedInUser.getFollowedUsers();
         System.out.println(allUsers);
-        System.out.println("ZASTO NULL POINTER PICKA TI MATERINAAAAAAA");
         allUsers.add(loggedInUser.getId());
         return new ResponseEntity<>(allUsers, HttpStatus.OK);
 
@@ -183,5 +182,11 @@ public class UserController {
             return new ResponseEntity<>("No user is logged in!", HttpStatus.NOT_FOUND);
 
         return new ResponseEntity<>(current, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<User> findUserById(@PathVariable("id") String id) {
+        var user = userService.get(id).get();
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
