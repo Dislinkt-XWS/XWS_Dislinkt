@@ -99,6 +99,10 @@ public class ExperienceController {
         userService.update(user);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
 
+    @GetMapping(value = "/user/{id}")
+    public ResponseEntity<?> getExperienceForUser(@PathVariable String id) {
+        return new ResponseEntity<>(experienceService.findByUser(id), HttpStatus.OK);
     }
 }

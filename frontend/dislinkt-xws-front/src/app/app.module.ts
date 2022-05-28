@@ -12,6 +12,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TokenInterceptor } from './interceptor/token-interceptor';
 import { NewsfeedComponent } from './components/newsfeed/newsfeed.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
     LoginComponent,
     RegistrationComponent,
     NewsfeedComponent,
-    DateAgoPipe
+    DateAgoPipe,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

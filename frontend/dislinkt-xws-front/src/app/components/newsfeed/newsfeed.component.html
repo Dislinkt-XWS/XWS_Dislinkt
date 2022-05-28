@@ -33,11 +33,11 @@
           </a>
         </li>
         <li class="nav-item mt-2 separator">
-          <h1 href="#" class="nav-link">|</h1>
+          <h1 class="nav-link">|</h1>
         </li>
 
         <li class="nav-item mt-2">
-          <a href="#" exact class="nav-link me-3">
+          <a href="/profile" exact class="nav-link me-3">
             <i class="far fa-user-circle me-1"></i>
             {{ fullName }}
           </a>
@@ -50,10 +50,10 @@
 
 <!-- MAIN CONTENT -->
 <div class="feed">
-  <div class="row p-5">
-    <div class="col-md-3"></div>
+  <div class="row py-5">
+    <div class="col-md-2"></div>
 
-    <div class="col-md-6">
+    <div class="col-md-8">
       <!-- NEW POST -->
       <div class="card new-post shadow">
         <div class="card-body">
@@ -62,8 +62,7 @@
         </div>
         <div class="card-footer p-0" style="display: inline-flex;">
           <div class="choose_file" style="width: 50%; height: 100%; border-radius: 0;">
-            <button type="button" class="btn" style="width: 50%; height: 100%; border-radius: 0; border: none"
-              [disabled]="imagePath !== undefined">
+            <button type="button" class="btn" style="width: 50%; height: 100%; border-radius: 0; border: none">
               <i class="far fa-images me-2"></i>
               Photo
               <span class="badge bg-info" *ngIf="imagePath !== undefined">1</span>
@@ -117,7 +116,7 @@
           </div>
         </div>
 
-        <hr class="text-muted my-0" style="height: 0.5rem; color: #ecf2f7;">
+        <hr class="text-muted my-0" style="height: 0.5rem; color: #ecf2f7;" *ngIf="getComments(post.id).length !== 0">
 
         <div class="all-comments px-3">
           <div class="py-3" *ngFor="let comment of getComments(post.id)">
@@ -140,7 +139,7 @@
 
     </div>
 
-    <div class=" col-md-3"></div>
+    <div class=" col-md-2"></div>
   </div>
 </div>
 <!-- END MAIN CONTENT -->

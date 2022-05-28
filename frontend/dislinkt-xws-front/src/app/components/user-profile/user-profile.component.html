@@ -1,0 +1,86 @@
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+  <div class="container">
+    <h1 class="logo navbar-brand">
+      <a href="/feed">
+        <img class="logo" src="../../../assets/img/linkedin_small.svg">
+      </a>
+    </h1>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse menu" id="navmenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item mt-2 d-lg-none d-md-none">
+          <input class="form-control search-bar" type="text" placeholder="&#xf52a;  Search "
+            style="font-family:'bootstrap-icons', Arial; width: 220px;">
+        </li>
+        <li class="nav-item mt-2">
+          <a href="/feed" exact class="nav-link me-3">
+            <i class="fas fa-home me-1"></i>
+            Home
+          </a>
+        </li>
+        <li class="nav-item mt-2">
+          <a href="#" exact class="nav-link me-3">
+            <i class="far fa-comments me-1"></i>
+            Messaging
+          </a>
+        </li>
+        <li class="nav-item mt-2 separator">
+          <h1 href="#" class="nav-link">|</h1>
+        </li>
+
+        <li class="nav-item mt-2">
+          <a href="#" exact class="nav-link me-3">
+            <i class="far fa-user-circle me-1"></i>
+            {{ fullName }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- END NAVBAR -->
+
+<!-- MAIN CONTENT -->
+<div class="background">
+  <div class="row py-5">
+    <div class="col-md-2"></div>
+
+    <div class="col-md-8 d-flex justify-content-center">
+      <div class="main-box">
+        <img class="cover"
+          src="https://images.ctfassets.net/7thvzrs93dvf/wpImage18643/2f45c72db7876d2f40623a8b09a88b17/linkedin-default-background-cover-photo-1.png?w=800&q=100">
+        <div>
+          <img class="profile-pic" src="https://via.placeholder.com/128/99ccff/0073e6.png?text=A">
+        </div>
+        <button class='pen-btn upload'><i class="bi bi-pencil-fill pen"></i></button>
+
+        <div class="box mt-3">
+          <div class="main-content">
+            <h2>{{ fullName }}</h2>
+            <h4 class="my-3">{{ currentUser.bio }}</h4>
+          </div>
+        </div>
+
+        <hr class="text-muted my-4">
+
+        <div class="experience">
+          <h3>Experience</h3>
+
+          <div class="experience-list" *ngFor="let e of experience">
+            <h6>{{e.establishmentName}}</h6>
+            <p>{{e.start}} - {{e.end}}</p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-md-2"></div>
+  </div>
+</div>
+<!-- END MAIN CONTENT -->

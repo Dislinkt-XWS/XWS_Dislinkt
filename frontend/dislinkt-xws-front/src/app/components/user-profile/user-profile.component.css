@@ -1,0 +1,120 @@
+.logo {
+  height: 55px;
+}
+
+.background {
+  background-color: #ecf2f7;
+}
+
+.main-box {
+  width: 100%;
+}
+
+h3 {
+  font-weight: 500;
+  font-size: x-large;
+}
+
+h4 {
+  font-size: 15px;
+  margin: 0;
+}
+
+.main-box {
+  max-width: 900px;
+  width: 100%;
+  background-color: white;
+  margin: 0;
+  border-radius: 20px;
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.pen-btn {
+  background-color: white;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 20px;
+  margin: 10px;
+  margin-top: -20px;
+}
+
+.pen-btn.upload {
+  right: 1%;
+  top: 52%;
+  font-size: 20px;
+}
+
+.cover {
+  width: 100%;
+  height: 200px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.main-content {
+  padding: 0px 25px;
+  color: rgba(0, 0, 0, 0.9);
+  line-height: 10px;
+}
+
+.profile-pic {
+  height: 132px;
+  width: 132px;
+  border-radius: 50%;
+  left: 4px;
+  position: relative;
+  top: 5px;
+  background-color: white;
+  padding: 5px;
+  margin-top: -100px;
+  margin-left: 22px;
+  margin-bottom: -4px;
+}
+
+.pen {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: x-large;
+  cursor: pointer;
+}
+
+.upload {
+  position: absolute;
+  right: 0px;
+}
+
+.pen-btn.upload {
+  right: 1%;
+  top: 52%;
+  font-size: 20px;
+}
+
+.box {
+  display: flex;
+  align-items: flex-start;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  color: #0a66c2;
+  font-weight: 600;
+}
+
+.current {
+  width: auto;
+  margin-left: auto;
+  padding-right: 2rem;
+}
+
+.experience {
+  padding: 0px 25px;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.experience-list {
+  text-indent: 10px;
+}
