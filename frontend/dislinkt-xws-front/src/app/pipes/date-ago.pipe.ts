@@ -6,31 +6,20 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class DateAgoPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    if (value) {
-      const seconds = Math.floor((+new Date() - +new Date(value)) / 1000);
-      if (seconds < 29) // less than 30 seconds ago will show as 'Just now'
-        return 'Just now';
-      const intervals: any = {
-        'year': 31536000,
-        'month': 2592000,
-        'week': 604800,
-        'day': 86400,
-        'hour': 3600,
-        'minute': 60,
-        'second': 1
-      };
-      let counter;
-      for (const i in intervals) {
-        counter = Math.floor(seconds / intervals[i]);
-        if (counter > 0)
-          if (counter === 1) {
-            return counter + ' ' + i + ' ago';
-          } else {
-            return counter + ' ' + i + 's ago';
-          }
-      }
+    let time = (Date.now() - Date.parse(value)) / 1000;
+    if (time < 10) {
+      return 'just now';
+    } else if (time < 60) {
+      return 'a moment ago';
     }
-    return value;
+    const divider = [60, 60, 24, 30, 12];
+    const string = [' second', ' minute', ' hour', ' day', ' month', ' year'];
+    let i;
+    for (i = 0; Math.floor(time / divider[i]) > 0; i++) {
+      time /= divider[i];
+    }
+    const plural = Math.floor(time) > 1 ? 's' : '';
+    return Math.floor(time) + string[i] + plural + ' ago';
   }
 
 }

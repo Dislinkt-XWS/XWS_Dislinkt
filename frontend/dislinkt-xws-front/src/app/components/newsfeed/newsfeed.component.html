@@ -92,12 +92,33 @@
               class="fas fa-thumbs-up me-2"></i>{{post.userLikes.length}}</a>
           <a class="dislike" (click)="dislikePost(post)" [ngClass]="{'disliked': alreadyDisliked(post)}"><i
               class="fas fa-thumbs-down me-2"></i>{{post.userDislikes.length}}</a>
-          <p class="card-text ms-auto ps-4" style="width: 105px;"><small
+          <p class="card-text ms-auto ps-4" style="width: auto;"><small
               class="text-muted">{{post.datePosted | dateAgo}}</small>
           </p>
         </div>
 
         <!-- COMMENTS -->
+        <div class="p-3">
+          <div class="d-flex comment">
+            <img class="rounded-circle comment-img" src="https://via.placeholder.com/128/99ccff/0073e6.png?text=A" />
+            <div class="flex-grow-1 ms-3">
+              <div class="hstack gap-2 mb-1">
+                <a href="#" class="comment-user">{{currentUser.fullName}}</a>
+              </div>
+              <div class="mb-3">
+                <textarea class="form-control w-100" placeholder="Leave a comment here" id="my-comment"
+                  style="height:4rem;" [(ngModel)]="commentContent"></textarea>
+              </div>
+              <div class="hstack justify-content-end gap-2">
+                <button class="btn btn-sm btn-primary text-uppercase rounded-4"
+                  (click)="comment(post.id)">comment</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="text-muted my-0" style="height: 0.5rem; color: #ecf2f7;">
+
         <div class="all-comments px-3">
           <div class="py-3" *ngFor="let comment of getComments(post.id)">
             <div class="d-flex comment">

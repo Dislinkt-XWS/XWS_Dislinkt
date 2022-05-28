@@ -15,7 +15,9 @@ export class NewsfeedComponent implements OnInit {
   currentUser: User;
   fullName: string = "";
   posts: Post[];
+
   comments: Comment[] = [];
+  commentContent: string;
 
   postContent: string;
   imagePath: File;
@@ -28,10 +30,10 @@ export class NewsfeedComponent implements OnInit {
     setTimeout(() => {
       this.getCurrentUser();
       this.getNewsfeed();
-    }, 500);
+    }, 300);
 
     this.authService.getAllUsers().subscribe(data => this.allUsers = data);
-    this.postsService.getCommentsByPost().subscribe(data => this.comments = data);
+    this.postsService.getComments().subscribe(data => this.comments = data);
   }
 
   getCurrentUser() {
@@ -90,18 +92,18 @@ export class NewsfeedComponent implements OnInit {
 
   likePost(post: Post) {
     if (post.userLikes.indexOf(this.currentUser.id) === -1) {
-      this.postsService.likePost(post.id).subscribe();
+      this.postsService.likePost(post.id).subscribe(data => this.ngOnInit()); //promijeni ako skontas
     }
     else
-      this.postsService.unlikePost(post.id).subscribe();
+      this.postsService.unlikePost(post.id).subscribe(data => this.ngOnInit());
   }
 
   dislikePost(post: Post) {
     if (post.userLikes.indexOf(this.currentUser.id) === -1) {
-      this.postsService.dislikePost(post.id).subscribe();
+      this.postsService.dislikePost(post.id).subscribe(data => this.ngOnInit());
     }
     else
-      this.postsService.undislikePost(post.id).subscribe();
+      this.postsService.undislikePost(post.id).subscribe(data => this.ngOnInit());
   }
 
   alreadyLiked(post: Post) {
@@ -127,7 +129,20 @@ export class NewsfeedComponent implements OnInit {
         foundComments.push(comment);
     }
 
-    return foundComments;
+    return foundComments.sort((a, b) => new Date(b.datePosted).getTime() - new Date(a.datePosted).getTime());
+  }
+
+  comment(postId: string) {
+    let commentDto = {
+      userId: this.currentUser.id,
+      textContent: this.commentContent,
+      postId: postId
+    }
+
+    this.postsService.comment(commentDto).subscribe(data => {
+      this.ngOnInit();
+      this.commentContent = "";
+    })
   }
 
 }

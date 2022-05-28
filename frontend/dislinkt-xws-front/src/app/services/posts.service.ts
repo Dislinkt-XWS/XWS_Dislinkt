@@ -34,8 +34,11 @@ export class PostsService {
     return this.http.post<Post>('/api/posts/unDislike', id);
   }
 
-  public getCommentsByPost(): Observable<Comment[]> {
+  public getComments(): Observable<Comment[]> {
     return this.http.get<Comment[]>('api/comments');
   }
 
+  public comment(commentDto: any) {
+    return this.http.post('api/comments', commentDto);
+  }
 }
