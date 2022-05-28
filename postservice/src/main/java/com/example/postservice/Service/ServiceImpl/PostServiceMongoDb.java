@@ -14,11 +14,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class PostServiceMongoDb implements PostService {
@@ -94,39 +94,43 @@ public class PostServiceMongoDb implements PostService {
     }
 
     @Override
-    public List<String> uploadImages(List<MultipartFile> images) {
-        List<String> imagePaths = new ArrayList<>();
+    public String uploadImages(MultipartFile file) {
+        var imagePath = "";
 
-        for (var file : images) {
-            InputStream inputStream = null;
-            OutputStream outputStream = null;
-            String fileName = file.getOriginalFilename();
-            System.out.println("NAZIV FAJLA " + fileName);
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+        String fileName = file.getOriginalFilename();
+        System.out.println("NAZIV FAJLA " + fileName);
 
-            var location = "./src/main/resources/static/images/";
+        var location = "./src/main/resources/static/images/";
 
-            File newFile = new File(location + fileName);
-            System.out.println("LOKACIJA FAJLA: " + newFile.getAbsolutePath());
+        File newFile = new File(location + fileName);
+        System.out.println("LOKACIJA FAJLA: " + newFile.getAbsolutePath());
 
-            try {
-                inputStream = file.getInputStream();
-                if (!newFile.exists()) {
-                    newFile.createNewFile();
-                }
-
-                outputStream = new FileOutputStream(newFile);
-                int read = 0;
-                byte[] bytes = new byte[1024];
-                while ((read = inputStream.read(bytes)) != -1) {
-                    outputStream.write(bytes, 0, read);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+        try {
+            inputStream = file.getInputStream();
+            if (!newFile.exists()) {
+                newFile.createNewFile();
             }
 
-            imagePaths.add(newFile.getAbsolutePath().substring(3));
+            outputStream = new FileOutputStream(newFile);
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            while ((read = inputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, read);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        return imagePaths;
+        imagePath = newFile.getAbsolutePath().substring(3);
+
+        return imagePath;
+    }
+
+    @Override
+    public String getBase64(Post post) throws IOException {
+        var path = Paths.get(post.getImagePath());
+        return Base64.getEncoder().encodeToString(Files.readAllBytes(path));
     }
 }

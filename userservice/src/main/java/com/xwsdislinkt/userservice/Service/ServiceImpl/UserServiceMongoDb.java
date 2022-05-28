@@ -34,6 +34,11 @@ public class UserServiceMongoDb implements UserService {
         u.setId(UUID.randomUUID().toString());
         var password = u.getPassword();
         u.setPassword(passwordEncoder.encode(password));
+        u.setFollowedUsers(new ArrayList<>());
+        u.setBlockedUsers(new ArrayList<>());
+        u.setFollowers(new ArrayList<>());
+        u.setFollowRequests(new ArrayList<>());
+        u.setPendingFollowRequests(new ArrayList<>());
         return userRepository.save(u);
     }
 

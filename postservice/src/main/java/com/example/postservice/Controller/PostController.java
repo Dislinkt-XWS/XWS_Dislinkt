@@ -11,6 +11,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,12 +29,12 @@ public class PostController {
     @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<?> create(@ModelAttribute NewPostDTO dto, @RequestHeader String authorization) {
         if ((dto.getTextContent() == null || dto.getTextContent().isEmpty())
-            && dto.getImages() == null)
+            && dto.getImage() == null)
             return new ResponseEntity<>("Each post must have some type of content!", HttpStatus.BAD_REQUEST);
 
-        List<String> imagePath = new ArrayList<>();
-        if (dto.getImages() != null)
-            imagePath = postService.uploadImages(dto.getImages());
+        var imagePath = "";
+        if (dto.getImage() != null)
+            imagePath = postService.uploadImages(dto.getImage());
 
         var postDto = new Post();
         postDto.setTextContent(dto.getTextContent());
@@ -69,24 +70,24 @@ public class PostController {
     }
 
     @GetMapping(value = "/newsfeed")
-    public ResponseEntity<List<PostDTO>> getNewsFeed(@RequestHeader String authorization) {
+    public ResponseEntity<List<PostDTO>> getNewsFeed(@RequestHeader String authorization) throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authorization);
         HttpEntity<String> entity = new HttpEntity<>("", headers);
         RestTemplate restTemplate = new RestTemplate();
         var userPostIds = restTemplate.exchange("http://user-service:8761/api/users/loggedinandfollowers",
                 HttpMethod.GET, entity, List.class);
-        System.out.println("Ovo dobijem iz user servisa " + userPostIds);
         List<String> userIds = userPostIds.getBody();
-        System.out.println("Ovo je body koji dobijem iz user servisa " + userIds);
 
         List<Post> posts = postService.findAll();
         List<Post> postsToShow = new ArrayList<>();
         for (String userId : userIds) {
             for (Post post : posts) {
-                System.out.println("Ovo je userId i post posebno: " + userId + " " + post);
-                if (userId.equals(post.getUserId()))
+                if (userId.equals(post.getUserId())) {
+                    if (!post.getImagePath().isEmpty())
+                        post.setImagePath(postService.getBase64(post));
                     postsToShow.add(post);
+                }
             }
         }
 

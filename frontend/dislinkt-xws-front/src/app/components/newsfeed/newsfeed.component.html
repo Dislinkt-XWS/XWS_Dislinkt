@@ -1,0 +1,146 @@
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+  <div class="container">
+    <h1 class="logo navbar-brand">
+      <a href="/feed">
+        <img class="logo" src="../../../assets/img/linkedin_small.svg">
+      </a>
+    </h1>
+    <div class="d-none d-sm-block">
+      <input class="form-control search-bar" type="text" placeholder="&#xf52a;  Search "
+        style="font-family:'bootstrap-icons', Arial">
+    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse menu" id="navmenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item mt-2 d-lg-none d-md-none">
+          <input class="form-control search-bar" type="text" placeholder="&#xf52a;  Search "
+            style="font-family:'bootstrap-icons', Arial; width: 220px;">
+        </li>
+        <li class="nav-item mt-2">
+          <a href="/feed" exact class="nav-link me-3">
+            <i class="fas fa-home me-1"></i>
+            Home
+          </a>
+        </li>
+        <li class="nav-item mt-2">
+          <a href="#" exact class="nav-link me-3">
+            <i class="far fa-comments me-1"></i>
+            Messaging
+          </a>
+        </li>
+        <li class="nav-item mt-2 separator">
+          <h1 href="#" class="nav-link">|</h1>
+        </li>
+
+        <li class="nav-item mt-2">
+          <a href="#" exact class="nav-link me-3">
+            <i class="far fa-user-circle me-1"></i>
+            {{ fullName }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- END NAVBAR -->
+
+<!-- MAIN CONTENT -->
+<div class="feed">
+  <div class="row p-5">
+    <div class="col-md-3"></div>
+
+    <div class="col-md-6">
+      <!-- NEW POST -->
+      <div class="card new-post shadow">
+        <div class="card-body">
+          <textarea rows="2" placeholder="Share your thoughts ..." id="new-post-text" class="form-control post-text"
+            [(ngModel)]="postContent"></textarea>
+        </div>
+        <div class="card-footer p-0" style="display: inline-flex;">
+          <div class="choose_file" style="width: 50%; height: 100%; border-radius: 0;">
+            <button type="button" class="btn" style="width: 50%; height: 100%; border-radius: 0; border: none"
+              [disabled]="imagePath !== undefined">
+              <i class="far fa-images me-2"></i>
+              Photo
+              <span class="badge bg-info" *ngIf="imagePath !== undefined">1</span>
+            </button>
+            <input name="img" type="file" (change)="selectedFiles($event)" [disabled]="imagePath !== undefined" />
+          </div>
+
+          <button style="width: 50%; height: 100%; border-radius: 0;" class="ms-auto btn btn-primary"
+            (click)="createPost()">Post</button>
+        </div>
+      </div>
+      <!-- END NEW POST -->
+
+      <!-- FEED -->
+      <div class="card all-posts shadow mt-5 rounded-3" *ngFor="let post of posts">
+        <div class="card-body">
+          <h5 class="card-title">{{getUserById(post.userId)}}</h5>
+          <p class="card-text text-content">{{post.textContent}}</p>
+        </div>
+        <img class="card-img-bottom img-fluid mb-4" [src]="getPhoto(post)" alt="Post image"
+          *ngIf="post.imagePath !== ''">
+
+        <hr class="text-muted my-0">
+        <div class="likes-comments p-3" style="display: inline-flex;">
+          <a class="me-3 ms-2 like" (click)="likePost(post)" [ngClass]="{'liked': alreadyLiked(post)}"><i
+              class="fas fa-thumbs-up me-2"></i>{{post.userLikes.length}}</a>
+          <a class="dislike" (click)="dislikePost(post)" [ngClass]="{'disliked': alreadyDisliked(post)}"><i
+              class="fas fa-thumbs-down me-2"></i>{{post.userDislikes.length}}</a>
+          <p class="card-text ms-auto ps-4" style="width: auto;"><small
+              class="text-muted">{{post.datePosted | dateAgo}}</small>
+          </p>
+        </div>
+
+        <!-- COMMENTS -->
+        <div class="p-3">
+          <div class="d-flex comment">
+            <img class="rounded-circle comment-img" src="https://via.placeholder.com/128/99ccff/0073e6.png?text=A" />
+            <div class="flex-grow-1 ms-3">
+              <div class="hstack gap-2 mb-1">
+                <a href="#" class="comment-user">{{currentUser.fullName}}</a>
+              </div>
+              <div class="mb-3">
+                <textarea class="form-control w-100" placeholder="Leave a comment here" id="my-comment"
+                  style="height:4rem;" [(ngModel)]="commentContent"></textarea>
+              </div>
+              <div class="hstack justify-content-end gap-2">
+                <button class="btn btn-sm btn-primary text-uppercase rounded-4"
+                  (click)="comment(post.id)">comment</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="text-muted my-0" style="height: 0.5rem; color: #ecf2f7;">
+
+        <div class="all-comments px-3">
+          <div class="py-3" *ngFor="let comment of getComments(post.id)">
+            <div class="d-flex comment">
+              <img class="rounded-circle comment-img" src="https://via.placeholder.com/128/99ccff/0073e6.png?text=A" />
+              <div class="ms-3">
+                <div class="mb-1">
+                  <a href="#" class="pe-1 comment-user">{{getUserById(comment.userId)}}</a>
+                  <span class="text-muted text-nowrap">{{comment.datePosted | dateAgo }}</span>
+                </div>
+                <p class="mb-2" style="overflow-wrap: break-word; word-break:break-all; min-width: 100px;">
+                  {{comment.textContent}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END COMMENTS -->
+      </div>
+      <!-- END FEED -->
+
+    </div>
+
+    <div class=" col-md-3"></div>
+  </div>
+</div>
+<!-- END MAIN CONTENT -->
