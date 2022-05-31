@@ -24,8 +24,9 @@ public class SkillController {
 
     @PostMapping
     public ResponseEntity<SkillDTO> addSkill(@RequestBody @Validated SkillDTO dto) {
+        var user = userService.findLoggedInUser();
+        dto.setUserId(user.getId());
         var skill = modelMapper.map(dto, Skill.class);
-        var user = userService.get(skill.getUserId()).get();
 
         skill = skillService.save(skill);
         user.getSkills().add(skill.getId());
@@ -42,12 +43,22 @@ public class SkillController {
         }
 
         var skill = skillService.get(id).get();
-        var user = userService.get(skill.getUserId()).get();
+        var user = userService.findLoggedInUser();
         skillService.delete(id);
         user.getSkills().remove(id);
         userService.update(user);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
 
+    @GetMapping(value = "/user/{id}")
+    public ResponseEntity<?> getSkillsForUser(@PathVariable String id) {
+        var user = userService.get(id).get();
+
+        if (user == null)
+            return new ResponseEntity<>("User not found!", HttpStatus.NOT_FOUND);
+
+        var skills = skillService.findAllByUserId(id);
+        return new ResponseEntity<>(skills, HttpStatus.OK);
     }
 }

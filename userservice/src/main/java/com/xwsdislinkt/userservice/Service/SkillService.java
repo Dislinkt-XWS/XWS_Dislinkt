@@ -11,4 +11,5 @@ public interface SkillService {
     Skill save(Skill skill);
     Skill update(Skill skill);
     void delete(String  id);
+    List<Skill> findAllByUserId(String id);
 }

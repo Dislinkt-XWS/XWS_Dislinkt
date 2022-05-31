@@ -32,4 +32,9 @@ public class InterestServiceMongoDb implements InterestService {
 
     @Override
     public void delete(String id) { interestRepository.deleteById(id);}
+
+    @Override
+    public List<Interest> findAllByUserId(String id) {
+        return interestRepository.findAllByUserId(id);
+    }
 }

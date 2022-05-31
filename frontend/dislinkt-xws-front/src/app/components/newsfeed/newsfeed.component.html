@@ -33,14 +33,20 @@
           </a>
         </li>
         <li class="nav-item mt-2 separator">
-          <h1 class="nav-link">|</h1>
+          <h1 class="nav-link me-3">|</h1>
         </li>
 
-        <li class="nav-item mt-2">
-          <a href="/profile" exact class="nav-link me-3">
+        <li class="nav-item dropdown mt-2">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
             <i class="far fa-user-circle me-1"></i>
             {{ fullName }}
           </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
+            <li><a class="dropdown-item" href="/profile"><i class="far fa-user-circle me-2"></i>Profile</a></li>
+            <li><a class="dropdown-item" href="/" (click)="logout()"><i class="fas fa-sign-out-alt me-2"></i>Log out</a>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>

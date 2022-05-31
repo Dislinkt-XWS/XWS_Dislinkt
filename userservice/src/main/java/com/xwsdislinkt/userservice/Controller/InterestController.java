@@ -25,7 +25,7 @@ public class InterestController {
     @PostMapping
     public ResponseEntity<InterestDTO> addInterest(@RequestBody @Validated InterestDTO dto) {
         var interest = modelMapper.map(dto, Interest.class);
-        var user = userService.get(interest.getUserId()).get();
+        var user = userService.findLoggedInUser();
 
         interest = interestService.save(interest);
         user.getInterests().add(interest.getId());
@@ -42,11 +42,22 @@ public class InterestController {
         }
 
         var interest = interestService.get(id).get();
-        var user = userService.get(interest.getUserId()).get();
+        var user = userService.findLoggedInUser();
         interestService.delete(id);
         user.getInterests().remove(id);
         userService.update(user);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/user/{id}")
+    public ResponseEntity<?> getInterestsByUser(@PathVariable String id) {
+        var user = userService.get(id).get();
+
+        if (user == null)
+            return new ResponseEntity<>("User not found!", HttpStatus.NOT_FOUND);
+
+        var interests = interestService.findAllByUserId(id);
+        return new ResponseEntity<>(interests, HttpStatus.OK);
     }
 }

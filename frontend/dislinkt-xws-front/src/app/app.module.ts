@@ -13,6 +13,8 @@ import { TokenInterceptor } from './interceptor/token-interceptor';
 import { NewsfeedComponent } from './components/newsfeed/newsfeed.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     MatStepperModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatSnackBarModule,
+    MatInputModule
   ],
   providers: [
     {

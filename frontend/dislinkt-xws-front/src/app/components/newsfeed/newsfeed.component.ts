@@ -146,4 +146,9 @@ export class NewsfeedComponent implements OnInit {
     })
   }
 
+  logout() {
+    this.authService.logout();
+    window.location.href = "/"
+  }
+
 }
