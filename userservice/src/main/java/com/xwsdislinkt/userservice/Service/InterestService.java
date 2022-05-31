@@ -11,4 +11,5 @@ public interface InterestService {
     Interest save(Interest interest);
     Interest update(Interest interest);
     void delete(String  id);
+    List<Interest> findAllByUserId(String id);
 }

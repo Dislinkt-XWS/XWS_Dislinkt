@@ -32,4 +32,9 @@ public class SkillServiceMongoDb implements SkillService {
 
     @Override
     public void delete(String id) { skillRepository.deleteById(id);}
+
+    @Override
+    public List<Skill> findAllByUserId(String id) {
+        return skillRepository.findAllByUserId(id);
+    }
 }

@@ -33,14 +33,20 @@
           </a>
         </li>
         <li class="nav-item mt-2 separator">
-          <h1 href="#" class="nav-link">|</h1>
+          <h1 class="nav-link me-3">|</h1>
         </li>
 
-        <li class="nav-item mt-2">
-          <a href="#" exact class="nav-link me-3">
+        <li class="nav-item dropdown mt-2">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
             <i class="far fa-user-circle me-1"></i>
             {{ fullName }}
           </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
+            <li><a class="dropdown-item" href="/profile"><i class="far fa-user-circle me-2"></i>Profile</a></li>
+            <li><a class="dropdown-item" href="/" (click)="logout()"><i class="fas fa-sign-out-alt me-2"></i>Log out</a>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>
@@ -50,10 +56,10 @@
 
 <!-- MAIN CONTENT -->
 <div class="feed">
-  <div class="row p-5">
-    <div class="col-md-3"></div>
+  <div class="row py-5">
+    <div class="col-md-2"></div>
 
-    <div class="col-md-6">
+    <div class="col-md-8">
       <!-- NEW POST -->
       <div class="card new-post shadow">
         <div class="card-body">
@@ -62,8 +68,7 @@
         </div>
         <div class="card-footer p-0" style="display: inline-flex;">
           <div class="choose_file" style="width: 50%; height: 100%; border-radius: 0;">
-            <button type="button" class="btn" style="width: 50%; height: 100%; border-radius: 0; border: none"
-              [disabled]="imagePath !== undefined">
+            <button type="button" class="btn" style="width: 50%; height: 100%; border-radius: 0; border: none">
               <i class="far fa-images me-2"></i>
               Photo
               <span class="badge bg-info" *ngIf="imagePath !== undefined">1</span>
@@ -117,7 +122,7 @@
           </div>
         </div>
 
-        <hr class="text-muted my-0" style="height: 0.5rem; color: #ecf2f7;">
+        <hr class="text-muted my-0" style="height: 0.5rem; color: #ecf2f7;" *ngIf="getComments(post.id).length !== 0">
 
         <div class="all-comments px-3">
           <div class="py-3" *ngFor="let comment of getComments(post.id)">
@@ -140,7 +145,7 @@
 
     </div>
 
-    <div class=" col-md-3"></div>
+    <div class=" col-md-2"></div>
   </div>
 </div>
 <!-- END MAIN CONTENT -->

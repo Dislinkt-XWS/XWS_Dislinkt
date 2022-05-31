@@ -21,6 +21,14 @@ export interface User {
     dateOfBirth: Date;
     bio: string;
     isPrivate: boolean;
+    workExperience: string[],
+    education: string[],
+    skills: string[],
+    interests: string[],
+    followRequests: string[],
+    followedUsers: string[],
+    pendingFollowRequests: string[],
+    followers: string[],
 }
 
 export enum UserGender {

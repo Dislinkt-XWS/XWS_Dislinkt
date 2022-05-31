@@ -11,4 +11,5 @@ public interface ExperienceService {
     Experience save(Experience experience);
     Experience update(Experience experience);
     void delete(String  id);
+    List<Experience> findByUser(String userId);
 }

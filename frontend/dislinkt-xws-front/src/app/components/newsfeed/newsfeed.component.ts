@@ -48,7 +48,7 @@ export class NewsfeedComponent implements OnInit {
   }
 
   getNewsfeed() {
-    this.postsService.newsfeed().subscribe(data => this.posts = data);
+    this.postsService.newsfeed().subscribe(data => this.posts = data.sort((a, b) => new Date(b.datePosted).getTime() - new Date(a.datePosted).getTime()));
   }
 
   createPost() {
@@ -61,6 +61,7 @@ export class NewsfeedComponent implements OnInit {
       (data) => {
         console.log('uspeh');
         this.getNewsfeed();
+        this.postContent = "";
       },
       (error) => {
         console.error('nesto ne valja');
@@ -143,6 +144,11 @@ export class NewsfeedComponent implements OnInit {
       this.ngOnInit();
       this.commentContent = "";
     })
+  }
+
+  logout() {
+    this.authService.logout();
+    window.location.href = "/"
   }
 
 }

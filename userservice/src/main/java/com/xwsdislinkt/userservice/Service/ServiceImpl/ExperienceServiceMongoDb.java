@@ -34,4 +34,9 @@ public class ExperienceServiceMongoDb implements ExperienceService {
 
     @Override
     public void delete(String id) { experienceRepository.deleteById(id); }
+
+    @Override
+    public List<Experience> findByUser(String id) {
+        return experienceRepository.findAllByUserId(id);
+    }
 }

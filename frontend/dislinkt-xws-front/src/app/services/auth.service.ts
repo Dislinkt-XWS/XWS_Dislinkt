@@ -46,4 +46,8 @@ export class AuthService {
   public getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>('/api/users');
   }
+
+  logout() {
+    window.localStorage.removeItem('jwt');
+  }
 }

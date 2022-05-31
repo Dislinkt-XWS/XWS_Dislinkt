@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -60,30 +61,36 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<UserDTO> update(@RequestBody @Validated UserDTO dto) {
+    public ResponseEntity<?> update(@RequestBody @Validated UserDTO dto) {
+        var user = userService.findLoggedInUser();
 
-        if(userService.get(dto.getId()).isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (user == null)
+            return new ResponseEntity<>("No user logged in!", HttpStatus.BAD_REQUEST);
+
+        if (dto.getEmail() != null && !dto.getEmail().isEmpty() && !dto.getEmail().equals(user.getEmail())) {
+            if (userService.findByUsernameOrEmail(dto.getEmail()) != null)
+                return new ResponseEntity<>("This email is already taken!", HttpStatus.BAD_REQUEST);
+            else
+                user.setEmail(dto.getEmail());
         }
-
-        if(userService.findByUsernameOrEmail(dto.getEmail()) != null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (dto.getFullName() != null && !dto.getFullName().isEmpty())
+            user.setFullName(dto.getFullName());
+        if (dto.getPhoneNumber() != null && !dto.getPhoneNumber().isEmpty())
+            user.setPhoneNumber(dto.getPhoneNumber());
+        if (dto.getUserGender() != null)
+            user.setUserGender(dto.getUserGender());
+        if (dto.getDateOfBirth() != null)
+            user.setDateOfBirth(dto.getDateOfBirth());
+        if (dto.getBio() != null && !dto.getBio().isEmpty())
+            user.setBio(dto.getBio());
+        if (dto.getUsername() != null && !dto.getUsername().isEmpty() && !dto.getUsername().equals(user.getUsername())) {
+            if (userService.findByUsernameOrEmail(dto.getUsername()) != null)
+                return new ResponseEntity<>("This username is already taken!", HttpStatus.BAD_REQUEST);
+            else
+                user.setUsername(dto.getUsername());
         }
-
-        if(userService.findByUsernameOrEmail(dto.getUsername()) != null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        User user = userService.get(dto.getId()).get();
-        user.setEmail(dto.getEmail());
-        user.setFullName(dto.getFullName());
-        user.setPhoneNumber(dto.getPhoneNumber());
-        user.setUserGender(dto.getUserGender());
-        user.setDateOfBirth(dto.getDateOfBirth());
-        user.setBio(dto.getBio());
-        user.setUsername(dto.getUsername());
-        //user.setPassword(dto.getPassword());
-        user.setIsPrivate(dto.getIsPrivate());
+        if (dto.getIsPrivate() != null)
+            user.setIsPrivate(dto.getIsPrivate());
 
         return new ResponseEntity<>(modelMapper.map(
                 userService.update(user), UserDTO.class), HttpStatus.OK);
