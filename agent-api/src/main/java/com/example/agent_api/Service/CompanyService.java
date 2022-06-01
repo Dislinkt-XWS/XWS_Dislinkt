@@ -11,4 +11,5 @@ public interface CompanyService {
     Company save(Company c);
     Company update(Company c);
     void delete(String  id);
+    void approveCompanyRequest(String id, boolean status);
 }

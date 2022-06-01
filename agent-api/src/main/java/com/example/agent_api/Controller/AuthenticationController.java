@@ -58,11 +58,4 @@ public class AuthenticationController {
 
         return new ResponseEntity<>(jwt, HttpStatus.OK);
     }
-
-    @GetMapping
-    public List<User> getall() {
-        return userService.findAll();
-    }
-
-
 }

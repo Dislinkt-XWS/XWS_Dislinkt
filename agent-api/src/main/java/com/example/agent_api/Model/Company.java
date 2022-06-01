@@ -17,12 +17,18 @@ public class Company {
     public String id;
     public String ownerId;
     public String description;
+    public int yearOfEstablishment;
     public String email;
     public String phoneNumber;
     public String address;
     public String city;
     public String country;
+    public boolean isApproved;
 
     private List<String> comments;
     private List<String> jobOffers;
+
+    public void setIsApproved(boolean isApproved) {
+        this.isApproved = isApproved;
+    }
 }
