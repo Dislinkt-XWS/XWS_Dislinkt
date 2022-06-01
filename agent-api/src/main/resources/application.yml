@@ -1,12 +1,13 @@
 spring:
   data:
     mongodb:
-      authentication-database: admin
-      username: root
-      password: example
-      database: agent
-      host: localhost
-      port: 27017
+      uri: mongodb://localhost:27017/agent?authSource=admin
+      #authentication-database: admin
+      #username: root
+      #password: example
+      #database: agent
+      #host: localhost
+      #port: 27017
 
 server:
   port: 9000
