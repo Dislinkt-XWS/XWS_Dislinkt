@@ -1,0 +1,14 @@
+.main-box {
+  height: 100vh;
+}
+
+.card-body {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.card-footer {
+  background: none;
+  border: none;
+}
