@@ -1,6 +1,6 @@
 package com.example.agent_api.DTO;
 
-import com.example.agent_api.Model.Role;
+import com.example.agent_api.Model.Enumerations.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

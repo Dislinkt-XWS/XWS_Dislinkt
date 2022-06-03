@@ -1,5 +1,6 @@
 package com.example.agent_api.Model;
 
+import com.example.agent_api.Model.Enumerations.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,12 +24,12 @@ public class Company {
     public String address;
     public String city;
     public String country;
-    public boolean isApproved;
+    public Status status;
 
     private List<String> comments;
     private List<String> jobOffers;
 
-    public void setIsApproved(boolean isApproved) {
+    /* public void setIsApproved(boolean isApproved) {
         this.isApproved = isApproved;
-    }
+    } */
 }

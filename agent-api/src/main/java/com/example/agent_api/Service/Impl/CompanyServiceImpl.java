@@ -1,7 +1,8 @@
 package com.example.agent_api.Service.Impl;
 
 import com.example.agent_api.Model.Company;
-import com.example.agent_api.Model.Role;
+import com.example.agent_api.Model.Enumerations.Role;
+import com.example.agent_api.Model.Enumerations.Status;
 import com.example.agent_api.Repository.CompanyRepository;
 import com.example.agent_api.Service.CompanyService;
 import com.example.agent_api.Service.UserService;
@@ -34,7 +35,7 @@ public class CompanyServiceImpl implements CompanyService {
     public Company save(Company c) {
         c.setId(UUID.randomUUID().toString());
         c.setOwnerId(userService.findLoggedInUser().getId());
-        c.setIsApproved(false);
+        c.setStatus(Status.PENDING);
         c.setJobOffers(new ArrayList<>());
         c.setComments(new ArrayList<>());
         return companyRepository.save(c);
@@ -51,11 +52,13 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void approveCompanyRequest(String id, boolean status) {
+    public Company approveCompanyRequest(String id, Status status) {
         var company = companyRepository.findById(id).get();
-        company.setIsApproved(status);
+        company.setStatus(status);
+        companyRepository.save(company);
         var user = userService.get(company.ownerId).get();
         user.setRole(Role.OWNER);
         userService.update(user);
+        return company;
     }
 }

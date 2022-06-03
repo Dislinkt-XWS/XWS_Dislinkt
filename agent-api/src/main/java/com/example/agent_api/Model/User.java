@@ -1,5 +1,6 @@
 package com.example.agent_api.Model;
 
+import com.example.agent_api.Model.Enumerations.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
