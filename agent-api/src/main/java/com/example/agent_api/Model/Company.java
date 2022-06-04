@@ -1,5 +1,6 @@
 package com.example.agent_api.Model;
 
+import com.example.agent_api.Model.Enumerations.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,13 +17,22 @@ public class Company {
     @Id
     public String id;
     public String ownerId;
+    public String name;
     public String description;
+    public int yearOfEstablishment;
     public String email;
     public String phoneNumber;
     public String address;
     public String city;
     public String country;
+    public Status status;
 
     private List<String> comments;
+    private List<String> salaries;
+    private List<String> interviews;
     private List<String> jobOffers;
+
+    public void addComment(String commentId) { comments.add(commentId);}
+    public void addSalary(String salaryId) { salaries.add(salaryId);}
+    public void addInterview(String interviewId) { interviews.add(interviewId);}
 }

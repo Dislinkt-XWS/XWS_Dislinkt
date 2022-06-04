@@ -1,9 +1,11 @@
 package com.example.agent_api.Service.Impl;
 
+import com.example.agent_api.Model.Role;
 import com.example.agent_api.Model.User;
 import com.example.agent_api.Repository.UserRepository;
 import com.example.agent_api.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,6 +37,7 @@ public class UserServiceImpl implements UserService {
         u.setId(UUID.randomUUID().toString());
         var password = u.getPassword();
         u.setPassword(passwordEncoder.encode(password));
+        u.setRole(new Role("USER"));
         return userRepository.save(u);
     }
 
@@ -61,5 +64,12 @@ public class UserServiceImpl implements UserService {
         } else {
             return user;
         }
+    }
+
+    @Override
+    public User findLoggedInUser(){
+        var loggedInUser = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println("This is the logged in user " + loggedInUser);
+        return userRepository.findByUsernameOrEmail(loggedInUser);
     }
 }

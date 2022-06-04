@@ -12,12 +12,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TokenInterceptor } from './interceptor/token-interceptor';
+import { CreateCompanyComponent } from './components/create-company/create-company.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ApproveCompanyComponent } from './components/approve-company/approve-company.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    CreateCompanyComponent,
+    ApproveCompanyComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +33,8 @@ import { TokenInterceptor } from './interceptor/token-interceptor';
     MatIconModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule
   ],
   providers: [
     {

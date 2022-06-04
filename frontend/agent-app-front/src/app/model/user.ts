@@ -4,9 +4,18 @@ export interface UserDto {
     email: string;
     firstName: string;
     lastName: string;
+}
+
+export interface User {
+    id: string;
+    password: string;
+    username: string;
+    email: string;
+    firstName: string;
+    lastName: string;
     role: Role;
 }
 
-export enum Role {
-    ADMIN, USER, OWNER
+export interface Role {
+    name: string
 }

@@ -1,6 +1,7 @@
 package com.example.agent_api.Controller;
 
 import com.example.agent_api.Configuration.Security.TokenUtils;
+import com.example.agent_api.DTO.CompanyDTO;
 import com.example.agent_api.DTO.LoginDTO;
 import com.example.agent_api.DTO.UserDTO;
 import com.example.agent_api.Model.User;
@@ -33,7 +34,7 @@ public class AuthenticationController {
     @PostMapping
     public ResponseEntity<?> registerUser(@RequestBody @Validated UserDTO dto){
         if(userService.findByUsernameOrEmail(dto.getEmail()) != null) {
-            return new ResponseEntity<>("User with this email already exists!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("User with this username already exists!", HttpStatus.BAD_REQUEST);
         }
 
         if(userService.findByUsernameOrEmail(dto.getUsername()) != null) {
@@ -59,10 +60,8 @@ public class AuthenticationController {
         return new ResponseEntity<>(jwt, HttpStatus.OK);
     }
 
-    @GetMapping
-    public List<User> getall() {
-        return userService.findAll();
+    @GetMapping(value = "/current-user")
+    public ResponseEntity<User> getCurrentUser() {
+        return new ResponseEntity<>(userService.findLoggedInUser(), HttpStatus.OK);
     }
-
-
 }

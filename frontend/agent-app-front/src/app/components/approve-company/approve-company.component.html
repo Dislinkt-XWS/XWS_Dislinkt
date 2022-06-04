@@ -1,0 +1,85 @@
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+  <div class="container">
+    <h1 class="logo navbar-brand mt-2">
+      <a href="/home">Company requests</a>
+    </h1>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse menu" id="navmenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item mt-2">
+          <a href="#" exact class="nav-link" (click)="logOut()">
+            <i class="bi bi-box-arrow-in-right me-2" style="font-size: 20px;"></i>
+            Sign out
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- END NAVBAR -->
+
+<div class="container">
+  <div class="row mx-auto" style="margin-top: 2rem">
+    <div class="col-12 mx-auto">
+      <div class="card shadow-sm" style="height: 600px">
+        <div class="row my-5">
+          <div class="col-12">
+            <div class="d-flex justify-content-center">
+              <h4 class="card-title" style="font-weight: bold">
+                Company Registration Requests
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="height: 400px">
+          <div class="col-11 mx-auto">
+            <div style="height: 350px; overflow: auto">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Year Of Establishment</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone number</th>
+                    <th scope="col">Address</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let comp of companies" [ngClass]="
+                  selectedCompany == comp ? 'selected' : 'notSelected'" (click)="selectCompany(comp)">
+                    <td> {{comp.name}} </td>
+                    <td> {{comp.description }}</td>
+                    <td> {{comp.yearOfEstablishment}} </td>
+                    <td> {{comp.email}} </td>
+                    <td> {{comp.phoneNumber}} </td>
+                    <td> {{comp.address}} {{comp.city}}, {{ comp.country}}</td>
+                  </tr>
+                  <tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class=" row my-3">
+          <div class="col-12">
+            <div class="d-flex justify-content-center">
+              <button type="button" class="btn me-3" [disabled]="selectedCompany == undefined"
+                (click)="approveCompany()">
+                Approve
+              </button>
+              <button type="button" class="btn ms-3" data-bs-toggle="modal" data-bs-target="#declineModal"
+                style="background: #f59494" [disabled]="selectedCompany == undefined" (click)="declineCompany()">
+                Decline
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

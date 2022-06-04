@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Role, User } from 'src/app/model/user';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -13,6 +14,7 @@ export class LoginComponent implements OnInit {
   username!: string;
   password!: string;
   errorMessage!: string;
+  currentUser: User;
 
   constructor(public authService: AuthService, public router: Router) { }
 
@@ -23,7 +25,20 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.username, this.password).subscribe(
       (data) => {
         console.log('response received: ');
-        this.router.navigate(['/']);
+
+        setTimeout(() => {
+          this.authService.whoami().subscribe(data => {
+            this.currentUser = data;
+            console.log(this.currentUser.role)
+            if (this.currentUser.role.name === "ADMIN")
+              this.router.navigate(['/approve']);
+            else if (this.currentUser.role.name === "OWNER")
+              this.router.navigate(['/companies'])
+            else
+              this.router.navigate(['/register-company'])
+          })
+        })
+
       },
       (error) => {
         this.errorMessage = 'Invalid credentials';
