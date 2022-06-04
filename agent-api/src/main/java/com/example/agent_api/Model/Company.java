@@ -28,5 +28,11 @@ public class Company {
     public Status status;
 
     private List<String> comments;
+    private List<String> salaries;
+    private List<String> interviews;
     private List<String> jobOffers;
+
+    public void addComment(String commentId) { comments.add(commentId);}
+    public void addSalary(String salaryId) { salaries.add(salaryId);}
+    public void addInterview(String interviewId) { interviews.add(interviewId);}
 }
