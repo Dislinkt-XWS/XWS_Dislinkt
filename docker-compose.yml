@@ -30,19 +30,20 @@ services:
       - ./gateway/api_gateway.conf:/etc/nginx/api_gateway.conf
 
   userservice:
-      build: './userservice/'
+      build: './microservices/userservice/'
       ports:
         - 8761:8761
+        - 8762:9090
       hostname: user-service
   postservice:
-      build: './postservice/'
+      build: './microservices/postservice/'
       ports:
         - 8750:8750
       hostname: post-service
       volumes:
         - ${HOME}/.xws_images:/etc
   messageservice:
-      build: './messageservice/'
+      build: './microservices/messageservice/'
       ports:
         - 8700:8700
       hostname: message-service

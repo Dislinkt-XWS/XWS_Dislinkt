@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package com.xwsdislinkt.userservice;
+
+option java_multiple_files = true;
+option java_package = "com.xwsdislinkt.userservice";
+
+service UserService {
+  rpc followers(FollowersRequest) returns (FollowersResponse) {
+  }
+}
+
+message FollowersRequest {
+
+}
+
+message FollowersResponse {
+  repeated string followers = 1;
+}
