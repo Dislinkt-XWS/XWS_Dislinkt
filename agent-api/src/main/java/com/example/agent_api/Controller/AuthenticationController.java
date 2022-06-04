@@ -34,7 +34,7 @@ public class AuthenticationController {
     @PostMapping
     public ResponseEntity<?> registerUser(@RequestBody @Validated UserDTO dto){
         if(userService.findByUsernameOrEmail(dto.getEmail()) != null) {
-            return new ResponseEntity<>("User with this email already exists!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("User with this username already exists!", HttpStatus.BAD_REQUEST);
         }
 
         if(userService.findByUsernameOrEmail(dto.getUsername()) != null) {

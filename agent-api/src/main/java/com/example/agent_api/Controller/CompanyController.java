@@ -9,8 +9,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -29,11 +31,12 @@ public class CompanyController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('OWNER')" + " || hasAuthority('USER')")
     public ResponseEntity<?> createNewCompany(@RequestBody CompanyDTO dto) {
         var currentUser = userService.findLoggedInUser();
 
         if (currentUser == null)
-            return new ResponseEntity("No user is logged in!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("No user is logged in!", HttpStatus.BAD_REQUEST);
 
         var company = modelMapper.map(dto, Company.class);
         return new ResponseEntity<>(modelMapper.map(
@@ -41,6 +44,7 @@ public class CompanyController {
     }
 
     @PutMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> approveNewCompanyRequest(@PathVariable String id, @RequestBody Status status) {
         var company = companyService.get(id).get();
         if (company == null)
@@ -51,6 +55,7 @@ public class CompanyController {
     }
 
     @PutMapping
+    @PreAuthorize("hasAuthority('OWNER')")
     public ResponseEntity<?> updateCompanyInformation(@RequestBody CompanyDTO dto) {
         var user = userService.findLoggedInUser();
         if (!user.getId().equals(dto.getOwnerId()))
@@ -79,6 +84,7 @@ public class CompanyController {
     }
 
     @GetMapping(value = "/pending")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<Company> getPendingCompanies() {
         return companyService.getAllPendingCompanies();
     }

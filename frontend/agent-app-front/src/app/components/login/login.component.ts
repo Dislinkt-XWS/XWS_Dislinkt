@@ -30,9 +30,9 @@ export class LoginComponent implements OnInit {
           this.authService.whoami().subscribe(data => {
             this.currentUser = data;
             console.log(this.currentUser.role)
-            if (this.currentUser.role === Role.ADMIN)
+            if (this.currentUser.role.name === "ADMIN")
               this.router.navigate(['/approve']);
-            else if (this.currentUser.role === Role.OWNER)
+            else if (this.currentUser.role.name === "OWNER")
               this.router.navigate(['/companies'])
             else
               this.router.navigate(['/register-company'])

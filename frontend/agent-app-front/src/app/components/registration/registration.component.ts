@@ -43,8 +43,7 @@ export class RegistrationComponent implements OnInit {
       username: this.username,
       email: this.email,
       firstName: this.firstName,
-      lastName: this.lastName,
-      role: Role.USER
+      lastName: this.lastName
     }
 
     this.authService.signup(user).subscribe(

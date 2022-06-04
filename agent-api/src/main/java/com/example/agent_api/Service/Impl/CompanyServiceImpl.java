@@ -1,8 +1,8 @@
 package com.example.agent_api.Service.Impl;
 
 import com.example.agent_api.Model.Company;
-import com.example.agent_api.Model.Enumerations.Role;
 import com.example.agent_api.Model.Enumerations.Status;
+import com.example.agent_api.Model.Role;
 import com.example.agent_api.Repository.CompanyRepository;
 import com.example.agent_api.Service.CompanyService;
 import com.example.agent_api.Service.UserService;
@@ -56,9 +56,13 @@ public class CompanyServiceImpl implements CompanyService {
         var company = companyRepository.findById(id).get();
         company.setStatus(status);
         companyRepository.save(company);
-        var user = userService.get(company.ownerId).get();
-        user.setRole(Role.OWNER);
-        userService.update(user);
+
+        if (status == Status.APPROVED) {
+            var user = userService.get(company.ownerId).get();
+            user.setRole(new Role("OWNER"));
+            userService.update(user);
+        }
+
         return company;
     }
 

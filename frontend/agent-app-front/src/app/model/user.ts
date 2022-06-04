@@ -4,7 +4,6 @@ export interface UserDto {
     email: string;
     firstName: string;
     lastName: string;
-    role: Role;
 }
 
 export interface User {
@@ -17,6 +16,6 @@ export interface User {
     role: Role;
 }
 
-export enum Role {
-    ADMIN, USER, OWNER
+export interface Role {
+    name: string
 }
