@@ -1,6 +1,7 @@
 package com.example.agent_api.Controller;
 
 import com.example.agent_api.Configuration.Security.TokenUtils;
+import com.example.agent_api.DTO.CompanyDTO;
 import com.example.agent_api.DTO.LoginDTO;
 import com.example.agent_api.DTO.UserDTO;
 import com.example.agent_api.Model.User;
@@ -57,5 +58,10 @@ public class AuthenticationController {
         var expiresIn = tokenUtils.getExpiredIn();
 
         return new ResponseEntity<>(jwt, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/current-user")
+    public ResponseEntity<User> getCurrentUser() {
+        return new ResponseEntity<>(userService.findLoggedInUser(), HttpStatus.OK);
     }
 }

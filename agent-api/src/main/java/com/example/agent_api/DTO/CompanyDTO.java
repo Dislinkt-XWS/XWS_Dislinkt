@@ -12,6 +12,7 @@ import lombok.Setter;
 public class CompanyDTO {
     public String id;
     public String ownerId;
+    public String name;
     public String description;
     public int yearOfEstablishment;
     public String email;

@@ -13,4 +13,5 @@ public interface CompanyService {
     Company update(Company c);
     void delete(String  id);
     Company approveCompanyRequest(String id, Status status);
+    List<Company> getAllPendingCompanies();
 }

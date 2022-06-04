@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "api/companies")
 public class CompanyController {
@@ -55,11 +57,13 @@ public class CompanyController {
             return new ResponseEntity<>("Company doesn't belong to the current user!", HttpStatus.BAD_REQUEST);
 
         var company = companyService.get(dto.getId()).get();
-        if (company == null)
-            return new ResponseEntity<>("Company with this id doesn't exist!", HttpStatus.NOT_FOUND);
+        if (company.getStatus() != Status.APPROVED)
+            return new ResponseEntity<>("Company was not yet approved!", HttpStatus.NOT_FOUND);
 
         if (dto.getDescription() != null && !dto.getDescription().isEmpty())
             company.setDescription(dto.getDescription());
+        if (dto.getName() != null && !dto.getName().isEmpty())
+            company.setName(dto.getName());
         if (dto.getAddress() != null && !dto.getAddress().isEmpty())
             company.setAddress(dto.getAddress());
         if (dto.getCity() != null && !dto.getCity().isEmpty())
@@ -72,5 +76,10 @@ public class CompanyController {
             company.setYearOfEstablishment(dto.getYearOfEstablishment());
 
         return new ResponseEntity<>(companyService.update(company), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/pending")
+    public List<Company> getPendingCompanies() {
+        return companyService.getAllPendingCompanies();
     }
 }

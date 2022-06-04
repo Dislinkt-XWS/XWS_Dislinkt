@@ -17,6 +17,7 @@ public class Company {
     @Id
     public String id;
     public String ownerId;
+    public String name;
     public String description;
     public int yearOfEstablishment;
     public String email;
@@ -28,8 +29,4 @@ public class Company {
 
     private List<String> comments;
     private List<String> jobOffers;
-
-    /* public void setIsApproved(boolean isApproved) {
-        this.isApproved = isApproved;
-    } */
 }

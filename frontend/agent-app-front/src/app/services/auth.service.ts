@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UserDto } from '../model/user';
+import { User, UserDto } from '../model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,9 @@ export class AuthService {
 
   public signup(user: UserDto) {
     return this.http.post('/api/auth/', user, { responseType: 'text' });
+  }
+
+  public whoami(): Observable<User> {
+    return this.http.get<User>('/api/auth/current-user');
   }
 }

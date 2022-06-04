@@ -61,4 +61,9 @@ public class CompanyServiceImpl implements CompanyService {
         userService.update(user);
         return company;
     }
+
+    @Override
+    public List<Company> getAllPendingCompanies() {
+        return companyRepository.getAllPendingCompanies();
+    }
 }
