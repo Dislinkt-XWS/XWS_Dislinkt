@@ -1,19 +1,16 @@
-package com.example.agent_api.Model;
+package com.example.agent_api.DTO;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.Setter;
 
 import java.util.List;
-
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
-@Document(collection = "job_offers")
-public class JobOffer {
-    @Id
+@NoArgsConstructor
+public class JobOfferDTO {
     public String id;
     public String position;
     public String jobDescription;
