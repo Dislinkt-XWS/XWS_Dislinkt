@@ -14,4 +14,5 @@ public interface CompanyService {
     void delete(String  id);
     Company approveCompanyRequest(String id, Status status);
     List<Company> getAllPendingCompanies();
+    List<Company> findCompaniesByOwner(String id);
 }

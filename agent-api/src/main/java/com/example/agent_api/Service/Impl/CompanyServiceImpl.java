@@ -38,6 +38,8 @@ public class CompanyServiceImpl implements CompanyService {
         c.setStatus(Status.PENDING);
         c.setJobOffers(new ArrayList<>());
         c.setComments(new ArrayList<>());
+        c.setSalaries(new ArrayList<>());
+        c.setInterviews(new ArrayList<>());
         return companyRepository.save(c);
     }
 
@@ -69,5 +71,10 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<Company> getAllPendingCompanies() {
         return companyRepository.getAllPendingCompanies();
+    }
+
+    @Override
+    public List<Company> findCompaniesByOwner(String id) {
+        return companyRepository.findCompaniesByOwner(id);
     }
 }

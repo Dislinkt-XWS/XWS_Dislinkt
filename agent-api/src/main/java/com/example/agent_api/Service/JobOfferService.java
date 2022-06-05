@@ -9,6 +9,5 @@ public interface JobOfferService {
     Optional<JobOffer> get(String  id);
     List<JobOffer> findAll();
     JobOffer save(JobOffer jobOffer);
-    JobOffer update(JobOffer jobOffer);
     void delete(String  id);
 }

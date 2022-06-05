@@ -14,7 +14,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TokenInterceptor } from './interceptor/token-interceptor';
 import { CreateCompanyComponent } from './components/create-company/create-company.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { ApproveCompanyComponent } from './components/approve-company/approve-company.component'
+import { ApproveCompanyComponent } from './components/approve-company/approve-company.component';
+import { AllCompaniesComponent } from './components/all-companies/all-companies.component';
+import { CompanyComponent } from './components/company/company.component'
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,9 @@ import { ApproveCompanyComponent } from './components/approve-company/approve-co
     LoginComponent,
     RegistrationComponent,
     CreateCompanyComponent,
-    ApproveCompanyComponent
+    ApproveCompanyComponent,
+    AllCompaniesComponent,
+    CompanyComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +39,8 @@ import { ApproveCompanyComponent } from './components/approve-company/approve-co
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSelectModule
   ],
   providers: [
     {

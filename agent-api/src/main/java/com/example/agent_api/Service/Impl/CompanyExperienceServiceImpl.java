@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -46,7 +47,7 @@ public class CompanyExperienceServiceImpl implements CompanyExperienceService {
 
         comment.setId(UUID.randomUUID().toString());
         comment.setUserId(userService.findLoggedInUser().getId());
-        comment.setDatePosted(DateTime.now());
+        comment.setDatePosted(new Date());
         return experienceRepository.save(comment);
     }
 
