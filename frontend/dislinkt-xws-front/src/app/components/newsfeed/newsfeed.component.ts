@@ -147,15 +147,6 @@ export class NewsfeedComponent implements OnInit {
     })
   }
 
-  logout() {
-    this.authService.logout();
-    window.location.href = "/"
-  }
-
-  openProfile() {
-    window.location.href = '/profile/' + this.currentUser.id;
-  }
-
   openProfileFromPost(id: string) {
     window.location.href = '/profile/' + id;
   }

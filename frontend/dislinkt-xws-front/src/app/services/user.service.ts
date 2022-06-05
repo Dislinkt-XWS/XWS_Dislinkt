@@ -72,4 +72,8 @@ export class UserService {
 
     return this.http.post('api/users/follow', dto);
   }
+
+  public searchUsers(criteria: String) {
+    return this.http.get('api/users/search/' + criteria);
+  }
 }

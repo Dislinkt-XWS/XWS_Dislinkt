@@ -1,0 +1,21 @@
+.card {
+    margin: auto;
+    width: 75%;
+}
+
+.card-title {
+    color: #0288d1;
+  }
+
+a:hover {
+    cursor: pointer;
+}
+
+.search {
+    background-color: #ecf2f7;
+}
+
+.text-content {
+    font-size: 18px;
+    text-indent: 10px;
+}

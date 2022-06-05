@@ -19,6 +19,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { SearchComponent } from './components/search/search.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     RegistrationComponent,
     NewsfeedComponent,
     DateAgoPipe,
-    UserProfileComponent
+    UserProfileComponent,
+    SearchComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,

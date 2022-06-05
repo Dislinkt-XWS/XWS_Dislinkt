@@ -75,10 +75,6 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  openProfile() {
-    window.location.href = '/profile/' + this.currentUser.id;
-  }
-
   getExperience() {
     this.userService.getExperienceForUser(this.userId).subscribe(data => {
       this.experience = data;
@@ -108,11 +104,6 @@ export class UserProfileComponent implements OnInit {
           duration: 2000
         })
       });
-  }
-
-  logout() {
-    this.authService.logout();
-    window.location.href = "/"
   }
 
   addSkill(event: MatChipInputEvent): void {
