@@ -1,6 +1,18 @@
 export interface JobOffer {
-    id: String,
-    position: String,
-    jobDescription: String,
-    requirements: String,
+    id: string,
+    position: string,
+    jobDescription: string,
+    requirements: string,
+    companyId: string,
+    isPublished: boolean
+}
+
+export interface JobOfferDTO {
+    id: string,
+    position: string,
+    jobDescription: string,
+    requirements: string,
+    publisherId: string,
+    companyId: string,
+    isPublished: boolean
 }

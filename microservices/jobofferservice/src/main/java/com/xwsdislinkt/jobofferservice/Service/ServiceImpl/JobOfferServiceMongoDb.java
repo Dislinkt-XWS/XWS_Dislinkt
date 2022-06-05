@@ -10,7 +10,9 @@ import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class JobOfferServiceMongoDb implements JobOfferService {
@@ -22,6 +24,7 @@ public class JobOfferServiceMongoDb implements JobOfferService {
 
     @Override
     public JobOffer save(JobOffer jobOffer) {
+        jobOffer.setId(UUID.randomUUID().toString());
         return jobOfferRepository.save(jobOffer);
     }
 
@@ -36,4 +39,7 @@ public class JobOfferServiceMongoDb implements JobOfferService {
     public List<JobOffer> searchOffers(String criteria) {
         return jobOfferRepository.searchOffers(criteria);
     }
+
+    @Override
+    public List<JobOffer> findAll() { return jobOfferRepository.findAll(); }
 }

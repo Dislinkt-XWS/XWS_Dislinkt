@@ -8,4 +8,5 @@ public interface JobOfferService {
     JobOffer save(JobOffer jobOffer);
     String findUserByApiKey(String apiKey);
     List<JobOffer> searchOffers(String criteria);
+    List<JobOffer> findAll();
 }

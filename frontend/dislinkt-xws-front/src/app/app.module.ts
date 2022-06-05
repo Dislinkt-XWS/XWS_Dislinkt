@@ -14,6 +14,8 @@ import { NewsfeedComponent } from './components/newsfeed/newsfeed.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatCheckboxModule} from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,6 +23,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { SearchComponent } from './components/search/search.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { JobOffersComponent } from './components/job-offers/job-offers.component';
+import { CreateJobOfferComponent } from './components/create-job-offer/create-job-offer.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,9 @@ import { NavigationComponent } from './components/navigation/navigation.componen
     DateAgoPipe,
     UserProfileComponent,
     SearchComponent,
-    NavigationComponent
+    NavigationComponent,
+    JobOffersComponent,
+    CreateJobOfferComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +52,9 @@ import { NavigationComponent } from './components/navigation/navigation.componen
     MatChipsModule,
     MatIconModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatSelectModule
   ],
   providers: [
     {

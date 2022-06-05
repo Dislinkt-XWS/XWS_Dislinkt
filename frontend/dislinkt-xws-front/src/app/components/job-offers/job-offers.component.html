@@ -1,0 +1,23 @@
+<app-navigation></app-navigation>
+<div class="homepage mt-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6 d-flex align-items-stretch" *ngFor="let jobOffer of jobOffers">
+          <div class="box card">
+            <div class="propertyInfo">
+              <h4 class="row">
+                <div class="col-md" style="text-align: start">
+                  <h4 id="position"> {{jobOffer.position}} </h4>
+                </div>
+              </h4>
+              <span> {{jobOffer.jobDescription | slice:0:100}}... </span>
+              <br />
+              <div class="row mt-5">
+                <span><b> Requirements: </b> {{jobOffer.requirements}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
