@@ -19,7 +19,7 @@ export class CreateJobOfferComponent implements OnInit {
   position: string;
   jobDescription: string;
   requirements: string;
-  isPublished: boolean;
+  isPublished: boolean = true;
   isPublishedString: string;
   companyId: string;
   companyForOffer: Company;
@@ -48,7 +48,7 @@ export class CreateJobOfferComponent implements OnInit {
       requirements: this.requirements,
       jobDescription: this.jobDescription,
       publisherId: this.currentUser.id,
-      isPublished: this.isPublished,
+      isPublished: true,
       companyId: this.companyForOffer.id
     };
  
