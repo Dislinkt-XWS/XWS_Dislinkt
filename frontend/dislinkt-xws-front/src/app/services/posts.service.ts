@@ -10,28 +10,44 @@ export class PostsService {
 
   constructor(private http: HttpClient) { }
 
-  public newsfeed(): Observable<Post[]> {
-    return this.http.get<Post[]>('/api/posts/newsfeed');
+  public newsfeed(id: string): Observable<Post[]> {
+    return this.http.get<Post[]>('/api/posts/newsfeed/' + id);
   }
 
   public createPost(newPost: FormData) {
     return this.http.post('/api/posts', newPost);
   }
 
-  public likePost(id: string): Observable<Post> {
-    return this.http.post<Post>('/api/posts/like', id);
+  public likePost(id: string, userId: string): Observable<Post> {
+    let dto = {
+      "userId": userId,
+      "postId": id
+    }
+    return this.http.post<Post>('/api/posts/like', dto);
   }
 
-  public dislikePost(id: string): Observable<Post> {
-    return this.http.post<Post>('/api/posts/dislike', id);
+  public dislikePost(id: string, userId: string): Observable<Post> {
+    let dto = {
+      "userId": userId,
+      "postId": id
+    }
+    return this.http.post<Post>('/api/posts/dislike', dto);
   }
 
-  public unlikePost(id: string): Observable<Post> {
-    return this.http.post<Post>('/api/posts/unLike', id);
+  public unlikePost(id: string, userId: string): Observable<Post> {
+    let dto = {
+      "userId": userId,
+      "postId": id
+    }
+    return this.http.post<Post>('/api/posts/unLike', dto);
   }
 
-  public undislikePost(id: string): Observable<Post> {
-    return this.http.post<Post>('/api/posts/unDislike', id);
+  public undislikePost(id: string, userId: string): Observable<Post> {
+    let dto = {
+      "userId": userId,
+      "postId": id
+    }
+    return this.http.post<Post>('/api/posts/unDislike', dto);
   }
 
   public getComments(): Observable<Comment[]> {

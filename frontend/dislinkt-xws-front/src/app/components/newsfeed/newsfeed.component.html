@@ -43,7 +43,7 @@
             {{ fullName }}
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-            <li><a class="dropdown-item" href="/profile"><i class="far fa-user-circle me-2"></i>Profile</a></li>
+            <li><a class="dropdown-item" (click)="openProfile()"><i class="far fa-user-circle me-2"></i>Profile</a></li>
             <li><a class="dropdown-item" href="/" (click)="logout()"><i class="fas fa-sign-out-alt me-2"></i>Log out</a>
             </li>
           </ul>
@@ -85,7 +85,7 @@
       <!-- FEED -->
       <div class="card all-posts shadow mt-5 rounded-3" *ngFor="let post of posts">
         <div class="card-body">
-          <h5 class="card-title">{{getUserById(post.userId)}}</h5>
+          <h5 class="card-title"><a (click)="openProfileFromPost(post.userId)">{{getUserById(post.userId)}}</a></h5>
           <p class="card-text text-content">{{post.textContent}}</p>
         </div>
         <img class="card-img-bottom img-fluid mb-4" [src]="getPhoto(post)" alt="Post image"
@@ -131,7 +131,7 @@
               <div class="ms-3">
                 <div class="mb-1">
                   <a href="#" class="pe-1 comment-user">{{getUserById(comment.userId)}}</a>
-                  <span class="text-muted text-nowrap">{{comment.datePosted | dateAgo }}</span>
+                  <!-- <span class="text-muted text-nowrap">{{comment.datePosted | dateAgo }}</span> -->
                 </div>
                 <p class="mb-2" style="overflow-wrap: break-word; word-break:break-all; min-width: 100px;">
                   {{comment.textContent}}</p>

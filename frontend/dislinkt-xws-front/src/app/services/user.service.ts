@@ -37,7 +37,15 @@ export class UserService {
   }
 
   public updateExperience(experience: any) {
-    return this.http.put('api/experience', experience);
+    return this.http.put('api/experiences', experience);
+  }
+
+  public removeEducation(id: string) {
+    return this.http.delete('api/experiences/education/' + id);
+  }
+
+  public removeWork(id: string) {
+    return this.http.delete('api/experiences/work/' + id);
   }
 
   public addSkill(skill: any) {
@@ -54,5 +62,14 @@ export class UserService {
 
   public removeInterest(id: string) {
     return this.http.delete('api/interests/' + id);
+  }
+
+  public follow(userId: string, userToFollow: string | null) {
+    let dto = {
+      "userId": userId,
+      "userToFollowId": userToFollow
+    }
+
+    return this.http.post('api/users/follow', dto);
   }
 }

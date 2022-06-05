@@ -29,7 +29,6 @@ export class NewsfeedComponent implements OnInit {
   ngOnInit(): void {
     setTimeout(() => {
       this.getCurrentUser();
-      this.getNewsfeed();
     }, 300);
 
     this.authService.getAllUsers().subscribe(data => this.allUsers = data);
@@ -40,6 +39,7 @@ export class NewsfeedComponent implements OnInit {
     this.authService.getCurrentUser().subscribe(data => {
       this.currentUser = data;
       this.fullName = this.currentUser.fullName;
+      this.getNewsfeed();
     });
   }
 
@@ -48,7 +48,7 @@ export class NewsfeedComponent implements OnInit {
   }
 
   getNewsfeed() {
-    this.postsService.newsfeed().subscribe(data => this.posts = data.sort((a, b) => new Date(b.datePosted).getTime() - new Date(a.datePosted).getTime()));
+    this.postsService.newsfeed(this.currentUser.id).subscribe(data => this.posts = data.sort((a, b) => new Date(b.datePosted).getTime() - new Date(a.datePosted).getTime()));
   }
 
   createPost() {
@@ -56,6 +56,7 @@ export class NewsfeedComponent implements OnInit {
       this.formData.append('image', this.imagePath);
 
     this.formData.append('textContent', this.postContent);
+    this.formData.append('userId', this.currentUser.id);
 
     this.postsService.createPost(this.formData).subscribe(
       (data) => {
@@ -93,18 +94,18 @@ export class NewsfeedComponent implements OnInit {
 
   likePost(post: Post) {
     if (post.userLikes.indexOf(this.currentUser.id) === -1) {
-      this.postsService.likePost(post.id).subscribe(data => this.ngOnInit()); //promijeni ako skontas
+      this.postsService.likePost(post.id, this.currentUser.id).subscribe(data => this.ngOnInit()); //promijeni ako skontas
     }
     else
-      this.postsService.unlikePost(post.id).subscribe(data => this.ngOnInit());
+      this.postsService.unlikePost(post.id, this.currentUser.id).subscribe(data => this.ngOnInit());
   }
 
   dislikePost(post: Post) {
-    if (post.userLikes.indexOf(this.currentUser.id) === -1) {
-      this.postsService.dislikePost(post.id).subscribe(data => this.ngOnInit());
+    if (post.userDislikes.indexOf(this.currentUser.id) === -1) {
+      this.postsService.dislikePost(post.id, this.currentUser.id).subscribe(data => this.ngOnInit());
     }
     else
-      this.postsService.undislikePost(post.id).subscribe(data => this.ngOnInit());
+      this.postsService.undislikePost(post.id, this.currentUser.id).subscribe(data => this.ngOnInit());
   }
 
   alreadyLiked(post: Post) {
@@ -149,6 +150,14 @@ export class NewsfeedComponent implements OnInit {
   logout() {
     this.authService.logout();
     window.location.href = "/"
+  }
+
+  openProfile() {
+    window.location.href = '/profile/' + this.currentUser.id;
+  }
+
+  openProfileFromPost(id: string) {
+    window.location.href = '/profile/' + id;
   }
 
 }

@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -17,47 +18,79 @@ export class UserProfileComponent implements OnInit {
 
   currentUser: User;
   fullName: string = "";
+  fullNameNav: string = "";
   experience: Experience[] = []
   education: Experience[] = []
   workExperience: Experience[] = []
-  skills: Skill[]
-  interests: Interest[]
+  skills: Skill[] = []
+  interests: Interest[] = []
 
   editingMode: boolean = false;
   updatedUser: UserDto
 
+  startExp: Date
+  endExp: Date
+  expName: string
+  expRole: string
+  editEducation: boolean = false
+  editWork: boolean = false
+
+  userId: string;
+  userFromId: User
+
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
-  constructor(public authService: AuthService, public userService: UserService, private matSnackBar: MatSnackBar) { }
+  constructor(public authService: AuthService, public userService: UserService, private matSnackBar: MatSnackBar,
+    public activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.userId = this.activatedRoute.snapshot.paramMap.get('id') as string;
     this.getCurrentUser();
+    this.getUserProfile();
+  }
+
+  showButton() {
+    return this.currentUser.id != this.userId && this.userFromId.followers.indexOf(this.currentUser.id) === -1
+  }
+
+  private getUserProfile() {
+    this.authService.getUserById(this.userId).subscribe(data => {
+      this.userFromId = data;
+      this.fullName = this.userFromId.fullName;
+
+      setTimeout(() => {
+        this.getExperience();
+        this.userService.getSkillsForUser(this.userId).subscribe(data => this.skills = data);
+        this.userService.getInterestsForUser(this.userId).subscribe(data => this.interests = data);
+        this.showButton();
+      }, 200);
+    });
   }
 
   getCurrentUser() {
     this.authService.getCurrentUser().subscribe(data => {
       this.currentUser = data;
-      this.fullName = this.currentUser.fullName;
-
-      setTimeout(() => {
-        this.getExperience();
-        this.userService.getSkillsForUser(this.currentUser.id).subscribe(data => this.skills = data);
-        this.userService.getInterestsForUser(this.currentUser.id).subscribe(data => this.interests = data);
-      }, 200)
+      this.fullNameNav = this.currentUser.fullName
     });
   }
 
+  openProfile() {
+    window.location.href = '/profile/' + this.currentUser.id;
+  }
+
   getExperience() {
-    this.userService.getExperienceForUser(this.currentUser.id).subscribe(data => {
+    this.userService.getExperienceForUser(this.userId).subscribe(data => {
       this.experience = data;
       this.getEducation();
     });
   }
 
   getEducation() {
+    this.workExperience = []
+    this.education = []
     for (let e of this.experience) {
-      if (this.currentUser.workExperience.indexOf(e.id) !== -1) {
+      if (this.userFromId.workExperience.indexOf(e.id) !== -1) {
         this.workExperience.push(e)
       }
       else
@@ -66,8 +99,8 @@ export class UserProfileComponent implements OnInit {
   }
 
   updateProfile() {
-    this.userService.updateProfile(this.currentUser).subscribe(data => {
-      this.fullName = this.currentUser.fullName;
+    this.userService.updateProfile(this.userFromId).subscribe(data => {
+      this.fullName = this.userFromId.fullName;
       window.location.reload();
     },
       (error) => {
@@ -87,7 +120,7 @@ export class UserProfileComponent implements OnInit {
 
     if (value) {
       this.userService.addSkill({ name: value }).subscribe(data => {
-        this.userService.getSkillsForUser(this.currentUser.id).subscribe(data => this.skills = data);
+        this.userService.getSkillsForUser(this.userId).subscribe(data => this.skills = data);
       })
     }
     event.chipInput!.clear();
@@ -97,7 +130,7 @@ export class UserProfileComponent implements OnInit {
     this.userService.removeSkill(skill.id).subscribe();
 
     setTimeout(() => {
-      this.userService.getSkillsForUser(this.currentUser.id).subscribe(data => this.skills = data);
+      this.userService.getSkillsForUser(this.userId).subscribe(data => this.skills = data);
     }, 200)
   }
 
@@ -106,7 +139,7 @@ export class UserProfileComponent implements OnInit {
 
     if (value) {
       this.userService.addInterest({ name: value }).subscribe(data => {
-        this.userService.getInterestsForUser(this.currentUser.id).subscribe(data => this.skills = data);
+        this.userService.getInterestsForUser(this.userId).subscribe(data => this.interests = data);
       })
     }
     event.chipInput!.clear();
@@ -116,7 +149,50 @@ export class UserProfileComponent implements OnInit {
     this.userService.removeInterest(skill.id).subscribe();
 
     setTimeout(() => {
-      this.userService.getInterestsForUser(this.currentUser.id).subscribe(data => this.skills = data);
+      this.userService.getInterestsForUser(this.userId).subscribe(data => this.interests = data);
     }, 200)
+  }
+
+  addExperience() {
+    let experience = {
+      userId: this.userId,
+      establishmentName: this.expName,
+      start: this.startExp,
+      end: this.endExp
+    }
+    this.userService.addEducation(experience).subscribe(data => window.location.reload())
+  }
+
+  addWork() {
+    let experience = {
+      userId: this.userId,
+      establishmentName: this.expName,
+      start: this.startExp,
+      end: this.endExp,
+      role: this.expRole
+    }
+    this.userService.addWork(experience).subscribe(data => window.location.reload())
+  }
+
+  updateExp(experience: Experience) {
+    this.userService.updateExperience(experience).subscribe(data => { this.editEducation = false; this.editWork = false });
+  }
+
+  deleteExp(experience: Experience) {
+    this.userService.removeWork(experience.id).subscribe(data => {
+      this.getExperience();
+      this.editWork = false;
+    })
+  }
+
+  deleteEducation(experience: Experience) {
+    this.userService.removeEducation(experience.id).subscribe(data => {
+      this.getEducation();
+      this.editEducation = false;
+    })
+  }
+
+  followUser() {
+    this.userService.follow(this.currentUser.id, this.userId).subscribe(data => this.getUserProfile());
   }
 }
