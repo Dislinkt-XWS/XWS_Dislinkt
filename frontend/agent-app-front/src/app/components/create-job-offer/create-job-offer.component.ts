@@ -19,8 +19,7 @@ export class CreateJobOfferComponent implements OnInit {
   position: string;
   jobDescription: string;
   requirements: string;
-  isPublished: boolean = true;
-  isPublishedString: string;
+  isPublished: boolean;
   companyId: string;
   companyForOffer: Company;
   myCompanies: any[];
@@ -36,19 +35,12 @@ export class CreateJobOfferComponent implements OnInit {
   }
 
   public create() {
-    if (this.isPublishedString == "Yes") {
-      this.isPublished = true;
-    }
-    else {
-      this.isPublished = false;
-    }
-
     let dto: JobOfferDTO = {
       position: this.position,
       requirements: this.requirements,
       jobDescription: this.jobDescription,
       publisherId: this.currentUser.id,
-      isPublished: true,
+      isPublished: this.isPublished,
       companyId: this.companyForOffer.id
     };
  
