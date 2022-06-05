@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.xml.bind.DatatypeConverter;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -169,5 +171,12 @@ public class UserServiceMongoDb implements UserService {
         } else {
             return user;
         }
+    }
+    @Override
+    public String generateUserApiKey(){
+        SecureRandom random  =new SecureRandom();
+        byte bytes[] = new byte[16];
+        random.nextBytes(bytes);
+        return DatatypeConverter.printHexBinary(bytes).toLowerCase();
     }
 }

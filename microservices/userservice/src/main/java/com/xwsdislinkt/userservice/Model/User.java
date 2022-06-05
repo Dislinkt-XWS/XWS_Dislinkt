@@ -49,6 +49,7 @@ public class User implements UserDetails {
     private List<String > pendingFollowRequests;
     //List of ids following the user
     private List<String > followers;
+    private String userApiKey;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

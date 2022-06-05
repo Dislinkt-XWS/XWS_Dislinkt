@@ -6,12 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="user-service" />
-        <module name="user-common" />
         <module name="postservice" />
-        <module name="messageservice" />
         <module name="proto" />
         <module name="userservice" />
+        <module name="jobofferservice" />
+        <module name="user-service" />
+        <module name="user-common" />
+        <module name="messageservice" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -20,6 +21,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="jobofferservice" options="-parameters" />
       <module name="messageservice" options="-parameters" />
       <module name="postservice" options="-parameters" />
       <module name="user-service" options="-parameters" />

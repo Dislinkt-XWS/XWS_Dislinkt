@@ -11,5 +11,6 @@
 		<module>userservice</module>
 		<module>postservice</module>
 		<module>messageservice</module>
+		<module>jobofferservice</module>
 	</modules>
 </project>

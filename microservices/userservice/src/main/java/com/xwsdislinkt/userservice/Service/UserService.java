@@ -21,4 +21,5 @@ public interface UserService extends UserDetailsService {
     Boolean approveFollow(String userId, String followerId);
     List<User> searchUsers(String criteria);
     User findLoggedInUser();
+    String generateUserApiKey();
 }

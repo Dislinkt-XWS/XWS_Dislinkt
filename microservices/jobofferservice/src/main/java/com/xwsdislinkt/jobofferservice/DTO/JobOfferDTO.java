@@ -1,8 +1,6 @@
-package com.example.agent_api.DTO;
+package com.xwsdislinkt.jobofferservice.DTO;
 
 import lombok.*;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor
