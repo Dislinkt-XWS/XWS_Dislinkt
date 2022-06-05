@@ -22,9 +22,9 @@ export class UserProfileComponent implements OnInit {
   experience: Experience[] = []
   education: Experience[] = []
   workExperience: Experience[] = []
-  skills: Skill[] = []
-  interests: Interest[] = []
-
+  skills: Skill[]
+  interests: Interest[]
+  apitoken: string | null;
   editingMode: boolean = false;
   updatedUser: UserDto
 
@@ -186,4 +186,8 @@ export class UserProfileComponent implements OnInit {
   followUser() {
     this.userService.follow(this.currentUser.id, this.userId).subscribe(data => this.getUserProfile());
   }
+
+  generateApiToken() {
+    this.authService.generateApiToken().subscribe(
+    (data) => this.apitoken = data);
 }

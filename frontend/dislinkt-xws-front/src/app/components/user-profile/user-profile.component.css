@@ -224,3 +224,6 @@ textarea {
 .btn:hover {
   border: none;
 }
+
+.tokenbutton {
+  border-radius: 20px;

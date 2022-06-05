@@ -1,0 +1,20 @@
+.main-box {
+    height: 80vh;
+  }
+  
+  .card-body {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .card-footer {
+    background: none;
+    border: none;
+  }
+  
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  

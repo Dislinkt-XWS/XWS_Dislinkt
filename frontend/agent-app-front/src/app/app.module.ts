@@ -14,10 +14,13 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TokenInterceptor } from './interceptor/token-interceptor';
 import { CreateCompanyComponent } from './components/create-company/create-company.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCheckboxModule} from '@angular/material/checkbox';
 import { ApproveCompanyComponent } from './components/approve-company/approve-company.component';
 import { AllCompaniesComponent } from './components/all-companies/all-companies.component';
 import { CompanyComponent } from './components/company/company.component'
 import { MatSelectModule } from '@angular/material/select';
+import { CreateJobOfferComponent } from './components/create-job-offer/create-job-offer.component';
+import { AllJobOffersComponent } from './components/all-job-offers/all-job-offers.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,9 @@ import { MatSelectModule } from '@angular/material/select';
     CreateCompanyComponent,
     ApproveCompanyComponent,
     AllCompaniesComponent,
-    CompanyComponent
+    CompanyComponent,
+    CreateJobOfferComponent,
+    AllJobOffersComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +45,8 @@ import { MatSelectModule } from '@angular/material/select';
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule
   ],
   providers: [
     {

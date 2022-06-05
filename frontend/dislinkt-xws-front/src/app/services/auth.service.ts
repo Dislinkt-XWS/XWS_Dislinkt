@@ -27,6 +27,10 @@ export class AuthService {
     );
   }
 
+  public generateApiToken() {
+    return this.http.get('/api/users/generateapitoken', { responseType: 'text'});
+  }
+
   public logOut(): void {
     localStorage.removeItem('jwt');
   }

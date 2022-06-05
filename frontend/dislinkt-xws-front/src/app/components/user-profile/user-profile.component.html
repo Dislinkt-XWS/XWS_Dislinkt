@@ -24,6 +24,11 @@
             </div>
 
             <h4 class="my-3">{{ currentUser.bio }}</h4>
+            
+            <div class="d-inline-flex mb-2">
+              <button class="btn btn-warning tokenbutton" (click)="generateApiToken()"> Get API Token</button>
+              <h6>{{apitoken}}</h6>
+            </div>
           </div>
         </div>
         <div class="d-inline-flex px-2 mb-0 followers">
