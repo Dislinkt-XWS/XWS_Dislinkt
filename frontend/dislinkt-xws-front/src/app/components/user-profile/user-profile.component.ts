@@ -22,7 +22,7 @@ export class UserProfileComponent implements OnInit {
   workExperience: Experience[] = []
   skills: Skill[]
   interests: Interest[]
-
+  apitoken: string | null;
   editingMode: boolean = false;
   updatedUser: UserDto
 
@@ -118,5 +118,10 @@ export class UserProfileComponent implements OnInit {
     setTimeout(() => {
       this.userService.getInterestsForUser(this.currentUser.id).subscribe(data => this.skills = data);
     }, 200)
+  }
+  
+  generateApiToken() {
+    this.authService.generateApiToken().subscribe(
+    (data) => this.apitoken = data);
   }
 }
