@@ -1,4 +1,4 @@
-package com.example.agent_api.Model;
+package com.xwsdislinkt.jobofferservice.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

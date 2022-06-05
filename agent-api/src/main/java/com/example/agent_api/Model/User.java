@@ -28,7 +28,7 @@ public class User implements UserDetails {
     private String firstName;
     private String lastName;
     private Role role;
-
+    private String dislinktApiKey;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<Role> roles = new ArrayList<>();

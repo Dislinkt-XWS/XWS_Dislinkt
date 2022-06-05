@@ -42,6 +42,7 @@ public class AuthenticationController {
         }
 
         var user = modelMapper.map(dto, User.class);
+        user.setDislinktApiKey("");
         return new ResponseEntity<>(modelMapper.map(
                 userService.save(user), UserDTO.class), HttpStatus.CREATED);
     }

@@ -10,6 +10,7 @@ import com.xwsdislinkt.userservice.Service.ExperienceService;
 import com.xwsdislinkt.userservice.Service.InterestService;
 import com.xwsdislinkt.userservice.Service.SkillService;
 import com.xwsdislinkt.userservice.Service.UserService;
+import org.apache.coyote.Response;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -172,5 +173,13 @@ public class UserController {
     public ResponseEntity<User> findUserById(@PathVariable("id") String id) {
         var user = userService.get(id).get();
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping(value="/generateapitoken")
+    public ResponseEntity<String> generateApiToken(){
+        var user = userService.findLoggedInUser();
+        user.setUserApiKey(userService.generateUserApiKey());
+        userService.save(user);
+        return new ResponseEntity<>(user.getUserApiKey(), HttpStatus.OK);
     }
 }

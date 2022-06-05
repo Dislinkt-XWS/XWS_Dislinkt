@@ -10,4 +10,5 @@ public interface JobOfferService {
     List<JobOffer> findAll();
     JobOffer save(JobOffer jobOffer);
     void delete(String  id);
+    JobOffer update(JobOffer jobOffer);
 }
