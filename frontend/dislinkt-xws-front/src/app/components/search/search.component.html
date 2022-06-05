@@ -1,32 +1,32 @@
-<app-navigation></app-navigation>
+<app-navigation *ngIf="isLoggedIn"></app-navigation>
 <div class="search">
-    <div class="row py-5">
-      <div class="col-md-2"></div>
-      <div class="col-md-8">
-        <div class="card shadow mt-5 rounded-3" *ngIf="users.length > 0">
-            <h3 class="m-3">Users</h3>
-            <div class="card-body" *ngFor="let user of users">
-                <div class="d-flex comment">
-                    <img class="rounded-circle comment-img" src="https://via.placeholder.com/128/99ccff/0073e6.png?text=A" />
-                    <div class="flex-grow-1 ms-3">
-                        <h5 class="card-title" [routerLink]="['/profile', user.id]"><a>{{user.fullName}}</a></h5>
-                        <p class="card-text text-content">{{user.bio}}</p>
-                    </div>
-                </div>
+  <div class="row py-5">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="card shadow mt-5 rounded-3" *ngIf="users.length > 0">
+        <h3 class="m-3">Users</h3>
+        <div class="card-body" *ngFor="let user of users">
+          <div class="d-flex comment">
+            <img class="rounded-circle comment-img" src="https://via.placeholder.com/128/99ccff/0073e6.png?text=A" />
+            <div class="flex-grow-1 ms-3">
+              <h5 class="card-title" [routerLink]="['/profile', user.id]"><a>{{user.fullName}}</a></h5>
+              <p class="card-text text-content">{{user.bio}}</p>
             </div>
+          </div>
         </div>
-        <div class="card shadow mt-5 rounded-3" *ngIf="jobOffers.length > 0">
-            <h3 class="m-3">Job offers</h3>
-            <div class="card-body" *ngFor="let jobOffer of jobOffers">
-                <div class="d-flex comment">
-                    <img class="rounded-circle comment-img" src="https://via.placeholder.com/128/99ccff/0073e6.png?text=A" />
-                    <div class="flex-grow-1 ms-3">
-                        <h5 class="card-title">{{jobOffer.position}}</h5>
-                        <p class="card-text text-content">{{jobOffer.jobDescription}}</p>
-                    </div>
-                </div>
+      </div>
+      <div class="card shadow mt-5 rounded-3" *ngIf="jobOffers.length > 0">
+        <h3 class="m-3">Job offers</h3>
+        <div class="card-body" *ngFor="let jobOffer of jobOffers">
+          <div class="d-flex comment">
+            <img class="rounded-circle comment-img" src="https://via.placeholder.com/128/99ccff/0073e6.png?text=A" />
+            <div class="flex-grow-1 ms-3">
+              <h5 class="card-title">{{jobOffer.position}}</h5>
+              <p class="card-text text-content">{{jobOffer.jobDescription}}</p>
             </div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
 </div>

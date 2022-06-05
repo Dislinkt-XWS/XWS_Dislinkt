@@ -184,4 +184,21 @@ public class UserServiceMongoDb implements UserService {
     public User findByApiKey(String apiKey) {
         return userRepository.findByUserApiKey(apiKey);
     }
+
+    @Override
+    public Boolean unfollowUser(String userId, String toUnfollowUserId){
+        User user = userRepository.findById(userId).get();
+        User userToFollow = userRepository.findById(toUnfollowUserId).get();
+
+        user.getFollowedUsers().remove(toUnfollowUserId);
+        userToFollow.getFollowers().remove(userId);
+        if(userRepository.save(user) != null && userRepository.save(userToFollow) != null)
+            return true;
+        return false;
+    }
+
+    @Override
+    public List<User> searchAllUsers(String criteria) {
+        return userRepository.searchAllUsers(criteria);
+    }
 }

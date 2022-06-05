@@ -12,8 +12,11 @@
       </button>
       <div class="collapse navbar-collapse menu" id="navmenu">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item mt-2">
-            <a href="#" exact class="nav-link me-3">Discover</a>
+          <li class="nav-item mt-3">
+            <div class="d-none d-sm-block me-5">
+              <input class="form-control search-bar" type="text" placeholder="&#xf52a;  Search "
+                style="font-family:'bootstrap-icons', Arial; height: 25px;" (keyup.enter)="search($event.target)">
+            </div>
           </li>
 
           <li class="nav-item mt-2 separator">

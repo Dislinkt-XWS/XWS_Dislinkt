@@ -37,6 +37,7 @@ export class UserProfileComponent implements OnInit {
 
   userId: string;
   userFromId: User
+  followRequests: User[] = []
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
@@ -51,7 +52,8 @@ export class UserProfileComponent implements OnInit {
   }
 
   showButton() {
-    return this.currentUser.id != this.userId && this.userFromId.followers.indexOf(this.currentUser.id) === -1
+    return this.currentUser.id != this.userId && this.userFromId.followers.indexOf(this.currentUser.id) === -1 &&
+      this.userFromId.followRequests.indexOf(this.currentUser.id) === -1
   }
 
   private getUserProfile() {
@@ -64,6 +66,7 @@ export class UserProfileComponent implements OnInit {
         this.userService.getSkillsForUser(this.userId).subscribe(data => this.skills = data);
         this.userService.getInterestsForUser(this.userId).subscribe(data => this.interests = data);
         this.showButton();
+        this.showUnfollow();
       }, 200);
     });
   }
@@ -72,6 +75,7 @@ export class UserProfileComponent implements OnInit {
     this.authService.getCurrentUser().subscribe(data => {
       this.currentUser = data;
       this.fullNameNav = this.currentUser.fullName
+      this.getFollowRequests();
     });
   }
 
@@ -184,10 +188,48 @@ export class UserProfileComponent implements OnInit {
   }
 
   followUser() {
-    this.userService.follow(this.currentUser.id, this.userId).subscribe(data => this.getUserProfile());
+    this.userService.follow(this.currentUser.id, this.userId).subscribe(data => window.location.reload());
   }
 
   generateApiToken() {
     this.authService.generateApiToken().subscribe(
-    (data) => this.apitoken = data);
+      (data) => this.apitoken = data);
+  }
+
+  isPrivate() {
+    if (this.userId != this.currentUser.id && this.userFromId.isPrivate &&
+      this.userFromId.followers.indexOf(this.currentUser.id) === -1)
+      return true;
+
+    return false;
+  }
+
+  getFollowRequests() {
+    let allUsers: User[] = [];
+    this.authService.getAllUsers().subscribe(data => {
+      allUsers = data;
+      for (let id of this.currentUser.followRequests) {
+        for (let user of allUsers) {
+          if (id === user.id)
+            this.followRequests.push(user);
+        }
+      }
+    });
+  }
+
+  approveFollow(id: string) {
+    this.userService.approveFollow(this.currentUser.id, id).subscribe(data => this.getFollowRequests());
+  }
+
+  unfollowUser() {
+    this.userService.unfollow(this.currentUser.id, this.userId).subscribe(data => window.location.reload());
+  }
+
+  showUnfollow() {
+    return this.currentUser.id != this.userId && this.userFromId.followers.indexOf(this.currentUser.id) !== -1
+  }
+
+  show() {
+    return this.currentUser.id != this.userId && this.userFromId.followRequests.indexOf(this.currentUser.id) !== -1
+  }
 }

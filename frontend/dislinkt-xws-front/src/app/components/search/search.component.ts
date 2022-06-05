@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { JobOffer } from 'src/app/model/jobOffer';
 import { User } from 'src/app/model/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { JobOfferService } from 'src/app/services/job-offer.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -14,13 +15,21 @@ export class SearchComponent implements OnInit {
 
   users: User[]
   jobOffers: JobOffer[];
+  currentUser: User;
+  isLoggedIn: boolean = false
 
-  constructor(private route: ActivatedRoute, private userService: UserService, private jobOfferService: JobOfferService) { }
+  constructor(private route: ActivatedRoute, private userService: UserService, private jobOfferService: JobOfferService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.authService.getCurrentUser().subscribe(data => {
+      this.currentUser = data;
+      this.isLoggedIn = true;
+    }, (error) => this.isLoggedIn = false);
+
     let criteria = String(this.route.snapshot.paramMap.get('criteria'))
     if (criteria) {
-      this.searchUsers(criteria);
+      this.searchAllUsers(criteria);
       this.searchJobOffers(criteria);
     }
   }
@@ -30,7 +39,7 @@ export class SearchComponent implements OnInit {
       users => {
         this.users = users as User[]
         console.log(this.users);
-      }  
+      }
     );
   }
 
@@ -39,7 +48,16 @@ export class SearchComponent implements OnInit {
       jobOffers => {
         this.jobOffers = jobOffers as JobOffer[]
         console.log(this.jobOffers);
-      }  
+      }
+    );
+  }
+
+  searchAllUsers(criteria: String) {
+    this.userService.searchAllUsers(criteria).subscribe(
+      users => {
+        this.users = users as User[]
+        console.log(this.users);
+      }
     );
   }
 

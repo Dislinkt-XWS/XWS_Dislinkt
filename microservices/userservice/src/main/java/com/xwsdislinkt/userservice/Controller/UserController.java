@@ -182,4 +182,29 @@ public class UserController {
         userService.update(user);
         return new ResponseEntity<>(user.getUserApiKey(), HttpStatus.OK);
     }
+
+    @PostMapping(value = "/unfollow")
+    public ResponseEntity<String> unfollow(@RequestBody Map<String, String> userToUnfollowId){
+        var user = userService.findLoggedInUser();
+        System.out.println("Controller logged in user id: " + user.getId());
+        System.out.println("Controller user to unfollow id: " + userToUnfollowId);
+        if(user == null){
+            return new ResponseEntity<>("User must be logged in to unfollow other accounts", HttpStatus.BAD_REQUEST);
+        }
+
+        if(userService.unfollowUser(user.getId(), userToUnfollowId.get("userToUnfollowId"))){
+            return new ResponseEntity<>("Successfully unfollowed user. ", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Couldnt execute the unfollow operation.", HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping(value="/search-all/{criteria}")
+    public ResponseEntity<List<UserDTO>> searchAll(@PathVariable("criteria") String criteria) {
+        var users = userService.searchAllUsers(criteria);
+        List<UserDTO> userDTOS = users
+                .stream()
+                .map(user -> modelMapper.map(user, UserDTO.class))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(userDTOS, HttpStatus.OK);
+    }
 }
