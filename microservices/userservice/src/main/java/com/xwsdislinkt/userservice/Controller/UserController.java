@@ -179,7 +179,7 @@ public class UserController {
     public ResponseEntity<String> generateApiToken(){
         var user = userService.findLoggedInUser();
         user.setUserApiKey(userService.generateUserApiKey());
-        userService.save(user);
+        userService.update(user);
         return new ResponseEntity<>(user.getUserApiKey(), HttpStatus.OK);
     }
 }
