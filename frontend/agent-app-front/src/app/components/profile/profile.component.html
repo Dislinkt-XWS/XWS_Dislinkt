@@ -58,30 +58,25 @@
 </nav>
 <!-- END NAVBAR -->
 
-<div class="homepage mt-5">
-  <div class="container">
-    <div class="row g-4">
-      <div class="col-lg-4 col-md-6 d-flex align-items-stretch" *ngFor="let company of companies">
-        <div class="box card">
-          <div class="propertyInfo">
-            <h4 class="row">
-              <div class="col-md" style="text-align: start">
-                <h4 id="name"> {{company.name}} </h4>
-              </div>
-            </h4>
-            <span> {{company.description | slice:0:100}}... </span>
-            <br />
-            <div class="row mt-5">
-              <span><b> Established: </b> {{company.yearOfEstablishment}}</span>
+<div class="row main-box d-flex justify-content-center bg-light">
+  <div class="col-md-3"></div>
+  <div class="col-md-6 d-flex align-items-center">
+    <div class="card shadow-sm w-100">
+      <div class="card-body ">
+        <h4 class="mb-4" style="background-color: crimson; padding: 8px; color: white;">Update your dislinkt Api key</h4>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="d-flex row justify-content-center">
+              <mat-form-field class="w-75">
+                <mat-label>Api Key</mat-label>
+                <input matInput type="text" [(ngModel)]="apiKey">
+              </mat-form-field>
             </div>
-            <div class="row mt-1">
-              <span><b>{{company.address}} {{company.city}}, {{company.country}}</b></span>
-            </div>
-          </div>
-          <a class="stretched-link" (click)="openCompanyPage(company.id)"></a>
-        </div>
+
+      <div class="card-footer d-flex justify-content-center">
+        <button class="btn btn-danger rounded-5 mb-4 w-50" (click)="update()">Update Api Key</button>
       </div>
     </div>
   </div>
-
+  <div class="col-md-3"></div>
 </div>

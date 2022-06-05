@@ -7,6 +7,7 @@ import { CompanyComponent } from './components/company/company.component';
 import { CreateCompanyComponent } from './components/create-company/create-company.component';
 import { CreateJobOfferComponent } from './components/create-job-offer/create-job-offer.component';
 import { LoginComponent } from './components/login/login.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 
 const routes: Routes = [
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'my-companies', component: AllCompaniesComponent },
   { path: '', pathMatch: "full", component: LoginComponent },
   { path: 'create-job-offer', component: CreateJobOfferComponent},
-  { path: 'job-offers', component: AllJobOffersComponent }
+  { path: 'job-offers', component: AllJobOffersComponent },
+  {path: 'profile', component: ProfileComponent}
 ];
 
 @NgModule({
