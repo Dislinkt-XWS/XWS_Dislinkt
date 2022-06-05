@@ -1,8 +1,0 @@
-com\example\messageservice\MessageserviceApplication.class
-com\example\messageservice\Service\MessageService.class
-com\example\messageservice\Model\Message.class
-com\example\messageservice\ApplicationConfig.class
-com\example\messageservice\Repository\MessageRepository.class
-com\example\messageservice\DTO\MessageDTO.class
-com\example\messageservice\Service\ServiceImpl\MessageServiceMongoDb.class
-com\example\messageservice\Controller\MessageController.class
