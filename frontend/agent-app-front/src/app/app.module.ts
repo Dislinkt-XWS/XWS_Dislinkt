@@ -18,6 +18,8 @@ import { ApproveCompanyComponent } from './components/approve-company/approve-co
 import { AllCompaniesComponent } from './components/all-companies/all-companies.component';
 import { CompanyComponent } from './components/company/company.component'
 import { MatSelectModule } from '@angular/material/select';
+import { CreateJobOfferComponent } from './components/create-job-offer/create-job-offer.component';
+import { AllJobOffersComponent } from './components/all-job-offers/all-job-offers.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { MatSelectModule } from '@angular/material/select';
     CreateCompanyComponent,
     ApproveCompanyComponent,
     AllCompaniesComponent,
-    CompanyComponent
+    CompanyComponent,
+    CreateJobOfferComponent,
+    AllJobOffersComponent
   ],
   imports: [
     BrowserModule,
