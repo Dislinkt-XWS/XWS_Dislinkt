@@ -47,4 +47,14 @@ public class JobOfferController {
                 .collect(Collectors.toList());
         return new ResponseEntity<>(jobOfferDTOS, HttpStatus.OK);
     }
+
+    @GetMapping()
+    public ResponseEntity<List<JobOfferDTO>> findAllJobOffers() {
+        var jobOffers = jobOfferService.findAll();
+        List<JobOfferDTO> jobOfferDTOS = jobOffers
+                .stream()
+                .map(jobOffer -> modelMapper.map(jobOffer, JobOfferDTO.class))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(jobOfferDTOS, HttpStatus.OK);
+    }
 }

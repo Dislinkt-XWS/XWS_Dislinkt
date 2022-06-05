@@ -190,4 +190,5 @@ export class UserProfileComponent implements OnInit {
   generateApiToken() {
     this.authService.generateApiToken().subscribe(
     (data) => this.apitoken = data);
+  }
 }

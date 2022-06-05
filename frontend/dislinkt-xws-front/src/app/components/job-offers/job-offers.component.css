@@ -1,0 +1,43 @@
+a {
+    text-decoration: none;
+    color: #282828;
+  }
+  
+  .container {
+    width: 80%;
+  }
+  
+  .box {
+    width: 100%;
+    transition: all ease-in-out 0.3s;
+    background: #fefefe;
+    box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.1);
+    border-radius: 18px;
+    border-bottom: 5px solid rgb(32, 137, 236);
+  }
+  
+  .box h4 {
+    font-weight: 700;
+    margin-bottom: 15px;
+    font-size: 24px;
+    color: rgb(32, 137, 236);
+  }
+  .box h4 a {
+    color: #282828;
+    transition: ease-in-out 0.3s;
+  }
+  .box p {
+    line-height: 24px;
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+  .box:hover {
+    transform: translateY(-10px);
+    border-color: rgb(32, 137, 236);
+    cursor: pointer;
+  }
+  
+  .propertyInfo {
+    padding: 50px 30px;
+  }
+  
