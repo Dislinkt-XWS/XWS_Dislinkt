@@ -24,9 +24,10 @@ public class InterestController {
 
     @PostMapping
     public ResponseEntity<InterestDTO> addInterest(@RequestBody @Validated InterestDTO dto) {
-        var interest = modelMapper.map(dto, Interest.class);
         var user = userService.findLoggedInUser();
+        dto.setUserId(user.getId());
 
+        var interest = modelMapper.map(dto, Interest.class);
         interest = interestService.save(interest);
         user.getInterests().add(interest.getId());
         userService.update(user);

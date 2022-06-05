@@ -15,6 +15,8 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     FormsModule,
     MatSnackBarModule,
-    MatInputModule
+    MatInputModule,
+    MatChipsModule,
+    MatIconModule
   ],
   providers: [
     {

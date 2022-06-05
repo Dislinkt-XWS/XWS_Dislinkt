@@ -131,15 +131,21 @@
                 </small>
               </li>
               <li style="font-weight: 600;" *ngIf="interests.length !== 0">Interests<br />
-                <div class="mt-1 ms-4">
-                  <span class="skills-interests me-4 mb-2" *ngFor="let interest of interests">
-                    {{interest.name}}</span>
+                <div class="mt-2 ms-4">
+                  <!-- <span class="skills-interests me-4 mb-2" *ngFor="let interest of interests">
+                    {{interest.name}}</span> -->
+                  <mat-chip-list aria-label="Fish selection">
+                    <mat-chip *ngFor="let interest of interests">{{interest.name}}</mat-chip>
+                  </mat-chip-list>
                 </div>
               </li>
               <li style="font-weight: 600;" *ngIf="skills.length !== 0">Skills<br />
-                <div class="mt-1 ms-4">
-                  <span class="skills-interests me-4 mb-2" *ngFor="let skill of skills">
-                    {{skill.name}}</span>
+                <div class="mt-2 ms-4">
+                  <!-- <span class="skills-interests me-4 mb-2" *ngFor="let skill of skills">
+                    {{skill.name}}</span> -->
+                  <mat-chip-list aria-label="Fish selection">
+                    <mat-chip *ngFor="let skill of skills">{{skill.name}}</mat-chip>
+                  </mat-chip-list>
                 </div>
               </li>
             </ul>
@@ -186,7 +192,7 @@
           <h3>Experience</h3>
 
           <div>
-            <h6 class="mt-4">EDUCATION</h6>
+            <h6 class="mt-4">EDUCATION <button class="btn"><i class="bi bi-plus-circle-fill mt-1"></i></button></h6>
             <hr style="width: 300px; margin-left: 1.5rem; margin-top: 0; margin-bottom: 20px;">
             <ul style="list-style: none;">
               <li *ngFor="let e of education" class="experience-edit">
@@ -212,7 +218,8 @@
           </div>
 
           <div>
-            <h6 class="mt-4">WORK EXPERIENCE</h6>
+            <h6 class="mt-4">WORK EXPERIENCE <button class="btn"><i class="bi bi-plus-circle-fill mt-1"></i></button>
+            </h6>
             <hr style="width: 300px; margin-left: 1.5rem; margin-top: 0; margin-bottom: 20px;">
             <ul class="style_1">
               <li *ngFor="let e of workExperience" class="experience-edit mb-2">
@@ -272,19 +279,39 @@
                 </div>
               </li>
               <li style="font-weight: 600;">Interests<br />
-                <div class="mt-1 ms-2">
-                  <span class="skills-interests mx-2 mb-2" *ngFor="let interest of interests">
-                    {{interest.name}}</span>
-                  <input type="text" class="form-control experience-edit mb-2" placeholder="Phone"
-                    [(ngModel)]="currentUser.phoneNumber">
+                <div class="mt-1 ms-2 w-100">
+                  <mat-form-field class="example-chip-list w-100">
+                    <mat-label>Interests</mat-label>
+                    <mat-chip-list #interestList aria-label="Skillls">
+                      <mat-chip *ngFor="let interest of interests" (removed)="removeInterest(interest)">
+                        {{interest.name}}
+                        <button matChipRemove>
+                          <mat-icon>cancel</mat-icon>
+                        </button>
+                      </mat-chip>
+                      <input placeholder="New interest..." [matChipInputFor]="interestList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                        (matChipInputTokenEnd)="addInterest($event)">
+                    </mat-chip-list>
+                  </mat-form-field>
                 </div>
               </li>
               <li style="font-weight: 600;">Skills<br />
-                <div class="mt-1 ms-2">
-                  <span class="skills-interests mx-2 mb-2" *ngFor="let skill of skills">
-                    {{skill.name}}</span>
-                  <input type="text" class="form-control experience-edit mb-2" placeholder="Phone"
-                    [(ngModel)]="currentUser.phoneNumber">
+                <div class="mt-1 ms-2 w-100">
+                  <mat-form-field class="example-chip-list w-100">
+                    <mat-label>Skills</mat-label>
+                    <mat-chip-list #skillList aria-label="Skillls">
+                      <mat-chip *ngFor="let skill of skills" (removed)="removeSkill(skill)">
+                        {{skill.name}}
+                        <button matChipRemove>
+                          <mat-icon>cancel</mat-icon>
+                        </button>
+                      </mat-chip>
+                      <input placeholder="New skill..." [matChipInputFor]="skillList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                        (matChipInputTokenEnd)="addSkill($event)">
+                    </mat-chip-list>
+                  </mat-form-field>
                 </div>
               </li>
             </ul>

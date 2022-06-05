@@ -27,4 +27,32 @@ export class UserService {
   public updateProfile(user: UserDto) {
     return this.http.put('api/users', user);
   }
+
+  public addEducation(experience: any) {
+    return this.http.post('api/experiences/education', experience);
+  }
+
+  public addWork(work: any) {
+    return this.http.post('api/experiences/work', work);
+  }
+
+  public updateExperience(experience: any) {
+    return this.http.put('api/experience', experience);
+  }
+
+  public addSkill(skill: any) {
+    return this.http.post('api/skills', skill);
+  }
+
+  public removeSkill(id: string) {
+    return this.http.delete('api/skills/' + id);
+  }
+
+  public addInterest(interest: any) {
+    return this.http.post('api/interests', interest);
+  }
+
+  public removeInterest(id: string) {
+    return this.http.delete('api/interests/' + id);
+  }
 }
