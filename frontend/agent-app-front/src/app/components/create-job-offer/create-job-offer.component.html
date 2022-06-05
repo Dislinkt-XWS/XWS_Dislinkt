@@ -79,10 +79,7 @@
                 </mat-form-field>
               </div>
               <div class="row d-flex justify-content-center">
-                <mat-form-field class="w-75">
-                  <mat-label>Publish</mat-label>
-                  <input matInput type="text" [(ngModel)]="isPublishedString">
-                </mat-form-field>
+                <mat-checkbox [(ngModel)]="isPublished" (ngModelChange)="isPublishedCheck($event)"> Publish </mat-checkbox>
               </div>
               <div class="row d-flex justify-content-center">
                 <mat-form-field class="w-75">

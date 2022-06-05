@@ -14,6 +14,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TokenInterceptor } from './interceptor/token-interceptor';
 import { CreateCompanyComponent } from './components/create-company/create-company.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCheckboxModule} from '@angular/material/checkbox';
 import { ApproveCompanyComponent } from './components/approve-company/approve-company.component';
 import { AllCompaniesComponent } from './components/all-companies/all-companies.component';
 import { CompanyComponent } from './components/company/company.component'
@@ -44,7 +45,8 @@ import { AllJobOffersComponent } from './components/all-job-offers/all-job-offer
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule
   ],
   providers: [
     {
