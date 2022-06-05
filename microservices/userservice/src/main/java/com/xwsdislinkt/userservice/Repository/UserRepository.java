@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface UserRepository extends MongoRepository<User, String > {
     @Query("{ $or: [ { 'username' : ?0 }, { 'email' : ?0 } ]}")
-    public User findByUsernameOrEmail(String username);
+    User findByUsernameOrEmail(String username);
 
     @Query("{ $or: [ { 'username' : { '$regex' : ?0, '$options' : 'i' }, 'isPrivate' : false }, { 'fullName' : { '$regex' : ?0, '$options' : 'i' }, 'isPrivate' : false } ]}")
     List<User> searchUsers(String criteria);

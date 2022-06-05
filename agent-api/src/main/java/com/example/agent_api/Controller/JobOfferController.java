@@ -43,7 +43,7 @@ public class JobOfferController {
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<JobOfferDTO> entity = new HttpEntity<>(dto, headers);
             RestTemplate restTemplate = new RestTemplate();
-            var response = restTemplate.exchange("http://localhost:8777/api/joboffers", HttpMethod.POST, entity, JobOfferDTO.class);
+            var response = restTemplate.exchange("http://localhost:8777/api/joboffers/external", HttpMethod.POST, entity, JobOfferDTO.class);
             if(response.getStatusCode().is4xxClientError()) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }

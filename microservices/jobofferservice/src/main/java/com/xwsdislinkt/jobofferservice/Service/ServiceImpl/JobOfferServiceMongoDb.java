@@ -10,6 +10,8 @@ import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class JobOfferServiceMongoDb implements JobOfferService {
     @Autowired
@@ -28,5 +30,10 @@ public class JobOfferServiceMongoDb implements JobOfferService {
         ApiKeyRequest request = ApiKeyRequest.newBuilder().setApiKey(apiKey).build();
         ApiKeyResponse response = userServiceStub.findByApiKey(request);
         return response.getUserId();
+    }
+
+    @Override
+    public List<JobOffer> searchOffers(String criteria) {
+        return jobOfferRepository.searchOffers(criteria);
     }
 }
