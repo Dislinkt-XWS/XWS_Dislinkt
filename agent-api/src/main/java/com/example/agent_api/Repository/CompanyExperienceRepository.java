@@ -9,12 +9,12 @@ import java.util.List;
 
 @Repository
 public interface CompanyExperienceRepository extends MongoRepository<CompanyExperience, String> {
-    @Query("{'experienceType' : 'COMMENT'}")
+    @Query("{$and: [ { 'experienceType' : 'COMMENT' }, { 'companyId' : ?0 } ]}")
     List<CompanyExperience> findCommentsByCompany(String companyId);
 
-    @Query("{'experienceType' : 'SALARY'}")
+    @Query("{$and: [ {'experienceType' : 'SALARY'}, { 'companyId' : ?0 } ]}")
     List<CompanyExperience> findSalariesByCompany(String companyId);
 
-    @Query("{'experienceType' : 'INTERVIEW'}")
+    @Query("{$and: [ {'experienceType' : 'INTERVIEW'}, { 'companyId' : ?0 } ]}")
     List<CompanyExperience> findInterviewsByCompany(String companyId);
 }

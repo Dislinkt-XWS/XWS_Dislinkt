@@ -1,0 +1,69 @@
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+  <div class="container">
+    <h1 class="logo navbar-brand mt-2">
+      <a href="/companies">AppName</a>
+    </h1>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse menu" id="navmenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item mt-2">
+          <a href="/companies" exact class="nav-link me-3">
+            <i class="bi bi-house me-2" style="font-size: 20px;"></i>
+            All Companies
+          </a>
+        </li>
+        <li class="nav-item mt-2">
+          <a href="/my-companies" exact class="nav-link me-3">
+            <i class="bi bi-building me-2" style="font-size: 20px;"></i>
+            My Companies
+          </a>
+        </li>
+        <li class="nav-item mt-2">
+          <a href="/register-company" exact class="nav-link me-3">
+            <i class="bi bi-cloud-plus me-2" style="font-size: 20px;"></i>
+            Create Company
+          </a>
+        </li>
+        <li class="nav-item mt-2">
+          <a href="#" exact class="nav-link" (click)="logOut()">
+            <i class="bi bi-box-arrow-in-right me-2" style="font-size: 20px;"></i>
+            Sign out
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- END NAVBAR -->
+
+<div class="homepage mt-5">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch" *ngFor="let company of companies">
+        <div class="box card">
+          <div class="propertyInfo">
+            <h4 class="row">
+              <div class="col-md" style="text-align: start">
+                <h4 id="name"> {{company.name}} </h4>
+              </div>
+            </h4>
+            <span> {{company.description | slice:0:100}}... </span>
+            <br />
+            <div class="row mt-5">
+              <span><b> Established: </b> {{company.yearOfEstablishment}}</span>
+            </div>
+            <div class="row mt-1">
+              <span><b>{{company.address}} {{company.city}}, {{company.country}}</b></span>
+            </div>
+          </div>
+          <a class="stretched-link" (click)="openCompanyPage(company.id)"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

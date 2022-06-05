@@ -11,4 +11,7 @@ import java.util.List;
 public interface CompanyRepository extends MongoRepository<Company, String> {
     @Query("{ 'status' : 'PENDING' }")
     List<Company> getAllPendingCompanies();
+
+    @Query("{'ownerId': ?0}")
+    List<Company> findCompaniesByOwner(String id);
 }

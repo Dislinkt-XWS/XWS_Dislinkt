@@ -28,8 +28,12 @@ public class ExperienceController {
     ModelMapper modelMapper;
 
     @PostMapping
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('USER')" + " || hasAuthority('OWNER')")
     public ResponseEntity<?> commentOnCompany(@RequestBody CommentDTO dto) {
+        var company = companyService.get(dto.getCompanyId()).get();
+        if (dto.getUserId() == company.getOwnerId())
+            return new ResponseEntity<>("Owners can't leave reviews for their companies!", HttpStatus.BAD_REQUEST);
+
         var comment = experienceService.save(modelMapper.map(dto, CompanyExperience.class));
         return new ResponseEntity<>(modelMapper.map(comment, CommentDTO.class), HttpStatus.CREATED);
     }

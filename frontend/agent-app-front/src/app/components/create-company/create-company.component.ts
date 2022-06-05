@@ -55,8 +55,9 @@ export class CreateCompanyComponent implements OnInit {
     )
   }
 
-  public logout() {
+  public logOut() {
     this.authService.logOut();
+    window.location.href = "/login"
   }
 
 }

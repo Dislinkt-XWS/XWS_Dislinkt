@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "api/companies")
@@ -88,4 +89,38 @@ public class CompanyController {
     public List<Company> getPendingCompanies() {
         return companyService.getAllPendingCompanies();
     }
+
+    @GetMapping(value = "/user")
+    @PreAuthorize("hasAuthority('OWNER')")
+    public ResponseEntity<List<Company>> getCompaniesForOwner(){
+        var user = userService.findLoggedInUser();
+        return new ResponseEntity<>(companyService.findCompaniesByOwner(user.getId()), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Company> getCompanyById(@PathVariable String id){
+        return new ResponseEntity<>(companyService.get(id).get(), HttpStatus.OK);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

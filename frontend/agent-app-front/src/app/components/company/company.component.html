@@ -1,0 +1,357 @@
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+  <div class="container">
+    <h1 class="logo navbar-brand mt-2">
+      <a href="/companies">AppName</a>
+    </h1>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse menu" id="navmenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item mt-2">
+          <a href="/companies" exact class="nav-link me-3">
+            <i class="bi bi-house me-2" style="font-size: 20px;"></i>
+            All Companies
+          </a>
+        </li>
+        <li class="nav-item mt-2">
+          <a href="/my-companies" exact class="nav-link me-3">
+            <i class="bi bi-building me-2" style="font-size: 20px;"></i>
+            My Companies
+          </a>
+        </li>
+        <li class="nav-item mt-2">
+          <a href="/register-company" exact class="nav-link me-3">
+            <i class="bi bi-cloud-plus me-2" style="font-size: 20px;"></i>
+            Create Company
+          </a>
+        </li>
+        <li class="nav-item mt-2">
+          <a href="#" exact class="nav-link" (click)="logOut()">
+            <i class="bi bi-box-arrow-in-right me-2" style="font-size: 20px;"></i>
+            Sign out
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- END NAVBAR -->
+
+<div class="container mt-5 py-4">
+  <div class="row d-flex justify-content-center" style="text-align: center">
+    <h1>{{company.name}}</h1>
+  </div>
+  <hr class="mb-4">
+  <div class="mb-4 buttons">
+    <button class="btn btn-danger rounded-5 me-3" [ngClass]="isGeneral ? 'active' : ''" (click)="showGeneral()">Company
+      info</button>
+    <button class="btn btn-danger rounded-5 me-3" [ngClass]="isComments ? 'active' : ''"
+      (click)="showComments()">Comments</button>
+    <button class="btn btn-danger rounded-5 me-3" [ngClass]="isSalaries ? 'active' : ''"
+      (click)="showSalaries()">Salaries</button>
+    <button class="btn btn-danger rounded-5 me-3" [ngClass]="isInterview ? 'active' : ''"
+      (click)="showInterview()">Interview experience</button>
+    <button class="btn btn-danger rounded-5" data-bs-toggle="modal" data-bs-target="#exampleModal"
+      *ngIf="currentUser.id === company.ownerId">Update company
+      info</button>
+  </div>
+  <div class="row general-info mt-4">
+    <div class="col-md-3">
+      <span class="details"><b>Year of establishment: </b>{{company.yearOfEstablishment}}</span>
+    </div>
+    <div class="col-md-3">
+      <span class="details"><b>Email: </b>{{company.email}}</span>
+    </div>
+    <div class="col-md-3">
+      <span class="details"><b>Phone number: </b>{{company.phoneNumber}}</span>
+    </div>
+    <div class="col-md-3">
+      <span class="details"><b>Address: </b>{{company.address}} {{company.city}}, {{company.country}}</span>
+    </div>
+  </div>
+
+  <div class="box card mt-5 p-4" *ngIf="isGeneral">
+    <div class="propertyInfo mb-4">
+      <span class="description"> {{company.description}} </span>
+    </div>
+  </div>
+
+  <div *ngIf="isComments" class="mb-5">
+    <div class="box comments card mt-5 p-4" *ngIf="currentUser.id !== company.ownerId">
+      <div class="propertyInfo mb-4">
+        <div class="row mb-4">
+          <div class="col-md" style="text-align: start">
+            <h4 id="name"> {{currentUser.firstName}} {{currentUser.lastName}} </h4>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>Job Position</mat-label>
+              <mat-select [(ngModel)]="workPosition">
+                <mat-option [value]="0">HR</mat-option>
+                <mat-option [value]="1">Backend Developer</mat-option>
+                <mat-option [value]="2">Frontend Developer</mat-option>
+                <mat-option [value]="3">Tester</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>Level of Expertise</mat-label>
+              <mat-select [(ngModel)]="experienceLevel">
+                <mat-option [value]="0">Junior</mat-option>
+                <mat-option [value]="1">Medior</mat-option>
+                <mat-option [value]="2">Senior</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-form-field appearance="fill" style="width: 100%;">
+          <mat-label>Leave a comment</mat-label>
+          <textarea matInput [(ngModel)]="textContent"></textarea>
+        </mat-form-field>
+        <div class="d-flex justify-content-end mt-1">
+          <button class="btn btn-danger rounded-5" (click)="comment()">Comment</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="box comments card mt-5 p-4" *ngFor="let comment of comments">
+      <div class="propertyInfo mb-4">
+        <div class="row">
+          <div class="col-md" style="text-align: start">
+            <h4 id="name"> {{comment.userId}} </h4>
+          </div>
+          <div class="col-md mt-1" style="text-align: end;">
+            <span class="description"> {{comment.datePosted | date: "dd.MM.yyyy."}} </span>
+          </div>
+        </div>
+        <div class="row mb-5">
+          <div class="col-md-4">
+            <span><b>Job Position: </b>{{comment.workPosition}}</span>
+          </div>
+          <div class="col-md-5">
+            <span><b>Level of Expertise: </b>{{comment.experienceLevel}}</span>
+          </div>
+        </div>
+        <span class="description"> {{comment.textContent}} </span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isInterview" class="mb-5">
+    <div class="box comments card mt-5 p-4" *ngIf="currentUser.id !== company.ownerId">
+      <div class="propertyInfo mb-4">
+        <div class="row mb-4">
+          <div class="col-md" style="text-align: start">
+            <h4 id="name"> {{currentUser.firstName}} {{currentUser.lastName}} </h4>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>Job Position</mat-label>
+              <mat-select [(ngModel)]="workPosition">
+                <mat-option [value]="0">HR</mat-option>
+                <mat-option [value]="1">Backend Developer</mat-option>
+                <mat-option [value]="2">Frontend Developer</mat-option>
+                <mat-option [value]="3">Tester</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>Level of Expertise</mat-label>
+              <mat-select [(ngModel)]="experienceLevel">
+                <mat-option [value]="0">Junior</mat-option>
+                <mat-option [value]="1">Medior</mat-option>
+                <mat-option [value]="2">Senior</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-form-field appearance="fill" style="width: 100%;">
+          <mat-label>Leave a review</mat-label>
+          <textarea matInput [(ngModel)]="textContent"></textarea>
+        </mat-form-field>
+        <div class="d-flex justify-content-end mt-1">
+          <button class="btn btn-danger rounded-5" (click)="interview()">Add review</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="box comments card mt-5 p-4" *ngFor="let comment of interviews">
+      <div class="propertyInfo mb-4">
+        <div class="row">
+          <div class="col-md" style="text-align: start">
+            <h4 id="name"> {{comment.userId}} </h4>
+          </div>
+          <div class="col-md mt-1" style="text-align: end;">
+            <span class="description"> {{comment.datePosted | date: "dd.MM.yyyy."}} </span>
+          </div>
+        </div>
+        <div class="row mb-5">
+          <div class="col-md-4">
+            <span><b>Job Position: </b>{{comment.workPosition}}</span>
+          </div>
+          <div class="col-md-5">
+            <span><b>Level of Expertise: </b>{{comment.experienceLevel}}</span>
+          </div>
+        </div>
+        <span class="description"> {{comment.textContent}} </span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isSalaries" class="mb-5">
+    <div class="box comments card mt-5 p-4" *ngIf="currentUser.id !== company.ownerId">
+      <div class="propertyInfo mb-4">
+        <div class="row mb-4">
+          <div class="col-md" style="text-align: start">
+            <h4 id="name"> {{currentUser.firstName}} {{currentUser.lastName}} </h4>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>Job Position</mat-label>
+              <mat-select [(ngModel)]="workPosition">
+                <mat-option [value]="0">HR</mat-option>
+                <mat-option [value]="1">Backend Developer</mat-option>
+                <mat-option [value]="2">Frontend Developer</mat-option>
+                <mat-option [value]="3">Tester</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>Level of Expertise</mat-label>
+              <mat-select [(ngModel)]="experienceLevel">
+                <mat-option [value]="0">Junior</mat-option>
+                <mat-option [value]="1">Medior</mat-option>
+                <mat-option [value]="2">Senior</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>Add salary</mat-label>
+              <input type="number" matInput [(ngModel)]="salary">
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-form-field appearance="fill" style="width: 100%;">
+          <mat-label>Leave a review</mat-label>
+          <textarea matInput [(ngModel)]="textContent"></textarea>
+        </mat-form-field>
+        <div class="d-flex justify-content-end mt-1">
+          <button class="btn btn-danger rounded-5" (click)="addSalary()">Add Salary</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="box comments card mt-5 p-4" *ngFor="let comment of salaries">
+      <div class="propertyInfo mb-4">
+        <div class="row">
+          <div class="col-md" style="text-align: start">
+            <h4 id="name"> {{comment.userId}} </h4>
+          </div>
+          <div class="col-md mt-1" style="text-align: end;">
+            <span class="description"> {{comment.datePosted | date: "dd.MM.yyyy."}} </span>
+          </div>
+        </div>
+        <div class="row mb-5">
+          <div class="col-md-4">
+            <span><b>Job Position: </b>{{comment.workPosition}}</span>
+          </div>
+          <div class="col-md-5">
+            <span><b>Level of Expertise: </b>{{comment.experienceLevel}}</span>
+          </div>
+        </div>
+        <span class="description"> <b>Salary: </b>{{comment.salary}} </span>
+        <br>
+        <span class="description"> {{comment.textContent}} </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UPDATE COMPANY -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update info</h5>
+        <button type="button" class="close btn" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="font-size: 18px;">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="d-flex row justify-content-center">
+              <mat-form-field class="w-75">
+                <mat-label>Name</mat-label>
+                <input matInput type="text" [(ngModel)]="company.name">
+              </mat-form-field>
+            </div>
+            <div class="d-flex row justify-content-center">
+              <mat-form-field class="w-75">
+                <mat-label>Description</mat-label>
+                <textarea rows="10" matInput type="text" [(ngModel)]="company.description"></textarea>
+              </mat-form-field>
+            </div>
+            <div class="row d-flex justify-content-center">
+              <mat-form-field class="w-75">
+                <mat-label>Year of establishment</mat-label>
+                <input matInput type="number" [(ngModel)]="company.yearOfEstablishment">
+              </mat-form-field>
+            </div>
+            <div class="row d-flex justify-content-center">
+              <mat-form-field class="w-75">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" [(ngModel)]="company.email">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row d-flex justify-content-center">
+              <mat-form-field class="w-75">
+                <mat-label>Phone number</mat-label>
+                <input matInput type="string" [(ngModel)]="company.phoneNumber">
+              </mat-form-field>
+            </div>
+            <div class="row d-flex justify-content-center">
+              <mat-form-field class="w-75">
+                <mat-label>Address</mat-label>
+                <input matInput type="text" [(ngModel)]="company.address">
+              </mat-form-field>
+            </div>
+            <div class="row d-flex justify-content-center">
+              <mat-form-field class="w-75">
+                <mat-label>City</mat-label>
+                <input matInput type="text" [(ngModel)]="company.city">
+              </mat-form-field>
+            </div>
+            <div class="row d-flex justify-content-center">
+              <mat-form-field class="w-75">
+                <mat-label>Country</mat-label>
+                <input matInput type="text" [(ngModel)]="company.country">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger rounded-5 me-3" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary rounded-5" (click)="updateInfo()"
+          data-bs-dismiss="modal">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

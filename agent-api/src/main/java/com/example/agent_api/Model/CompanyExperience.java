@@ -10,6 +10,8 @@ import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,6 +26,6 @@ public class CompanyExperience {
     private ExperienceLevel experienceLevel;
     private double salary;
     private ExperienceType experienceType;
-    private DateTime datePosted;
+    private Date datePosted;
 
 }
