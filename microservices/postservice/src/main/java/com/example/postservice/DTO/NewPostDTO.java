@@ -15,4 +15,5 @@ import java.util.List;
 public class NewPostDTO {
     private String textContent;
     private MultipartFile image;
+    private String userId;
 }

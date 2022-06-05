@@ -120,19 +120,6 @@ public class UserController {
         return new ResponseEntity<>(jwt, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/loggedinandfollowers")
-    public ResponseEntity<List<String>> newsfeedGet(){
-
-        var loggedInUser = userService.findLoggedInUser();
-        System.out.println(loggedInUser.getFullName());
-        List<String> allUsers = new ArrayList<>();
-        allUsers = loggedInUser.getFollowedUsers();
-        System.out.println(allUsers);
-        allUsers.add(loggedInUser.getId());
-        return new ResponseEntity<>(allUsers, HttpStatus.OK);
-
-    }
-
     @PostMapping(value = "/follow/approve" )
     public ResponseEntity<String> approveFollow(@RequestBody Map<String, String> userToApproveIds){
         var user = userService.findLoggedInUser();
@@ -169,16 +156,6 @@ public class UserController {
                 .map(user -> modelMapper.map(user, UserDTO.class))
                 .collect(Collectors.toList());
         return new ResponseEntity<>(userDTOS, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/current-user")
-    public ResponseEntity<String> getCurrentUser() {
-        var current = userService.findLoggedInUser();
-
-        if (current == null)
-            return new ResponseEntity<>("No user is logged in!", HttpStatus.NOT_FOUND);
-
-        return new ResponseEntity<>(current.getId(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/whoami")

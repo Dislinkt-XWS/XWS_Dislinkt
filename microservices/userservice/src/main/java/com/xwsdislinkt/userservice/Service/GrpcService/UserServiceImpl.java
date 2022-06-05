@@ -20,17 +20,13 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
 
     @Override
     public void followers(FollowersRequest request, StreamObserver<FollowersResponse> responseObserver) {
-        //TODO: Implement getting followers for logged user so that it is grpc compatible
-        /*var loggedInUser = userService.findLoggedInUser();
-        List<String> allUsers = loggedInUser.getFollowedUsers();
-        allUsers.add(loggedInUser.getId());*/
-        List<String> allUsers = new ArrayList<>();
-        for(User user : userService.findAll()) {
-            allUsers.add(user.getId());
-        }
+        String userId = request.getUserId();
+        User user = userService.get(userId).get();
+        List<String> followers = user.getFollowedUsers();
+        followers.add(userId);
 
         FollowersResponse followersResponse = FollowersResponse.newBuilder()
-                .addAllFollowers(allUsers)
+                .addAllFollowers(followers)
                 .build();
 
         responseObserver.onNext(followersResponse);

@@ -6,4 +6,16 @@ package com.xwsdislinkt.userservice;
 public interface FollowersRequestOrBuilder extends
     // @@protoc_insertion_point(interface_extends:com.xwsdislinkt.userservice.FollowersRequest)
     com.google.protobuf.MessageOrBuilder {
+
+  /**
+   * <code>string userId = 1;</code>
+   * @return The userId.
+   */
+  java.lang.String getUserId();
+  /**
+   * <code>string userId = 1;</code>
+   * @return The bytes for userId.
+   */
+  com.google.protobuf.ByteString
+      getUserIdBytes();
 }

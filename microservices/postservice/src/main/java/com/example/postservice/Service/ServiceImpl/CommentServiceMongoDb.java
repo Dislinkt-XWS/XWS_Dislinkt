@@ -28,13 +28,7 @@ public class CommentServiceMongoDb implements CommentService {
     }
 
     @Override
-    public Comment save(Comment comment, String authorization) {
-        var userId = postService.findCurrentUser(authorization);
-
-        if (userId == null)
-            return null;
-
-        comment.setUserId(userId);
+    public Comment save(Comment comment) {
         comment.setId(UUID.randomUUID().toString());
         comment.setDatePosted(LocalDateTime.now());
         return commentRepository.save(comment);

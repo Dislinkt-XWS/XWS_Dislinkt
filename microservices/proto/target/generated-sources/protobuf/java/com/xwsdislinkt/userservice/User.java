@@ -34,12 +34,13 @@ public final class User {
   static {
     java.lang.String[] descriptorData = {
       "\n\nuser.proto\022\033com.xwsdislinkt.userservic" +
-      "e\"\022\n\020FollowersRequest\"&\n\021FollowersRespon" +
-      "se\022\021\n\tfollowers\030\001 \003(\t2{\n\013UserService\022l\n\t" +
-      "followers\022-.com.xwsdislinkt.userservice." +
-      "FollowersRequest\032..com.xwsdislinkt.users" +
-      "ervice.FollowersResponse\"\000B\037\n\033com.xwsdis" +
-      "linkt.userserviceP\001b\006proto3"
+      "e\"\"\n\020FollowersRequest\022\016\n\006userId\030\001 \001(\t\"&\n" +
+      "\021FollowersResponse\022\021\n\tfollowers\030\001 \003(\t2{\n" +
+      "\013UserService\022l\n\tfollowers\022-.com.xwsdisli" +
+      "nkt.userservice.FollowersRequest\032..com.x" +
+      "wsdislinkt.userservice.FollowersResponse" +
+      "\"\000B\037\n\033com.xwsdislinkt.userserviceP\001b\006pro" +
+      "to3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -50,7 +51,7 @@ public final class User {
     internal_static_com_xwsdislinkt_userservice_FollowersRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_xwsdislinkt_userservice_FollowersRequest_descriptor,
-        new java.lang.String[] { });
+        new java.lang.String[] { "UserId", });
     internal_static_com_xwsdislinkt_userservice_FollowersResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_com_xwsdislinkt_userservice_FollowersResponse_fieldAccessorTable = new

@@ -13,11 +13,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -43,12 +43,13 @@ public class PostController {
         if (dto.getImage() != null)
             imagePath = postService.uploadImages(dto.getImage());
 
-        var postDto = new Post();
-        postDto.setTextContent(dto.getTextContent());
-        postDto.setImagePath(imagePath);
+        var post = new Post();
+        post.setUserId(dto.getUserId());
+        post.setTextContent(dto.getTextContent());
+        post.setImagePath(imagePath);
         Post newPost = null;
         try {
-            newPost = postService.save(postDto, authorization);
+            newPost = postService.save(post);
         } catch (Exception e) {
             return new ResponseEntity<>("Unable to create post because there is no user defined!", HttpStatus.BAD_REQUEST);
         }
@@ -76,10 +77,10 @@ public class PostController {
         return new ResponseEntity<>(postDTOS, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/newsfeed")
-    public ResponseEntity<List<PostDTO>> getNewsFeed(@RequestHeader String authorization) throws IOException {
+    @GetMapping(value = "/newsfeed/{id}")
+    public ResponseEntity<List<PostDTO>> getNewsFeed(@PathVariable("id") String id) throws IOException {
         System.out.println("Targeting grpc server: " + userServiceStub.getChannel());
-        FollowersRequest followersRequest = FollowersRequest.newBuilder().build();
+        FollowersRequest followersRequest = FollowersRequest.newBuilder().setUserId(id).build();
         FollowersResponse followersResponse = userServiceStub.followers(followersRequest);
         List<String> userIds = followersResponse.getFollowersList();
 
@@ -103,34 +104,42 @@ public class PostController {
     }
 
     @PostMapping(value = "/like")
-    public ResponseEntity<?> likePost(@RequestBody String postId, @RequestHeader String authorization) {
+    public ResponseEntity<?> likePost(@RequestBody Map<String, String> ids) {
+        String userId = ids.get("userId");
+        String postId = ids.get("postId");
         if (postId == null || postId.equals(""))
             return new ResponseEntity<>("Cannot determine which post to like!", HttpStatus.BAD_REQUEST);
-        Post post = likeService.likePost(postId, authorization);
+        Post post = likeService.likePost(postId, userId);
         return new ResponseEntity<>(modelMapper.map(post, PostDTO.class), HttpStatus.OK);
     }
 
     @PostMapping(value = "/dislike")
-    public ResponseEntity<?> dislikePost(@RequestBody String postId, @RequestHeader String authorization) {
+    public ResponseEntity<?> dislikePost(@RequestBody Map<String, String> ids) {
+        String userId = ids.get("userId");
+        String postId = ids.get("postId");
         if (postId == null || postId.equals(""))
             return new ResponseEntity<>("Cannot determine which post to dislike!", HttpStatus.BAD_REQUEST);
-        Post post = likeService.disLikePost(postId, authorization);
+        Post post = likeService.disLikePost(postId, userId);
         return new ResponseEntity<>(modelMapper.map(post, PostDTO.class), HttpStatus.OK);
     }
 
     @PostMapping(value = "/unLike")
-    public ResponseEntity<?> unLikePost(@RequestBody String postId, @RequestHeader String authorization) {
+    public ResponseEntity<?> unLikePost(@RequestBody Map<String, String> ids) {
+        String userId = ids.get("userId");
+        String postId = ids.get("postId");
         if (postId == null || postId.equals(""))
             return new ResponseEntity<>("Cannot determine which post to unlike!", HttpStatus.BAD_REQUEST);
-        Post post = likeService.unLikePost(postId, authorization);
+        Post post = likeService.unLikePost(postId, userId);
         return new ResponseEntity<>(modelMapper.map(post, PostDTO.class), HttpStatus.OK);
     }
 
     @PostMapping(value = "/unDislike")
-    public ResponseEntity<?> unDislikePost(@RequestBody String postId, @RequestHeader String authorization) {
+    public ResponseEntity<?> unDislikePost(@RequestBody Map<String, String> ids) {
+        String userId = ids.get("userId");
+        String postId = ids.get("postId");
         if (postId == null || postId.equals(""))
             return new ResponseEntity<>("Cannot determine from which post the like should be removed!", HttpStatus.BAD_REQUEST);
-        Post post = likeService.unDislikePost(postId, authorization);
+        Post post = likeService.unDislikePost(postId, userId);
         return new ResponseEntity<>(modelMapper.map(post, PostDTO.class), HttpStatus.OK);
     }
 }
