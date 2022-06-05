@@ -38,4 +38,11 @@ export class LoginComponent implements OnInit {
     );
   }
 
+  search(input: any) {
+    if (input.value.length > 0) {
+      //this.router.navigate(['search', input.value]);
+      window.location.href = '/search/' + input.value;
+    }
+  }
+
 }

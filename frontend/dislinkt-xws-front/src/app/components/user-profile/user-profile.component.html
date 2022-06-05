@@ -13,6 +13,9 @@
         </div>
         <div class="btn-wrapper" *ngIf="this.currentUser.id == userId">
           <button class='pen-btn upload' (click)="editingMode = true"><i class="bi bi-pencil-fill pen"></i></button>
+          <button class='btn btn-sm btn-primary rounded-5' data-bs-toggle="modal" data-bs-target="#requestsModal"
+            *ngIf="this.currentUser.id == userId && this.userFromId.isPrivate">Follow
+            Requests</button>
         </div>
 
         <div class="box mt-3">
@@ -21,11 +24,14 @@
               <h2 class="me-3">{{ fullName }}</h2>
               <button class="btn btn-md btn-primary rounded-5" *ngIf="showButton()"
                 (click)="followUser()">Follow</button>
+              <button disabled *ngIf="show()" class="btn btn-md btn-primary rounded-5 ms-2">Follow request sent</button>
+              <button class="btn btn-md btn-danger rounded-5" *ngIf="showUnfollow()"
+                (click)="unfollowUser()">Unfollow</button>
             </div>
 
             <h4 class="my-3">{{ currentUser.bio }}</h4>
-            
-            <div class="d-inline-flex mb-2">
+
+            <div class="d-inline-flex mb-2" *ngIf="this.currentUser.id == userId">
               <button class="btn btn-warning tokenbutton" (click)="generateApiToken()"> Get API Token</button>
               <h6>{{apitoken}}</h6>
             </div>
@@ -38,7 +44,7 @@
 
         <hr class=" text-muted mb-4">
 
-        <div class="experience">
+        <div class="experience" *ngIf="!isPrivate()">
           <h3>Experience</h3>
 
           <div class="experience-list">
@@ -66,7 +72,7 @@
           </div>
         </div>
 
-        <div class="experience">
+        <div class="experience" *ngIf="!isPrivate()">
           <h3>Personal information</h3>
           <hr>
           <div class="personal-info">
@@ -388,6 +394,33 @@
         <button type="button" class="btn btn-danger rounded-5 me-3" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary rounded-5" data-bs-dismiss="modal"
           (click)="addWork()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="requestsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-bs-backdrop="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Follow requests</h5>
+        <button type="button" class="close btn" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="font-size: 18px;">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+        <table>
+          <tr *ngFor="let user of followRequests">
+            <td>{{user.fullName}}</td>
+            <td align="end"><button class="btn btn-primary rounded-5" data-bs-dismiss="modal"
+                (click)="approveFollow(user.id)">Accept</button></td>
+            <td align="end"><button class="btn btn-danger rounded-5" data-bs-dismiss="modal">Delete</button></td>
+          </tr>
+          <tr *ngIf="followRequests.length === 0">
+            <td align="center">No new follow requests!</td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>

@@ -17,6 +17,9 @@ public interface UserRepository extends MongoRepository<User, String > {
     @Query("{ $or: [ { 'username' : { '$regex' : ?0, '$options' : 'i' }, 'isPrivate' : false }, { 'fullName' : { '$regex' : ?0, '$options' : 'i' }, 'isPrivate' : false } ]}")
     List<User> searchUsers(String criteria);
 
+    @Query("{ $or: [ { 'username' : { '$regex' : ?0, '$options' : 'i' }}, { 'fullName' : { '$regex' : ?0, '$options' : 'i' }} ]}")
+    List<User> searchAllUsers(String criteria);
+
     @Query("{username:'?0'}")
     User getUserByUsername(String username);
 

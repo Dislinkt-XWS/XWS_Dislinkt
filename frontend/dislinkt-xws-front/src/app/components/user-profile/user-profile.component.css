@@ -41,6 +41,12 @@ h4 {
   float: right;
 }
 
+.btn-sm {
+  margin: 10px;
+  margin-top: -5px;
+  float: right;
+}
+
 .pen {
   color: rgba(0, 0, 0, 0.6);
   font-size: x-large;
@@ -227,3 +233,8 @@ textarea {
 
 .tokenbutton {
   border-radius: 20px;
+}
+
+table {
+  width: 90%;
+}

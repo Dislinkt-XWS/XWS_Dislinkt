@@ -76,4 +76,26 @@ export class UserService {
   public searchUsers(criteria: String) {
     return this.http.get('api/users/search/' + criteria);
   }
+
+  public approveFollow(id: string, userToApprove: string) {
+    let dto = {
+      "userId": id,
+      "userToApproveIds": userToApprove
+    }
+
+    return this.http.post('api/users/follow/approve', dto);
+  }
+
+  public unfollow(userId: string, userToUnfollow: string | null) {
+    let dto = {
+      "userId": userId,
+      "userToUnfollowId": userToUnfollow
+    }
+
+    return this.http.post('api/users/unfollow', dto);
+  }
+
+  public searchAllUsers(criteria: String) {
+    return this.http.get('api/users/search-all/' + criteria);
+  }
 }
