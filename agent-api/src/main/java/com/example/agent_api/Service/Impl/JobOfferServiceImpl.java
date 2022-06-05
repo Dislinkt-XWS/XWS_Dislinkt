@@ -23,7 +23,6 @@ public class JobOfferServiceImpl implements JobOfferService {
     CompanyService companyService;
 
 
-
     @Override
     public Optional<JobOffer> get(String id) {
         return jobOfferRepository.findById(id);
@@ -43,6 +42,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 
         jobOffer.setId(UUID.randomUUID().toString());
         jobOffer.setPublisherId(userId);
+
         return jobOfferRepository.save(jobOffer);
     }
 

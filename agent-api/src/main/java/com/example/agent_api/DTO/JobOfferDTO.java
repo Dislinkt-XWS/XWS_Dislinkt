@@ -15,6 +15,7 @@ public class JobOfferDTO {
     public String jobDescription;
     public String requirements;
     public String companyId;
+
     public Boolean isPublished;
     private List<String> comments;
 }

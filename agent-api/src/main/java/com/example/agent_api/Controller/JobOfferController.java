@@ -41,8 +41,8 @@ public class JobOfferController {
     public ResponseEntity<List<JobOffer>> getAll() {
         return new ResponseEntity<>(jobOfferService.findAll(), HttpStatus.OK);
     }
-
-
-
-
 }
+
+
+
+
