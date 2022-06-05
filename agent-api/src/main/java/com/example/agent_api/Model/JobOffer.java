@@ -20,4 +20,7 @@ public class JobOffer {
     public String requirements;
     public String publisherId;
     public String companyId;
+    public Boolean isPublished;
+    private List<String> comments;
+
 }

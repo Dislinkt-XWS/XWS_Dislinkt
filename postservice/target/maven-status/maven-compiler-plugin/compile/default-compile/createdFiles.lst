@@ -1,0 +1,17 @@
+com\example\postservice\PostserviceApplication.class
+com\example\postservice\ApplicationConfig.class
+com\example\postservice\DTO\NewPostDTO.class
+com\example\postservice\Model\Post.class
+com\example\postservice\Service\ServiceImpl\LikeServiceMongoDb.class
+com\example\postservice\Service\PostService.class
+com\example\postservice\Service\LikeService.class
+com\example\postservice\Controller\CommentController.class
+com\example\postservice\Service\CommentService.class
+com\example\postservice\Controller\PostController.class
+com\example\postservice\Model\Comment.class
+com\example\postservice\Repository\CommentRepository.class
+com\example\postservice\Service\ServiceImpl\PostServiceMongoDb.class
+com\example\postservice\DTO\CommentDTO.class
+com\example\postservice\Service\ServiceImpl\CommentServiceMongoDb.class
+com\example\postservice\DTO\PostDTO.class
+com\example\postservice\Repository\PostRepository.class

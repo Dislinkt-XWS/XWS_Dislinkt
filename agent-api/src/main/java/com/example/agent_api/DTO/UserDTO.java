@@ -26,4 +26,6 @@ public class UserDTO {
     private String firstName;
     @NotNull(message = "User must have last name!")
     private String lastName;
+    private Role role;
+    private String dislinktApiKey;
 }

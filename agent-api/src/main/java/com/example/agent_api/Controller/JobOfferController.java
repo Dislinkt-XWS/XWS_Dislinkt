@@ -4,11 +4,13 @@ import com.example.agent_api.DTO.JobOfferDTO;
 import com.example.agent_api.Model.JobOffer;
 import com.example.agent_api.Service.JobOfferService;
 import com.example.agent_api.Service.UserService;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +25,10 @@ public class JobOfferController {
     @Autowired
     ModelMapper modelMapper;
 
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+
     @PostMapping
     @PreAuthorize("hasAuthority('OWNER')")
     public ResponseEntity<JobOfferDTO> createNewOffer(@RequestBody JobOfferDTO dto) {
@@ -35,4 +41,8 @@ public class JobOfferController {
     public ResponseEntity<List<JobOffer>> getAll() {
         return new ResponseEntity<>(jobOfferService.findAll(), HttpStatus.OK);
     }
+
+
+
+
 }
