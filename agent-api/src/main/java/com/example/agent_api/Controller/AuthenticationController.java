@@ -65,4 +65,13 @@ public class AuthenticationController {
     public ResponseEntity<User> getCurrentUser() {
         return new ResponseEntity<>(userService.findLoggedInUser(), HttpStatus.OK);
     }
+
+    @PutMapping("/apikey")
+    public ResponseEntity<String> updateApiKey(@RequestBody String apiKey){
+        var currentUser = userService.findLoggedInUser();
+        currentUser.setDislinktApiKey(apiKey);
+        System.out.println("Promenio sam mu na: " + apiKey);
+        userService.update(currentUser);
+        return new ResponseEntity<>("You managed to update your api key", HttpStatus.OK);
+    }
 }

@@ -25,7 +25,9 @@ export class AuthService {
       })
     );
   }
-
+  public updateApiKey(apiKey: string){
+    return this.http.put('/api/auth/apikey', apiKey, { responseType: 'text' } )
+  }
   public logOut(): void {
     localStorage.removeItem('jwt');
   }
