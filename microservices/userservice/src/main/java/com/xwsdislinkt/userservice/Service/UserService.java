@@ -22,4 +22,5 @@ public interface UserService extends UserDetailsService {
     List<User> searchUsers(String criteria);
     User findLoggedInUser();
     String generateUserApiKey();
+    User findByApiKey(String apiKey);
 }

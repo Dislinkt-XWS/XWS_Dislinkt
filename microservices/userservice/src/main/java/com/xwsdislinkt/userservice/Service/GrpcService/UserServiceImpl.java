@@ -1,10 +1,8 @@
 package com.xwsdislinkt.userservice.Service.GrpcService;
 
-import com.xwsdislinkt.userservice.FollowersRequest;
-import com.xwsdislinkt.userservice.FollowersResponse;
+import com.xwsdislinkt.userservice.*;
 import com.xwsdislinkt.userservice.Model.User;
 import com.xwsdislinkt.userservice.Service.UserService;
-import com.xwsdislinkt.userservice.UserServiceGrpc;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +28,19 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
                 .build();
 
         responseObserver.onNext(followersResponse);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void findByApiKey(ApiKeyRequest request, StreamObserver<ApiKeyResponse> responseObserver) {
+        String apiKey = request.getApiKey();
+        User user = userService.findByApiKey(apiKey);
+        String userId = (user == null)?"":user.getId();
+        ApiKeyResponse apiKeyResponse = ApiKeyResponse.newBuilder()
+                .setUserId(userId)
+                .build();
+
+        responseObserver.onNext(apiKeyResponse);
         responseObserver.onCompleted();
     }
 }

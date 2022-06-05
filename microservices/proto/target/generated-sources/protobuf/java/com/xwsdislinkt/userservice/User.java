@@ -24,6 +24,16 @@ public final class User {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_xwsdislinkt_userservice_FollowersResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_xwsdislinkt_userservice_ApiKeyRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_xwsdislinkt_userservice_ApiKeyRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_xwsdislinkt_userservice_ApiKeyResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_xwsdislinkt_userservice_ApiKeyResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -35,12 +45,16 @@ public final class User {
     java.lang.String[] descriptorData = {
       "\n\nuser.proto\022\033com.xwsdislinkt.userservic" +
       "e\"\"\n\020FollowersRequest\022\016\n\006userId\030\001 \001(\t\"&\n" +
-      "\021FollowersResponse\022\021\n\tfollowers\030\001 \003(\t2{\n" +
-      "\013UserService\022l\n\tfollowers\022-.com.xwsdisli" +
-      "nkt.userservice.FollowersRequest\032..com.x" +
-      "wsdislinkt.userservice.FollowersResponse" +
-      "\"\000B\037\n\033com.xwsdislinkt.userserviceP\001b\006pro" +
-      "to3"
+      "\021FollowersResponse\022\021\n\tfollowers\030\001 \003(\t\"\037\n" +
+      "\rApiKeyRequest\022\016\n\006apiKey\030\001 \001(\t\" \n\016ApiKey" +
+      "Response\022\016\n\006userId\030\001 \001(\t2\346\001\n\013UserService" +
+      "\022l\n\tfollowers\022-.com.xwsdislinkt.userserv" +
+      "ice.FollowersRequest\032..com.xwsdislinkt.u" +
+      "serservice.FollowersResponse\"\000\022i\n\014findBy" +
+      "ApiKey\022*.com.xwsdislinkt.userservice.Api" +
+      "KeyRequest\032+.com.xwsdislinkt.userservice" +
+      ".ApiKeyResponse\"\000B\037\n\033com.xwsdislinkt.use" +
+      "rserviceP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -58,6 +72,18 @@ public final class User {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_xwsdislinkt_userservice_FollowersResponse_descriptor,
         new java.lang.String[] { "Followers", });
+    internal_static_com_xwsdislinkt_userservice_ApiKeyRequest_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_com_xwsdislinkt_userservice_ApiKeyRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_xwsdislinkt_userservice_ApiKeyRequest_descriptor,
+        new java.lang.String[] { "ApiKey", });
+    internal_static_com_xwsdislinkt_userservice_ApiKeyResponse_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_com_xwsdislinkt_userservice_ApiKeyResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_xwsdislinkt_userservice_ApiKeyResponse_descriptor,
+        new java.lang.String[] { "UserId", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -19,4 +19,6 @@ public interface UserRepository extends MongoRepository<User, String > {
 
     @Query("{username:'?0'}")
     User getUserByUsername(String username);
+
+    User findByUserApiKey(String userApiKey);
 }

@@ -45,6 +45,37 @@ public final class UserServiceGrpc {
     return getFollowersMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.xwsdislinkt.userservice.ApiKeyRequest,
+      com.xwsdislinkt.userservice.ApiKeyResponse> getFindByApiKeyMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "findByApiKey",
+      requestType = com.xwsdislinkt.userservice.ApiKeyRequest.class,
+      responseType = com.xwsdislinkt.userservice.ApiKeyResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.xwsdislinkt.userservice.ApiKeyRequest,
+      com.xwsdislinkt.userservice.ApiKeyResponse> getFindByApiKeyMethod() {
+    io.grpc.MethodDescriptor<com.xwsdislinkt.userservice.ApiKeyRequest, com.xwsdislinkt.userservice.ApiKeyResponse> getFindByApiKeyMethod;
+    if ((getFindByApiKeyMethod = UserServiceGrpc.getFindByApiKeyMethod) == null) {
+      synchronized (UserServiceGrpc.class) {
+        if ((getFindByApiKeyMethod = UserServiceGrpc.getFindByApiKeyMethod) == null) {
+          UserServiceGrpc.getFindByApiKeyMethod = getFindByApiKeyMethod =
+              io.grpc.MethodDescriptor.<com.xwsdislinkt.userservice.ApiKeyRequest, com.xwsdislinkt.userservice.ApiKeyResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "findByApiKey"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.xwsdislinkt.userservice.ApiKeyRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.xwsdislinkt.userservice.ApiKeyResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier("findByApiKey"))
+              .build();
+        }
+      }
+    }
+    return getFindByApiKeyMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -100,6 +131,13 @@ public final class UserServiceGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getFollowersMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void findByApiKey(com.xwsdislinkt.userservice.ApiKeyRequest request,
+        io.grpc.stub.StreamObserver<com.xwsdislinkt.userservice.ApiKeyResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getFindByApiKeyMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -109,6 +147,13 @@ public final class UserServiceGrpc {
                 com.xwsdislinkt.userservice.FollowersRequest,
                 com.xwsdislinkt.userservice.FollowersResponse>(
                   this, METHODID_FOLLOWERS)))
+          .addMethod(
+            getFindByApiKeyMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                com.xwsdislinkt.userservice.ApiKeyRequest,
+                com.xwsdislinkt.userservice.ApiKeyResponse>(
+                  this, METHODID_FIND_BY_API_KEY)))
           .build();
     }
   }
@@ -134,6 +179,14 @@ public final class UserServiceGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getFollowersMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void findByApiKey(com.xwsdislinkt.userservice.ApiKeyRequest request,
+        io.grpc.stub.StreamObserver<com.xwsdislinkt.userservice.ApiKeyResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getFindByApiKeyMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -155,6 +208,13 @@ public final class UserServiceGrpc {
     public com.xwsdislinkt.userservice.FollowersResponse followers(com.xwsdislinkt.userservice.FollowersRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getFollowersMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.xwsdislinkt.userservice.ApiKeyResponse findByApiKey(com.xwsdislinkt.userservice.ApiKeyRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getFindByApiKeyMethod(), getCallOptions(), request);
     }
   }
 
@@ -179,9 +239,18 @@ public final class UserServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getFollowersMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.xwsdislinkt.userservice.ApiKeyResponse> findByApiKey(
+        com.xwsdislinkt.userservice.ApiKeyRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getFindByApiKeyMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_FOLLOWERS = 0;
+  private static final int METHODID_FIND_BY_API_KEY = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -203,6 +272,10 @@ public final class UserServiceGrpc {
         case METHODID_FOLLOWERS:
           serviceImpl.followers((com.xwsdislinkt.userservice.FollowersRequest) request,
               (io.grpc.stub.StreamObserver<com.xwsdislinkt.userservice.FollowersResponse>) responseObserver);
+          break;
+        case METHODID_FIND_BY_API_KEY:
+          serviceImpl.findByApiKey((com.xwsdislinkt.userservice.ApiKeyRequest) request,
+              (io.grpc.stub.StreamObserver<com.xwsdislinkt.userservice.ApiKeyResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -266,6 +339,7 @@ public final class UserServiceGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new UserServiceFileDescriptorSupplier())
               .addMethod(getFollowersMethod())
+              .addMethod(getFindByApiKeyMethod())
               .build();
         }
       }

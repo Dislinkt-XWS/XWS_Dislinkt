@@ -179,4 +179,9 @@ public class UserServiceMongoDb implements UserService {
         random.nextBytes(bytes);
         return DatatypeConverter.printHexBinary(bytes).toLowerCase();
     }
+
+    @Override
+    public User findByApiKey(String apiKey) {
+        return userRepository.findByUserApiKey(apiKey);
+    }
 }

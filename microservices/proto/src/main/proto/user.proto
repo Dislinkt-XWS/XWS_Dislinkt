@@ -8,6 +8,9 @@ option java_package = "com.xwsdislinkt.userservice";
 service UserService {
   rpc followers(FollowersRequest) returns (FollowersResponse) {
   }
+  rpc findByApiKey(ApiKeyRequest) returns (ApiKeyResponse) {
+
+  }
 }
 
 message FollowersRequest {
@@ -16,4 +19,12 @@ message FollowersRequest {
 
 message FollowersResponse {
   repeated string followers = 1;
+}
+
+message ApiKeyRequest {
+  string apiKey = 1;
+}
+
+message ApiKeyResponse {
+  string userId = 1;
 }
