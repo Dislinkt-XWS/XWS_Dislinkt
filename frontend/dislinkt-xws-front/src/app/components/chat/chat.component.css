@@ -1,11 +1,12 @@
-body{
-    background-color: #f4f7f6;
-    margin-top:20px;
+.body {
+    background-color: #ecf2f7;
+    height: 100%;
 }
 .card {
     background: #fff;
     transition: .5s;
     border: 0;
+    margin-top: 50px;
     margin-bottom: 30px;
     border-radius: .55rem;
     position: relative;
@@ -86,6 +87,12 @@ body{
 .chat .chat-header .chat-about {
     float: left;
     padding-left: 10px
+}
+
+.chat-history {
+    height: 70vh;
+    overflow-y: auto;    
+    overflow-x: hidden;
 }
 
 .chat .chat-history {

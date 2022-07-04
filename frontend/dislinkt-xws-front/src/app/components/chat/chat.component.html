@@ -1,64 +1,66 @@
 <app-navigation></app-navigation>
-<div class="container">
-    <div class="row clearfix">
-        <div class="col-lg-12">
-            <div class="card chat-app">
-                <div id="plist" class="people-list">
-                    <ul class="list-unstyled chat-list mt-2 mb-0">
-                        <li *ngFor="let user of users" class="clearfix">
-                            <img src="https://via.placeholder.com/128/99ccff/0073e6.png?text=A" alt="avatar">
-                            <div class="about" (click)="openChat(user)">
-                                <div class="name">{{user.fullName}}</div>
-                                <div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>                                            
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="chat">
-                    <div class="chat-header clearfix">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                    <img src="https://via.placeholder.com/128/99ccff/0073e6.png?text=A" alt="avatar">
-                                </a>
-                                <div class="chat-about">
-                                    <h6 class="m-b-0">{{chatUser?.fullName}}</h6>
-                                    <small>Last seen: 2 hours ago</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat-history">
-                        <ul class="m-b-0">
-                            <li *ngFor="let message of messages" class="clearfix">
-                                <div *ngIf="message.senderId == currentUser.id">
-                                    <div class="message-data text-right">
-                                        <span class="message-data-time">{{message.messageSent | date : 'MMMM d, y, h:mm a'}}</span>
-                                        <img src="https://via.placeholder.com/128/99ccff/0073e6.png?text=A" alt="avatar">
-                                    </div>
-                                    <div class="message other-message float-right">{{message.text}}</div>
-                                </div>
-                                <div *ngIf="message.senderId == chatUser.id">
-                                    <div class="message-data">
-                                        <span class="message-data-time">{{message.messageSent | date : 'MMMM d, y, h:mm a'}}</span>
-                                    </div>
-                                    <div class="message my-message">{{message.text}}</div>
+<div class="body">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="card chat-app">
+                    <div id="plist" class="people-list">
+                        <ul class="list-unstyled chat-list mt-2 mb-0">
+                            <li *ngFor="let user of users" class="clearfix">
+                                <img src="https://via.placeholder.com/128/99ccff/0073e6.png?text=A" alt="avatar">
+                                <div class="about" (click)="openChat(user)">
+                                    <div class="name">{{user.fullName}}</div>
+                                    <div class="status">{{user.email}}</div>                                            
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    <div class="chat-message clearfix">
-                        <form (ngSubmit)="sendMessage()" #messageForm="ngForm">
-                            <div class="input-group mb-0">
-                                <div class="input-group-prepend">
-                                    <button class="btn btn-primary input-group-text" type="submit" [disabled]="!messageForm.form.valid"><i class="bi bi-send"></i></button>
+                    <div class="chat">
+                        <div class="chat-header clearfix">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                        <img src="https://via.placeholder.com/128/99ccff/0073e6.png?text=A" alt="avatar">
+                                    </a>
+                                    <div class="chat-about">
+                                        <h6 class="m-b-0">{{chatUser?.fullName}}</h6>
+                                        <small>{{chatUser?.email}}</small>
+                                    </div>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Enter text here..." [(ngModel)]="message.text" name="text" #text="ngModel" required>                                    
                             </div>
-                        </form>
+                        </div>
+                        <div class="chat-history">
+                            <ul class="m-b-0">
+                                <li *ngFor="let message of messages" class="clearfix">
+                                    <div *ngIf="message.senderId == currentUser.id">
+                                        <div class="message-data text-right">
+                                            <span class="message-data-time me-1">{{message.messageSent | date : 'MMMM d, y, h:mm a'}}</span>
+                                            <img src="https://via.placeholder.com/128/99ccff/0073e6.png?text=A" alt="avatar">
+                                        </div>
+                                        <div class="message other-message float-right">{{message.text}}</div>
+                                    </div>
+                                    <div *ngIf="message.senderId == chatUser.id">
+                                        <div class="message-data">
+                                            <span class="message-data-time">{{message.messageSent | date : 'MMMM d, y, h:mm a'}}</span>
+                                        </div>
+                                        <div class="message my-message">{{message.text}}</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="chat-message clearfix">
+                            <form (ngSubmit)="sendMessage()" #messageForm="ngForm">
+                                <div class="input-group mb-0">
+                                    <div class="input-group-prepend">
+                                        <button class="btn btn-primary input-group-text" type="submit" [disabled]="!messageForm.form.valid"><i class="bi bi-send"></i></button>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Enter text here..." [(ngModel)]="message.text" name="text" #text="ngModel" required>                                    
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
+        </div>
+</div>
