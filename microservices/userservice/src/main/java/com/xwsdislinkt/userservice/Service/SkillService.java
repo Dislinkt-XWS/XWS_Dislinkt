@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SkillService {
-    Optional<Skill> get(String  id);
+    Optional<Skill> get(String id);
     List<Skill> findAll();
     Skill save(Skill skill);
     Skill update(Skill skill);

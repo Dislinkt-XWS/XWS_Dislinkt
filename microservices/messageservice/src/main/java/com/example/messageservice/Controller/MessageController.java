@@ -3,7 +3,11 @@ package com.example.messageservice.Controller;
 import com.example.messageservice.DTO.MessageDTO;
 import com.example.messageservice.Model.Message;
 import com.example.messageservice.Service.MessageService;
+import com.xwsdislinkt.userservice.NotificationRequest;
+import com.xwsdislinkt.userservice.NotificationResponse;
+import com.xwsdislinkt.userservice.UserServiceGrpc;
 import org.bson.types.ObjectId;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,10 +26,16 @@ public class MessageController {
     @Autowired
     ModelMapper modelMapper;
 
+    @GrpcClient("user-service")
+    private UserServiceGrpc.UserServiceBlockingStub userServiceStub;
 
     @PostMapping
     public ResponseEntity<MessageDTO> create(@RequestBody @Validated MessageDTO dto){
         var message = modelMapper.map(dto, Message.class);
+
+        NotificationRequest notificationRequest = NotificationRequest.newBuilder().setSenderId(dto.getSenderId()).setUserId(dto.getReceiverId()).setText("New message").build();
+        NotificationResponse notificationResponse = userServiceStub.addNotification(notificationRequest);
+
         return new ResponseEntity<>(modelMapper.map(
                 messageService.save(message), MessageDTO.class), HttpStatus.CREATED);
     }

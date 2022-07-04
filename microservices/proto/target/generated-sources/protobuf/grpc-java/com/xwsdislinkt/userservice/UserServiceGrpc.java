@@ -76,6 +76,37 @@ public final class UserServiceGrpc {
     return getFindByApiKeyMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.xwsdislinkt.userservice.NotificationRequest,
+      com.xwsdislinkt.userservice.NotificationResponse> getAddNotificationMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "addNotification",
+      requestType = com.xwsdislinkt.userservice.NotificationRequest.class,
+      responseType = com.xwsdislinkt.userservice.NotificationResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.xwsdislinkt.userservice.NotificationRequest,
+      com.xwsdislinkt.userservice.NotificationResponse> getAddNotificationMethod() {
+    io.grpc.MethodDescriptor<com.xwsdislinkt.userservice.NotificationRequest, com.xwsdislinkt.userservice.NotificationResponse> getAddNotificationMethod;
+    if ((getAddNotificationMethod = UserServiceGrpc.getAddNotificationMethod) == null) {
+      synchronized (UserServiceGrpc.class) {
+        if ((getAddNotificationMethod = UserServiceGrpc.getAddNotificationMethod) == null) {
+          UserServiceGrpc.getAddNotificationMethod = getAddNotificationMethod =
+              io.grpc.MethodDescriptor.<com.xwsdislinkt.userservice.NotificationRequest, com.xwsdislinkt.userservice.NotificationResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "addNotification"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.xwsdislinkt.userservice.NotificationRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.xwsdislinkt.userservice.NotificationResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier("addNotification"))
+              .build();
+        }
+      }
+    }
+    return getAddNotificationMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -138,6 +169,13 @@ public final class UserServiceGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getFindByApiKeyMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void addNotification(com.xwsdislinkt.userservice.NotificationRequest request,
+        io.grpc.stub.StreamObserver<com.xwsdislinkt.userservice.NotificationResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getAddNotificationMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -154,6 +192,13 @@ public final class UserServiceGrpc {
                 com.xwsdislinkt.userservice.ApiKeyRequest,
                 com.xwsdislinkt.userservice.ApiKeyResponse>(
                   this, METHODID_FIND_BY_API_KEY)))
+          .addMethod(
+            getAddNotificationMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                com.xwsdislinkt.userservice.NotificationRequest,
+                com.xwsdislinkt.userservice.NotificationResponse>(
+                  this, METHODID_ADD_NOTIFICATION)))
           .build();
     }
   }
@@ -187,6 +232,14 @@ public final class UserServiceGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getFindByApiKeyMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void addNotification(com.xwsdislinkt.userservice.NotificationRequest request,
+        io.grpc.stub.StreamObserver<com.xwsdislinkt.userservice.NotificationResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getAddNotificationMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -215,6 +268,13 @@ public final class UserServiceGrpc {
     public com.xwsdislinkt.userservice.ApiKeyResponse findByApiKey(com.xwsdislinkt.userservice.ApiKeyRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getFindByApiKeyMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.xwsdislinkt.userservice.NotificationResponse addNotification(com.xwsdislinkt.userservice.NotificationRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getAddNotificationMethod(), getCallOptions(), request);
     }
   }
 
@@ -247,10 +307,19 @@ public final class UserServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getFindByApiKeyMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.xwsdislinkt.userservice.NotificationResponse> addNotification(
+        com.xwsdislinkt.userservice.NotificationRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getAddNotificationMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_FOLLOWERS = 0;
   private static final int METHODID_FIND_BY_API_KEY = 1;
+  private static final int METHODID_ADD_NOTIFICATION = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -276,6 +345,10 @@ public final class UserServiceGrpc {
         case METHODID_FIND_BY_API_KEY:
           serviceImpl.findByApiKey((com.xwsdislinkt.userservice.ApiKeyRequest) request,
               (io.grpc.stub.StreamObserver<com.xwsdislinkt.userservice.ApiKeyResponse>) responseObserver);
+          break;
+        case METHODID_ADD_NOTIFICATION:
+          serviceImpl.addNotification((com.xwsdislinkt.userservice.NotificationRequest) request,
+              (io.grpc.stub.StreamObserver<com.xwsdislinkt.userservice.NotificationResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -340,6 +413,7 @@ public final class UserServiceGrpc {
               .setSchemaDescriptor(new UserServiceFileDescriptorSupplier())
               .addMethod(getFollowersMethod())
               .addMethod(getFindByApiKeyMethod())
+              .addMethod(getAddNotificationMethod())
               .build();
         }
       }

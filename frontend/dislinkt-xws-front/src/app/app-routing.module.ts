@@ -7,15 +7,17 @@ import { NewsfeedComponent } from './components/newsfeed/newsfeed.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { SearchComponent } from './components/search/search.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'signup', component: RegistrationComponent },
   { path: 'feed', component: NewsfeedComponent },
   { path: 'profile/:id', component: UserProfileComponent },
-  { path: 'search/:criteria', component: SearchComponent},
-  { path: 'job-offers', component: JobOffersComponent},
-  { path: 'create-job-offer', component: CreateJobOfferComponent}
+  { path: 'search/:criteria', component: SearchComponent },
+  { path: 'job-offers', component: JobOffersComponent },
+  { path: 'create-job-offer', component: CreateJobOfferComponent },
+  { path: 'notifications', component: NotificationsComponent }
 ];
 
 @NgModule({

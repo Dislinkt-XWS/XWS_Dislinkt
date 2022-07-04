@@ -9,7 +9,8 @@ service UserService {
   rpc followers(FollowersRequest) returns (FollowersResponse) {
   }
   rpc findByApiKey(ApiKeyRequest) returns (ApiKeyResponse) {
-
+  }
+  rpc addNotification(NotificationRequest) returns (NotificationResponse) {
   }
 }
 
@@ -27,4 +28,14 @@ message ApiKeyRequest {
 
 message ApiKeyResponse {
   string userId = 1;
+}
+
+message NotificationRequest {
+ string userId = 1;
+ string senderId = 2;
+ string text = 3;
+}
+
+message NotificationResponse {
+ string notificationId = 1;
 }

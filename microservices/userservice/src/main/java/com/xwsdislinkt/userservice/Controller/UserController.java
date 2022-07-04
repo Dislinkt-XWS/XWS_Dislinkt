@@ -2,14 +2,9 @@ package com.xwsdislinkt.userservice.Controller;
 
 import com.xwsdislinkt.userservice.Configuration.Security.TokenUtils;
 import com.xwsdislinkt.userservice.DTO.*;
-import com.xwsdislinkt.userservice.Model.Experience;
-import com.xwsdislinkt.userservice.Model.Interest;
-import com.xwsdislinkt.userservice.Model.Skill;
-import com.xwsdislinkt.userservice.Model.User;
-import com.xwsdislinkt.userservice.Service.ExperienceService;
-import com.xwsdislinkt.userservice.Service.InterestService;
-import com.xwsdislinkt.userservice.Service.SkillService;
-import com.xwsdislinkt.userservice.Service.UserService;
+import com.xwsdislinkt.userservice.Model.*;
+import com.xwsdislinkt.userservice.Service.*;
+import com.xwsdislinkt.userservice.Service.GrpcService.UserServiceImpl;
 import org.apache.coyote.Response;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +35,8 @@ public class UserController {
     SkillService skillService;
     @Autowired
     InterestService interestService;
+    @Autowired
+    NotificationService notificationService;
     @Autowired
     ModelMapper modelMapper;
     @Autowired
@@ -144,8 +142,18 @@ public class UserController {
         }
 
         if(userService.followUser(user.getId(), userToFollowId.get("userToFollowId"))){
+
+            Notification notification = new Notification();
+            notification.setUserId(userToFollowId.get("userToFollowId"));
+            notification.setSenderId(user.getId());
+            notification.setTime(LocalDateTime.now());
+            notification.setText("New follower: " + user.getId());
+            notificationService.save(notification);
+
             return new ResponseEntity<>("Successfully followed user. ", HttpStatus.OK);
         }
+
+
         return new ResponseEntity<>("Couldnt execute the follow operation.", HttpStatus.BAD_REQUEST);
     }
 

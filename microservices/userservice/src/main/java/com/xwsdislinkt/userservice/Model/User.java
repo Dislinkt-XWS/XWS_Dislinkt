@@ -43,6 +43,7 @@ public class User implements UserDetails {
     private List<String > followedUsers;
     private List<String> interests = new ArrayList<>();;
     private List<String> skills = new ArrayList<>();
+    private List<String> notifications = new ArrayList<>();
     //List of ids of users who sent a follow request to the user.
     private List<String > followRequests;
     //List of ids of follow requests the user made

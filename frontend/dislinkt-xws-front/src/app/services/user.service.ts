@@ -98,4 +98,8 @@ export class UserService {
   public searchAllUsers(criteria: String) {
     return this.http.get('api/users/search-all/' + criteria);
   }
+
+  public getNotificationsForUser(id: string): Observable<Notification[]> {
+    return this.http.get<Notification[]>('/api/notifications/' + id);
+  }
 }
