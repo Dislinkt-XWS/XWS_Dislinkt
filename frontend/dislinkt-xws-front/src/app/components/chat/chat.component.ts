@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Message } from 'src/app/model/message';
 import { User } from 'src/app/model/user';
+import { AuthService } from 'src/app/services/auth.service';
+import { MessageService } from 'src/app/services/message.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -9,15 +12,33 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ChatComponent implements OnInit {
 
-  constructor(private userService : UserService) { }
+  constructor(private authService: AuthService, private userService : UserService, private messageService : MessageService) { }
   users: User[] = [];
+  currentUser: User;
   chatUser: User;
+  messages: Message[] = [];
 
   ngOnInit(): void {
-    this.userService.getChatUsers().subscribe(data => this.users = data);
+    this.getCurrentUser();
+    this.userService.getChatUsers().subscribe(data => {
+      this.users = data
+      if(this.users.length > 0) {
+        this.chatUser = this.users[0];
+        this.getChat();
+      }
+    });
   }
 
   openChat(user: User) {
     this.chatUser = user;
+    this.getChat();
+  }
+
+  getChat() {
+    this.messageService.getChat(this.currentUser.id, this.chatUser.id).subscribe(data => this.messages = data);
+  }
+
+  getCurrentUser() {
+    this.authService.getCurrentUser().subscribe(data => this.currentUser = data);
   }
 }

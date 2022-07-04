@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -41,5 +42,14 @@ public class MessageController {
         return new ResponseEntity<>(messageDTOS, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/chat/{user1}/{user2}")
+    public ResponseEntity<List<MessageDTO>> getChat(@PathVariable("user1") String user1, @PathVariable("user2") String user2){
+        var messages = messageService.getChat(user1, user2);
+        List<MessageDTO> messageDTOS = messages
+                .stream()
+                .map(post -> modelMapper.map(post, MessageDTO.class))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(messageDTOS, HttpStatus.OK);
+    }
 
 }
