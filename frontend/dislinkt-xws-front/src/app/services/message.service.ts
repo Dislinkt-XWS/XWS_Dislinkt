@@ -13,4 +13,8 @@ export class MessageService {
   public getChat(user1: string, user2: string) : Observable<Message[]> {
     return this.http.get<Message[]>('api/messages/chat/' + user1 + '/' + user2);
   }
+
+  public sendMessage(message: Message) {
+    return this.http.post('api/messages', message);
+  }
 }

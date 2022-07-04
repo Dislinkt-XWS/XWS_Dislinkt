@@ -48,12 +48,14 @@
                         </ul>
                     </div>
                     <div class="chat-message clearfix">
-                        <div class="input-group mb-0">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="bi bi-send"></i></span>
+                        <form (ngSubmit)="sendMessage()" #messageForm="ngForm">
+                            <div class="input-group mb-0">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-primary input-group-text" type="submit" [disabled]="!messageForm.form.valid"><i class="bi bi-send"></i></button>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Enter text here..." [(ngModel)]="message.text" name="text" #text="ngModel" required>                                    
                             </div>
-                            <input type="text" class="form-control" placeholder="Enter text here...">                                    
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

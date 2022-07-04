@@ -1,7 +1,9 @@
-export interface Message {
-    id: string,
-    senderId: string,
-    receiverId: string,
-    text: string,
-    messageSent: Date
+export class Message {
+    constructor( 
+        public id: string,
+        public senderId: string,
+        public receiverId: string,
+        public text: string,
+        public messageSent: Date|null
+    ) {}
 }

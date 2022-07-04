@@ -17,6 +17,7 @@ export class ChatComponent implements OnInit {
   currentUser: User;
   chatUser: User;
   messages: Message[] = [];
+  message = new Message('', '', '', '', null);
 
   ngOnInit(): void {
     this.getCurrentUser();
@@ -40,5 +41,11 @@ export class ChatComponent implements OnInit {
 
   getCurrentUser() {
     this.authService.getCurrentUser().subscribe(data => this.currentUser = data);
+  }
+
+  sendMessage() {
+    this.message.senderId = this.currentUser.id;
+    this.message.receiverId = this.chatUser.id;
+    this.messageService.sendMessage(this.message).subscribe(() => this.getChat());
   }
 }
