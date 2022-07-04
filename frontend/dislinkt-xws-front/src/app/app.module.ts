@@ -25,6 +25,7 @@ import { SearchComponent } from './components/search/search.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { JobOffersComponent } from './components/job-offers/job-offers.component';
 import { CreateJobOfferComponent } from './components/create-job-offer/create-job-offer.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { CreateJobOfferComponent } from './components/create-job-offer/create-jo
     SearchComponent,
     NavigationComponent,
     JobOffersComponent,
-    CreateJobOfferComponent
+    CreateJobOfferComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

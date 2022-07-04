@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Experience } from '../model/experience';
 import { Interest, Skill } from '../model/skill';
-import { UserDto } from '../model/user';
+import { User, UserDto } from '../model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -97,5 +97,9 @@ export class UserService {
 
   public searchAllUsers(criteria: String) {
     return this.http.get('api/users/search-all/' + criteria);
+  }
+
+  public getChatUsers(): Observable<User[]> {
+    return this.http.get<User[]>('api/users/chat-users');
   }
 }
