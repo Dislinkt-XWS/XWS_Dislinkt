@@ -217,4 +217,17 @@ public class UserController {
                 .collect(Collectors.toList());
         return new ResponseEntity<>(userDTOS, HttpStatus.OK);
     }
+    
+    @PostMapping(value = "/block")
+    public ResponseEntity<String> blockUser(@RequestBody Map<String, String> userToBlock){
+        var user = userService.findLoggedInUser();
+        if(user == null){
+            return new ResponseEntity<>("User must be logged in to follow other accounts", HttpStatus.BAD_REQUEST);
+        }
+
+        if(userService.blockUser(user.getId(), userToBlock.get("userToBlockId"))){
+            return new ResponseEntity<>("Successfully blocked user. ", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Couldnt execute the block operation.", HttpStatus.BAD_REQUEST);
+    }
 }

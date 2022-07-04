@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 public class UserServiceMongoDb implements UserService {
@@ -201,7 +202,44 @@ public class UserServiceMongoDb implements UserService {
 
     @Override
     public List<User> searchAllUsers(String criteria) {
-        return userRepository.searchAllUsers(criteria);
+        var user = findLoggedInUser();
+        if (user == null)
+            return userRepository.searchAllUsers(criteria);
+        else {
+            var foundUsers = userRepository.searchAllUsers(criteria);
+            var blocked = user.getBlockedUsers();
+
+            for (var blockedId : blocked) {
+                var blockedUser = userRepository.findById(blockedId).get();
+                if(foundUsers.contains(blockedUser))
+                    foundUsers.remove(blockedUser);
+            }
+
+            return foundUsers;
+        }
+    }
+
+    @Override
+    public Boolean blockUser(String userId, String userToBlockId) {
+        var user = userRepository.findById(userId).get();
+        var blockedUser = userRepository.findById(userToBlockId).get();
+        System.out.println(user.getId());
+        System.out.println(blockedUser.getId());
+
+        user.getBlockedUsers().add(userToBlockId);
+        if (user.getFollowedUsers().contains(userToBlockId)) {
+            user.getFollowedUsers().remove(userToBlockId);
+            blockedUser.getFollowers().remove(userId);
+
+            if (user.getFollowers().contains(userToBlockId)) {
+                user.getFollowers().remove(userToBlockId);
+                blockedUser.getFollowedUsers().remove(userId);
+            }
+        }
+
+        if(userRepository.save(user) != null && userRepository.save(blockedUser) != null)
+            return true;
+        return false;
     }
 
     @Override

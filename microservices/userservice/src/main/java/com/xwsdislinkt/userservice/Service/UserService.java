@@ -26,4 +26,5 @@ public interface UserService extends UserDetailsService {
     Boolean unfollowUser(String  userId, String  toUnfollowUserId);
     List<User> searchAllUsers(String criteria);
     List<User> getFollowersAndFollowed();
+    Boolean blockUser(String userId, String userToBlockId);
 }

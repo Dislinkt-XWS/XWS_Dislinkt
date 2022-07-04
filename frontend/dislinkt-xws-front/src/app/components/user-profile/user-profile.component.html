@@ -5,7 +5,10 @@
     <div class="col-md-2"></div>
 
     <div class="col-md-8 d-flex justify-content-center">
-      <div class="main-box" *ngIf="!editingMode">
+      <div *ngIf="notFound && !editingMode">
+        <h1>User not found!</h1>
+      </div>
+      <div class="main-box" *ngIf="!editingMode && !notFound">
         <img class="cover"
           src="https://images.ctfassets.net/7thvzrs93dvf/wpImage18643/2f45c72db7876d2f40623a8b09a88b17/linkedin-default-background-cover-photo-1.png?w=800&q=100">
         <div>
@@ -27,6 +30,8 @@
               <button disabled *ngIf="show()" class="btn btn-md btn-primary rounded-5 ms-2">Follow request sent</button>
               <button class="btn btn-md btn-danger rounded-5" *ngIf="showUnfollow()"
                 (click)="unfollowUser()">Unfollow</button>
+              <button class="btn btn-md btn-danger rounded-5 ms-3" *ngIf="showBlocked()"
+                (click)="blockUser()">Block</button>
             </div>
 
             <h4 class="my-3">{{ currentUser.bio }}</h4>
@@ -112,8 +117,8 @@
 
       </div>
 
-      <div class="edit-info main-box" *ngIf="editingMode">
-        <img class="cover"
+      <div class="edit-info main-box" *ngIf="editingMode && !notFound">
+        <img class=" cover"
           src="https://images.ctfassets.net/7thvzrs93dvf/wpImage18643/2f45c72db7876d2f40623a8b09a88b17/linkedin-default-background-cover-photo-1.png?w=800&q=100">
         <div>
           <img class="profile-pic" src="https://via.placeholder.com/128/99ccff/0073e6.png?text=A">

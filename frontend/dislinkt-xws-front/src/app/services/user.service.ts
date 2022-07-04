@@ -102,4 +102,13 @@ export class UserService {
   public getChatUsers(): Observable<User[]> {
     return this.http.get<User[]>('api/users/chat-users');
   }
+
+  public block(userId: string, userToBlock: string | null) {
+    let dto = {
+      "userId": userId,
+      "userToBlockId": userToBlock
+    }
+
+    return this.http.post('api/users/block', dto);
+  }
 }

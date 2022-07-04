@@ -29,6 +29,7 @@ export interface User {
     followedUsers: string[],
     pendingFollowRequests: string[],
     followers: string[],
+    blockedUsers: string[]
 }
 
 export enum UserGender {

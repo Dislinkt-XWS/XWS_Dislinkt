@@ -42,6 +42,8 @@ export class UserProfileComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
+  notFound: boolean = false;
+
   constructor(public authService: AuthService, public userService: UserService, private matSnackBar: MatSnackBar,
     public activatedRoute: ActivatedRoute) { }
 
@@ -62,6 +64,7 @@ export class UserProfileComponent implements OnInit {
       this.fullName = this.userFromId.fullName;
 
       setTimeout(() => {
+        this.showProfile();
         this.getExperience();
         this.userService.getSkillsForUser(this.userId).subscribe(data => this.skills = data);
         this.userService.getInterestsForUser(this.userId).subscribe(data => this.interests = data);
@@ -99,8 +102,8 @@ export class UserProfileComponent implements OnInit {
   }
 
   updateProfile() {
-    this.userService.updateProfile(this.userFromId).subscribe(data => {
-      this.fullName = this.userFromId.fullName;
+    this.userService.updateProfile(this.currentUser).subscribe(data => {
+      this.fullName = this.currentUser.fullName;
       window.location.reload();
     },
       (error) => {
@@ -229,7 +232,21 @@ export class UserProfileComponent implements OnInit {
     return this.currentUser.id != this.userId && this.userFromId.followers.indexOf(this.currentUser.id) !== -1
   }
 
+  showBlocked() {
+    return this.currentUser.id != this.userId
+  }
+
   show() {
     return this.currentUser.id != this.userId && this.userFromId.followRequests.indexOf(this.currentUser.id) !== -1
+  }
+
+  blockUser() {
+    this.userService.block(this.currentUser.id, this.userId).subscribe(data => window.location.reload());
+  }
+
+  showProfile() {
+    console.log(this.currentUser)
+    if (this.currentUser.blockedUsers.indexOf(this.userId) !== -1)
+      this.notFound = true;
   }
 }
