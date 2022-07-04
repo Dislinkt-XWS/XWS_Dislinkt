@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ChatComponent } from './components/chat/chat.component';
 import { CreateJobOfferComponent } from './components/create-job-offer/create-job-offer.component';
 import { JobOffersComponent } from './components/job-offers/job-offers.component';
 import { LoginComponent } from './components/login/login.component';
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'search/:criteria', component: SearchComponent },
   { path: 'job-offers', component: JobOffersComponent },
   { path: 'create-job-offer', component: CreateJobOfferComponent },
-  { path: 'notifications', component: NotificationsComponent }
+  { path: 'notifications', component: NotificationsComponent },
+  { path: 'chat', component: ChatComponent}
 ];
 
 @NgModule({

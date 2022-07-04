@@ -1,5 +1,6 @@
 package com.xwsdislinkt.userservice.Service.ServiceImpl;
 
+import com.xwsdislinkt.userservice.DTO.UserDTO;
 import com.xwsdislinkt.userservice.Model.User;
 import com.xwsdislinkt.userservice.Repository.UserRepository;
 import com.xwsdislinkt.userservice.Service.UserService;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceMongoDb implements UserService {
@@ -200,5 +202,21 @@ public class UserServiceMongoDb implements UserService {
     @Override
     public List<User> searchAllUsers(String criteria) {
         return userRepository.searchAllUsers(criteria);
+    }
+
+    @Override
+    public List<User> getFollowersAndFollowed() {
+        var user = findLoggedInUser();
+        List<String> ids = user.getFollowedUsers();
+        for(String id : user.getFollowers()) {
+            if(!ids.contains(id)) {
+                ids.add(id);
+            }
+        }
+        List<User> users = new ArrayList<>();
+        for(String id : ids) {
+            users.add(get(id).get());
+        }
+        return users;
     }
 }

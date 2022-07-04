@@ -26,6 +26,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { JobOffersComponent } from './components/job-offers/job-offers.component';
 import { CreateJobOfferComponent } from './components/create-job-offer/create-job-offer.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { NotificationsComponent } from './components/notifications/notifications
     NavigationComponent,
     JobOffersComponent,
     CreateJobOfferComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

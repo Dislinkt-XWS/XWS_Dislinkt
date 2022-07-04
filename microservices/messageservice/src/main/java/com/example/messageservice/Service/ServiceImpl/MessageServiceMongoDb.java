@@ -7,7 +7,9 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,11 +32,17 @@ public class MessageServiceMongoDb implements MessageService {
     @Override
     public Message save(Message m) {
         m.setId(UUID.randomUUID().toString());
+        m.setMessageSent(LocalDateTime.now());
         return messageRepository.save(m);
     }
 
     @Override
     public void delete(String id) {
         messageRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Message> getChat(String user1, String user2) {
+        return messageRepository.getChat(user1, user2);
     }
 }

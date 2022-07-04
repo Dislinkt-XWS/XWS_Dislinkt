@@ -215,4 +215,14 @@ public class UserController {
                 .collect(Collectors.toList());
         return new ResponseEntity<>(userDTOS, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/chat-users")
+    public ResponseEntity<List<UserDTO>> followedUsers() {
+        List<User> users = userService.getFollowersAndFollowed();
+        List<UserDTO> userDTOS = users
+                .stream()
+                .map(u -> modelMapper.map(u, UserDTO.class))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(userDTOS, HttpStatus.OK);
+    }
 }

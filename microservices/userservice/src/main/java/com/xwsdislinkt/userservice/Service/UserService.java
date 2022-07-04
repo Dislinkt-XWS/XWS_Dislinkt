@@ -25,4 +25,5 @@ public interface UserService extends UserDetailsService {
     User findByApiKey(String apiKey);
     Boolean unfollowUser(String  userId, String  toUnfollowUserId);
     List<User> searchAllUsers(String criteria);
+    List<User> getFollowersAndFollowed();
 }

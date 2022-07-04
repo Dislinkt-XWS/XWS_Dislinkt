@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Experience } from '../model/experience';
 import { Interest, Skill } from '../model/skill';
-import { UserDto } from '../model/user';
+import { User, UserDto } from '../model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -101,5 +101,9 @@ export class UserService {
 
   public getNotificationsForUser(id: string): Observable<Notification[]> {
     return this.http.get<Notification[]>('/api/notifications/' + id);
+  }
+
+  public getChatUsers(): Observable<User[]> {
+    return this.http.get<User[]>('api/users/chat-users');
   }
 }
