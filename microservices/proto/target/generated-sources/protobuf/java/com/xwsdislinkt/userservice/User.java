@@ -44,6 +44,16 @@ public final class User {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_xwsdislinkt_userservice_NotificationResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_xwsdislinkt_userservice_UsersFollowersRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_xwsdislinkt_userservice_UsersFollowersRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_xwsdislinkt_userservice_UsersFollowersResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_xwsdislinkt_userservice_UsersFollowersResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -60,17 +70,22 @@ public final class User {
       "Response\022\016\n\006userId\030\001 \001(\t\"E\n\023Notification" +
       "Request\022\016\n\006userId\030\001 \001(\t\022\020\n\010senderId\030\002 \001(" +
       "\t\022\014\n\004text\030\003 \001(\t\".\n\024NotificationResponse\022" +
-      "\026\n\016notificationId\030\001 \001(\t2\340\002\n\013UserService\022" +
-      "l\n\tfollowers\022-.com.xwsdislinkt.userservi" +
-      "ce.FollowersRequest\032..com.xwsdislinkt.us" +
-      "erservice.FollowersResponse\"\000\022i\n\014findByA" +
-      "piKey\022*.com.xwsdislinkt.userservice.ApiK" +
-      "eyRequest\032+.com.xwsdislinkt.userservice." +
-      "ApiKeyResponse\"\000\022x\n\017addNotification\0220.co" +
-      "m.xwsdislinkt.userservice.NotificationRe" +
-      "quest\0321.com.xwsdislinkt.userservice.Noti" +
-      "ficationResponse\"\000B\037\n\033com.xwsdislinkt.us" +
-      "erserviceP\001b\006proto3"
+      "\026\n\016notificationId\030\001 \001(\t\"\'\n\025UsersFollower" +
+      "sRequest\022\016\n\006userId\030\001 \001(\t\"+\n\026UsersFollowe" +
+      "rsResponse\022\021\n\tfollowers\030\001 \003(\t2\335\003\n\013UserSe" +
+      "rvice\022l\n\tfollowers\022-.com.xwsdislinkt.use" +
+      "rservice.FollowersRequest\032..com.xwsdisli" +
+      "nkt.userservice.FollowersResponse\"\000\022i\n\014f" +
+      "indByApiKey\022*.com.xwsdislinkt.userservic" +
+      "e.ApiKeyRequest\032+.com.xwsdislinkt.userse" +
+      "rvice.ApiKeyResponse\"\000\022x\n\017addNotificatio" +
+      "n\0220.com.xwsdislinkt.userservice.Notifica" +
+      "tionRequest\0321.com.xwsdislinkt.userservic" +
+      "e.NotificationResponse\"\000\022{\n\016usersFollowe" +
+      "rs\0222.com.xwsdislinkt.userservice.UsersFo" +
+      "llowersRequest\0323.com.xwsdislinkt.userser" +
+      "vice.UsersFollowersResponse\"\000B\037\n\033com.xws" +
+      "dislinkt.userserviceP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -112,6 +127,18 @@ public final class User {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_xwsdislinkt_userservice_NotificationResponse_descriptor,
         new java.lang.String[] { "NotificationId", });
+    internal_static_com_xwsdislinkt_userservice_UsersFollowersRequest_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_com_xwsdislinkt_userservice_UsersFollowersRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_xwsdislinkt_userservice_UsersFollowersRequest_descriptor,
+        new java.lang.String[] { "UserId", });
+    internal_static_com_xwsdislinkt_userservice_UsersFollowersResponse_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_com_xwsdislinkt_userservice_UsersFollowersResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_xwsdislinkt_userservice_UsersFollowersResponse_descriptor,
+        new java.lang.String[] { "Followers", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

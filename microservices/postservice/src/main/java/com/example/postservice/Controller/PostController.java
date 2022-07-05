@@ -48,9 +48,9 @@ public class PostController {
         try {
             newPost = postService.save(post);
 
-            FollowersRequest followersRequest = FollowersRequest.newBuilder().setUserId(dto.getUserId()).build();
-            FollowersResponse followersResponse = userServiceStub.followers(followersRequest);
-            List<String> userIds = followersResponse.getFollowersList();
+            UsersFollowersRequest usersFollowersRequest = UsersFollowersRequest.newBuilder().setUserId(dto.getUserId()).build();
+            UsersFollowersResponse usersFollowersResponse = userServiceStub.usersFollowers(usersFollowersRequest);
+            List<String> userIds = usersFollowersResponse.getFollowersList();
 
             System.out.println(userIds.size());
 

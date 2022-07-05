@@ -12,6 +12,8 @@ service UserService {
   }
   rpc addNotification(NotificationRequest) returns (NotificationResponse) {
   }
+  rpc usersFollowers(UsersFollowersRequest) returns (UsersFollowersResponse) {
+  }
 }
 
 message FollowersRequest {
@@ -38,4 +40,12 @@ message NotificationRequest {
 
 message NotificationResponse {
  string notificationId = 1;
+}
+
+message UsersFollowersRequest  {
+ string userId = 1;
+}
+
+message UsersFollowersResponse {
+  repeated string followers = 1;
 }

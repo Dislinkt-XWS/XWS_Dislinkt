@@ -6,7 +6,7 @@
         <div class="card all-posts shadow mt-5 rounded-3" *ngFor="let notification of notifications">
           <div class="card-body">
             <h5 class="card-title">{{notification.text}}</h5>
-            <p class="card-text text-content">{{notification.time}}</p>
+            <p class="card-text text-content">{{notification.time | dateAgo}}</p>
           </div>
           <hr class="text-muted my-0">
         </div>

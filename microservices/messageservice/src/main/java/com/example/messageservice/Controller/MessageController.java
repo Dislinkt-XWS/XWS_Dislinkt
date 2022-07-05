@@ -34,8 +34,8 @@ public class MessageController {
     public ResponseEntity<MessageDTO> create(@RequestBody @Validated MessageDTO dto){
         var message = modelMapper.map(dto, Message.class);
 
-        NotificationRequest notificationRequest = NotificationRequest.newBuilder().setSenderId(dto.getSenderId()).setUserId(dto.getReceiverId()).setText("New message").build();
-        NotificationResponse notificationResponse = userServiceStub.addNotification(notificationRequest);
+        //NotificationRequest notificationRequest = NotificationRequest.newBuilder().setSenderId(dto.getSenderId()).setUserId(dto.getReceiverId()).setText("New message").build();
+        //NotificationResponse notificationResponse = userServiceStub.addNotification(notificationRequest);
 
         return new ResponseEntity<>(modelMapper.map(
                 messageService.save(message), MessageDTO.class), HttpStatus.CREATED);

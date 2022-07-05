@@ -107,6 +107,37 @@ public final class UserServiceGrpc {
     return getAddNotificationMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.xwsdislinkt.userservice.UsersFollowersRequest,
+      com.xwsdislinkt.userservice.UsersFollowersResponse> getUsersFollowersMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "usersFollowers",
+      requestType = com.xwsdislinkt.userservice.UsersFollowersRequest.class,
+      responseType = com.xwsdislinkt.userservice.UsersFollowersResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.xwsdislinkt.userservice.UsersFollowersRequest,
+      com.xwsdislinkt.userservice.UsersFollowersResponse> getUsersFollowersMethod() {
+    io.grpc.MethodDescriptor<com.xwsdislinkt.userservice.UsersFollowersRequest, com.xwsdislinkt.userservice.UsersFollowersResponse> getUsersFollowersMethod;
+    if ((getUsersFollowersMethod = UserServiceGrpc.getUsersFollowersMethod) == null) {
+      synchronized (UserServiceGrpc.class) {
+        if ((getUsersFollowersMethod = UserServiceGrpc.getUsersFollowersMethod) == null) {
+          UserServiceGrpc.getUsersFollowersMethod = getUsersFollowersMethod =
+              io.grpc.MethodDescriptor.<com.xwsdislinkt.userservice.UsersFollowersRequest, com.xwsdislinkt.userservice.UsersFollowersResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "usersFollowers"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.xwsdislinkt.userservice.UsersFollowersRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.xwsdislinkt.userservice.UsersFollowersResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier("usersFollowers"))
+              .build();
+        }
+      }
+    }
+    return getUsersFollowersMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -176,6 +207,13 @@ public final class UserServiceGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getAddNotificationMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void usersFollowers(com.xwsdislinkt.userservice.UsersFollowersRequest request,
+        io.grpc.stub.StreamObserver<com.xwsdislinkt.userservice.UsersFollowersResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getUsersFollowersMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -199,6 +237,13 @@ public final class UserServiceGrpc {
                 com.xwsdislinkt.userservice.NotificationRequest,
                 com.xwsdislinkt.userservice.NotificationResponse>(
                   this, METHODID_ADD_NOTIFICATION)))
+          .addMethod(
+            getUsersFollowersMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                com.xwsdislinkt.userservice.UsersFollowersRequest,
+                com.xwsdislinkt.userservice.UsersFollowersResponse>(
+                  this, METHODID_USERS_FOLLOWERS)))
           .build();
     }
   }
@@ -240,6 +285,14 @@ public final class UserServiceGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getAddNotificationMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void usersFollowers(com.xwsdislinkt.userservice.UsersFollowersRequest request,
+        io.grpc.stub.StreamObserver<com.xwsdislinkt.userservice.UsersFollowersResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getUsersFollowersMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -275,6 +328,13 @@ public final class UserServiceGrpc {
     public com.xwsdislinkt.userservice.NotificationResponse addNotification(com.xwsdislinkt.userservice.NotificationRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getAddNotificationMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.xwsdislinkt.userservice.UsersFollowersResponse usersFollowers(com.xwsdislinkt.userservice.UsersFollowersRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getUsersFollowersMethod(), getCallOptions(), request);
     }
   }
 
@@ -315,11 +375,20 @@ public final class UserServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getAddNotificationMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.xwsdislinkt.userservice.UsersFollowersResponse> usersFollowers(
+        com.xwsdislinkt.userservice.UsersFollowersRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getUsersFollowersMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_FOLLOWERS = 0;
   private static final int METHODID_FIND_BY_API_KEY = 1;
   private static final int METHODID_ADD_NOTIFICATION = 2;
+  private static final int METHODID_USERS_FOLLOWERS = 3;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -349,6 +418,10 @@ public final class UserServiceGrpc {
         case METHODID_ADD_NOTIFICATION:
           serviceImpl.addNotification((com.xwsdislinkt.userservice.NotificationRequest) request,
               (io.grpc.stub.StreamObserver<com.xwsdislinkt.userservice.NotificationResponse>) responseObserver);
+          break;
+        case METHODID_USERS_FOLLOWERS:
+          serviceImpl.usersFollowers((com.xwsdislinkt.userservice.UsersFollowersRequest) request,
+              (io.grpc.stub.StreamObserver<com.xwsdislinkt.userservice.UsersFollowersResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -414,6 +487,7 @@ public final class UserServiceGrpc {
               .addMethod(getFollowersMethod())
               .addMethod(getFindByApiKeyMethod())
               .addMethod(getAddNotificationMethod())
+              .addMethod(getUsersFollowersMethod())
               .build();
         }
       }

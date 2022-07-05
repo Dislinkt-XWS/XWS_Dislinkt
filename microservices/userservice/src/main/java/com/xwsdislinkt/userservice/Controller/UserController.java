@@ -147,7 +147,7 @@ public class UserController {
             notification.setUserId(userToFollowId.get("userToFollowId"));
             notification.setSenderId(user.getId());
             notification.setTime(LocalDateTime.now());
-            notification.setText("New follower: " + user.getId());
+            notification.setText("New follower: " + user.getUsername());
             notificationService.save(notification);
 
             return new ResponseEntity<>("Successfully followed user. ", HttpStatus.OK);

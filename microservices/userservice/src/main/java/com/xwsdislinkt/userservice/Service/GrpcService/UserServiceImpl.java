@@ -39,6 +39,20 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
     }
 
     @Override
+    public void usersFollowers(UsersFollowersRequest request, StreamObserver<UsersFollowersResponse> responseObserver) {
+        String userId = request.getUserId();
+        User user = userService.get(userId).get();
+        List<String> followers = user.getFollowers();
+
+        UsersFollowersResponse usersFollowersResponse = UsersFollowersResponse.newBuilder()
+                .addAllFollowers(followers)
+                .build();
+
+        responseObserver.onNext(usersFollowersResponse);
+        responseObserver.onCompleted();
+    }
+
+    @Override
     public void addNotification(NotificationRequest request, StreamObserver<NotificationResponse> responseObserver) {
         String senderId = request.getSenderId();
         System.out.println("User ID:" + senderId);
