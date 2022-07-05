@@ -13,3 +13,11 @@ spring:
 
 server:
   port: 8700
+
+grpc:
+  client:
+    user-service:
+      address: 'static://user-service:9090'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
