@@ -112,10 +112,14 @@ public class UserServiceMongoDb implements UserService {
         System.out.println("Service user to follow id: " + toFollowUserId);
         User user = userRepository.findById(userId).get();
         User userToFollow = userRepository.findById(toFollowUserId).get();
-        if(isAlreadyAFollower(user, userToFollow))
+        if(isAlreadyAFollower(user, userToFollow)) {
+            System.out.println("already a follower");
             return false;
-        if(hasBeenBlocked(user, userToFollow))
+        }
+        if(hasBeenBlocked(user, userToFollow)) {
+            System.out.println("has been blocked");
             return false;
+        }
         if(userToFollow.getIsPrivate()){
             var followed = handlePrivateFollow(user, userToFollow);
             if(followed)
@@ -130,6 +134,7 @@ public class UserServiceMongoDb implements UserService {
         userToFollow.getFollowers().add(userId);
         if(userRepository.save(user) != null && userRepository.save(userToFollow) != null)
             return true;
+
         return false;
     }
     private Boolean handlePrivateFollow(User user, User userToFollow){
@@ -151,7 +156,7 @@ public class UserServiceMongoDb implements UserService {
         return false;
     }
     private Boolean isAlreadyAFollower(User user, User userToFollow){
-        if(user.getFollowers() != null && user.getFollowers().contains(userToFollow.getId()))
+        if(userToFollow.getFollowers() != null && userToFollow.getFollowers().contains(user.getId()))
             return true;
         return false;
     }

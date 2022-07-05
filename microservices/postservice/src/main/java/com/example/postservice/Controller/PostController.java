@@ -5,9 +5,7 @@ import com.example.postservice.DTO.PostDTO;
 import com.example.postservice.Model.Post;
 import com.example.postservice.Service.LikeService;
 import com.example.postservice.Service.PostService;
-import com.xwsdislinkt.userservice.FollowersRequest;
-import com.xwsdislinkt.userservice.FollowersResponse;
-import com.xwsdislinkt.userservice.UserServiceGrpc;
+import com.xwsdislinkt.userservice.*;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +27,6 @@ public class PostController {
     private ModelMapper modelMapper;
     @Autowired
     private LikeService likeService;
-
     @GrpcClient("user-service")
     private UserServiceGrpc.UserServiceBlockingStub userServiceStub;
 
@@ -50,6 +47,20 @@ public class PostController {
         Post newPost = null;
         try {
             newPost = postService.save(post);
+
+            UsersFollowersRequest usersFollowersRequest = UsersFollowersRequest.newBuilder().setUserId(dto.getUserId()).build();
+            UsersFollowersResponse usersFollowersResponse = userServiceStub.usersFollowers(usersFollowersRequest);
+            List<String> userIds = usersFollowersResponse.getFollowersList();
+
+            System.out.println(userIds.size());
+
+            if(userIds.size() > 0) {
+                for(String userId: userIds) {
+                    NotificationRequest notificationRequest = NotificationRequest.newBuilder().setUserId(userId).setSenderId(dto.getUserId()).setText("New post").build();
+                    NotificationResponse notificationResponse = userServiceStub.addNotification(notificationRequest);
+                }
+            }
+
         } catch (Exception e) {
             return new ResponseEntity<>("Unable to create post because there is no user defined!", HttpStatus.BAD_REQUEST);
         }

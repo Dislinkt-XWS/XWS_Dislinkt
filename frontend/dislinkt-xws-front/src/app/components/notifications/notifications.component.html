@@ -1,0 +1,16 @@
+<app-navigation></app-navigation>
+<div class="feed">
+  <div class="row py-5">
+    <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <div class="card all-posts shadow mt-5 rounded-3" *ngFor="let notification of notifications">
+          <div class="card-body">
+            <h5 class="card-title">{{notification.text}}</h5>
+            <p class="card-text text-content">{{notification.time | dateAgo}}</p>
+          </div>
+          <hr class="text-muted my-0">
+        </div>
+      </div>
+    <div class="col-md-2"></div>
+  </div>
+</div>

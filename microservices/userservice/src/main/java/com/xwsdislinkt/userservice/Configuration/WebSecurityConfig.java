@@ -58,6 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/skills/**").permitAll()
                 .antMatchers("/api/interests/**").permitAll()
                 .antMatchers("/api/experiences/**").permitAll()
+                .antMatchers("/api/notifications/**").permitAll()
 
                 .anyRequest().authenticated().and()
                 .cors().and()

@@ -99,6 +99,10 @@ export class UserService {
     return this.http.get('api/users/search-all/' + criteria);
   }
 
+  public getNotificationsForUser(id: string): Observable<Notification[]> {
+    return this.http.get<Notification[]>('/api/notifications/' + id);
+  }
+
   public getChatUsers(): Observable<User[]> {
     return this.http.get<User[]>('api/users/chat-users');
   }
